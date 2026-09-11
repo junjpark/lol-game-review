@@ -1,0 +1,52 @@
+# ---- Secrets ----------------------------------------------------------
+# Riot personal API keys expire every 24h and get rotated constantly.
+# Never let one reach a commit.
+.env
+config.yaml
+config.yml
+*.key
+
+# ---- Data -------------------------------------------------------------
+# The raw JSON cache grows into the gigabytes. Keep the directories
+# (via .gitkeep) but never the contents.
+data/raw/*
+data/processed/*
+data/baselines/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/baselines/.gitkeep
+
+*.parquet
+*.sqlite
+*.db
+
+# ---- Models -----------------------------------------------------------
+models/*
+!models/.gitkeep
+
+# ---- Python -----------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# ---- Notebooks --------------------------------------------------------
+.ipynb_checkpoints/
+
+# ---- Tooling ----------------------------------------------------------
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ---- Editors / OS -----------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
