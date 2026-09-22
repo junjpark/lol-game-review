@@ -23,15 +23,15 @@
 *Est: 1 evening · Blocks: everything*
 
 ### 0.1 Riot API access
-- [ ] 0.1.1 Register a developer account and generate a personal API key
-- [ ] 0.1.2 Store the key in an env var or gitignored config — personal keys expire every 24h, you'll rotate it constantly
-- [ ] 0.1.3 Note the binding rate limit: 100 requests / 2 minutes (not the 20/s)
-- [ ] 0.1.4 Pick and pin your region/routing values
+- [x] 0.1.1 Register a developer account and generate a personal API key
+- [x] 0.1.2 Store the key in an env var or gitignored config — personal keys expire every 24h, you'll rotate it constantly
+- [x] 0.1.3 Note the binding rate limit: 100 requests / 2 minutes (not the 20/s)
+- [x] 0.1.4 Pick and pin your region/routing values
 
 ### 0.2 Project scaffolding
-- [ ] 0.2.1 Repo, virtualenv, dependencies (`requests`, `pandas`, `pyarrow`, `xgboost`, `scikit-learn`, `matplotlib`)
-- [ ] 0.2.2 Directory layout: `data/raw/` (JSON cache), `data/processed/`, `data/baselines/`, `models/`, `notebooks/`, `src/`
-- [ ] 0.2.3 Config for key, region, target patch, queue ID (420 = ranked solo/duo)
+- [x] 0.2.1 Repo, virtualenv, dependencies (`requests`, `pandas`, `pyarrow`, `xgboost`, `scikit-learn`, `matplotlib`)
+- [x] 0.2.2 Directory layout: `data/raw/` (JSON cache), `data/processed/`, `data/baselines/`, `models/`, `notebooks/`, `src/`
+- [x] 0.2.3 Config for key, region, target patch, queue ID (420 = ranked solo/duo)
 
 ### 0.3 Single-match spike
 - [ ] 0.3.1 Walk the full chain by hand for one match: Riot ID → PUUID → match IDs → match + timeline
