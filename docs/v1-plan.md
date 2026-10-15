@@ -34,9 +34,9 @@
 - [x] 0.2.3 Config for key, region, target patch, queue ID (420 = ranked solo/duo)
 
 ### 0.3 Single-match spike
-- [ ] 0.3.1 Walk the full chain by hand for one match: Riot ID → PUUID → match IDs → match + timeline
-- [ ] 0.3.2 Dump both JSONs to disk and read them manually
-- [ ] 0.3.3 Write down every field name you'll need — this becomes your extraction contract and prevents rework later
+- [x] 0.3.1 Walk the full chain by hand for one match: Riot ID → PUUID → match IDs → match + timeline
+- [x] 0.3.2 Dump both JSONs to disk and read them manually
+- [x] 0.3.3 Write down every field name you'll need — this becomes your extraction contract and prevents rework later
 
 **Exit criteria:** two JSON files on disk for one of your own games, and a written list of the fields you care about.
 
