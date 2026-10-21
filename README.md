@@ -11,15 +11,14 @@ comparable spots.
 Two models with cleanly separated jobs:
 
 1. **A win-probability model** (gradient-boosted trees) trained on per-minute game state.
-   Produces one number: P(win) at each point in the game. The change in that number
-   across a decision — win probability added, or WPA — is the severity signal, the same
-   way centipawn loss is in chess.
+   Produces one number: P(win) at each point. The change in that number across a decision
+   — win probability added, or WPA — is the severity signal, the same way centipawn loss
+   is in chess.
 2. **An LLM** that turns a curated payload of state, action, and eval into readable
    coaching text. Called with a prompt, not fine-tuned.
 
 Everything between and around those two — feature extraction, rank-matched baselines,
-decision detection, the semantic fields — is deterministic code. The trained model is a
-small component in the middle of a large amount of plumbing.
+decision detection, the semantic fields — is deterministic code.
 
 ## Why this isn't just a chess engine port
 
@@ -27,46 +26,68 @@ Chess has an oracle: an engine can search the position and tell you the objectiv
 move. League has no equivalent — the action space isn't enumerable, and the game has
 hidden information. So this tool makes **comparative statistical** claims ("this cost you
 10% win probability; players in similar spots usually warded first"), never claims of
-proven optimality. That distinction drives a lot of the design, particularly the
-`knowable_at_the_time` fields that keep advice from being hindsight-biased.
+proven optimality.
 
 ## Status
 
-Pre-Phase 0. See [`docs/v1-plan.md`](docs/v1-plan.md) for the full build plan.
+| Phase | | |
+|---|---|---|
+| 0 — Foundations & extraction contract | ✅ | [`docs/extraction-contract.md`](docs/extraction-contract.md) |
+| 1 — Data collection | ✅ | 5,000 Emerald + 2,000 Diamond ranked games, patches 16.18–16.20 |
+| 2 — Replay visualizer | ✅ | interactive HTML replay of any game |
+| 3 — Extraction | in progress | timelines → per-player-per-minute table |
+| 4–10 | | baselines, win-prob model, decision detection, coaching |
+
+Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data gotchas:
+[`CLAUDE.md`](CLAUDE.md).
 
 ## Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -e .
+python -m venv venv
+source venv/bin/activate           # Windows: venv\Scripts\activate
+pip install -e ".[dev]"
 cp .env.example .env               # then paste your Riot key into .env
+pytest                             # should all pass, no key or data needed
 ```
 
-Get a development API key at https://developer.riotgames.com. Development keys expire every
-24 hours, so expect to re-paste it often — nothing should ever hard-code it.
+Get a development API key at https://developer.riotgames.com. Development keys expire
+every 24 hours, so expect to re-paste it often — nothing should ever hard-code it.
+
+## Usage
+
+```bash
+# Collect a corpus (resumable; safe to stop and restart)
+python scripts/collect_summoners.py --tier EMERALD --target 1000
+python scripts/collect_matches.py   --tier emerald --target 5000
+
+# Open a game as an interactive replay
+python scripts/replay.py --riot-id "Name#TAG"        # your latest ranked game
+python scripts/replay.py --random --tier emerald     # random game from the corpus
+python scripts/replay.py NA1_5660427960              # a specific match
+```
 
 ## Layout
 
 ```
 src/lolreview/
-  riot/        API client, routing values, rate limiting, disk cache
-  extract/     timeline JSON -> tidy per-participant-per-minute frames
-  baselines/   rank x role x minute aggregates, z-scoring
-  model/       win-probability training and calibration
-  review/      decision detection, payload assembly, LLM prompting
-  viz/         timeline replay and debugging views
-data/
-  raw/         cached Riot API responses (gitignored)
-  processed/   parquet feature tables (gitignored)
-  baselines/   computed baseline lookups (gitignored)
-docs/          plan and design notes
-notebooks/     exploration
-scripts/       entry points for collection and batch jobs
+  config.py    settings from .env, data paths
+  rift.py      Summoner's Rift geometry: turrets, pits, camps (measured from the corpus)
+  riot/        API client, routing, rate limiter, gzip cache, Data Dragon
+  extract/     timelines -> per-player-per-minute tables          (Phase 3)
+  baselines/   rank x role x minute aggregates                     (Phase 4)
+  model/       win-probability training and calibration            (Phase 5)
+  review/      decision detection, payload assembly, LLM coaching  (Phases 6–9)
+  viz/         replay visualizer
+scripts/       command-line entry points
+tests/         offline tests (no API key or corpus needed)
+docs/          plan, extraction contract
+data/          cache and processed tables (gitignored)
 ```
 
-## Scope of v1
+---
 
-Working pipeline that produces a useful review on a single Emerald ranked game.
-No UI, no hosting, no fine-tuning, single region. See the plan for what's deliberately
-excluded and why.
+*lol-game-review isn't endorsed by Riot Games and doesn't reflect the views or opinions of
+Riot Games or anyone officially involved in producing or managing Riot Games properties.
+Riot Games, and all associated properties are trademarks or registered trademarks of Riot
+Games, Inc.*

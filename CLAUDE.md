@@ -152,20 +152,24 @@ without it.
 - **Phase 0 done.** Field mapping lives in `docs/extraction-contract.md`. Read its Gaps
   section: ward events carry no position, there is no vision state, and there are no
   summoner-spell events, so 3 of the 4 `knowable_at_the_time` fields are unavailable.
-  `scripts/spike_single_match.py` has served its purpose and can be deleted.
-- **Phase 1 mostly done.** Fetcher in `src/lolreview/riot/` (rate limiter, gzip cache,
-  client); `scripts/collect_summoners.py` and `scripts/collect_matches.py`.
+- **Phase 1 done** (except optional AFK flagging, 1.3.5). Fetcher in `src/lolreview/riot/`
+  (rate limiter, gzip cache, client); `scripts/collect_summoners.py` and
+  `scripts/collect_matches.py`.
   - **Emerald corpus complete:** 5,000 matches on `TARGET_PATCHES=16.18,16.19,16.20`
     (765 / 898 / 3,337). About 45% of sampled Emerald players have no recent ranked games,
     so yield is ~2.3 usable matches per player.
   - **The corpus is defined by `data/processed/matches_<tier>.json` → `"kept"`.** The raw
     cache in `data/raw/` is shared across tiers and also holds rejected matches, so never
     treat "everything in the cache" as a tier's corpus.
-  - Diamond pull not yet run.
+  - **Diamond corpus complete:** 2,000 matches, same patches, from 2,056 downloaded (97%
+    yield, thanks to the `startTime` filter and Diamond players being more active).
+  - Patch 16.21 is out (Data Dragon lists it). Both corpora stay on 16.18–16.20 so the
+    Diamond comparison set matches Emerald; refresh both together later.
 - Long runs on a laptop: `caffeinate -i python ...`. The Emerald run lost ~70 minutes to
   what was probably the Mac sleeping.
 
-- **Phase 2 built.** `scripts/replay.py <matchId> | --random | --riot-id "Name#TAG"` writes a
+- **Phase 2 done.** Alignment verified over the real Data Dragon minimap.
+  `scripts/replay.py <matchId> | --random | --riot-id "Name#TAG"` writes a
   self-contained HTML replay to `data/processed/replays/` (logic in `src/lolreview/viz/replay.py`).
   Steps minute to minute and deliberately does **not** interpolate positions. Uses the Data
   Dragon minimap if reachable, else a schematic. Draws turrets/inhibitors with live
@@ -174,8 +178,8 @@ without it.
   `data/raw/ddragon/`); `--offline` skips downloads.
   `build_replay_data(..., winprob=)` is the Phase 5 overlay hook.
 
-**Next:** Diamond pull (overnight) → confirm replay alignment on the real minimap → Phase 3
-extraction.
+**Next:** Phase 3 extraction — timelines → one tidy table (participant × minute), lane
+opponent diffs, per-minute event aggregates, validated against the replay and op.gg.
 
 ## Conventions
 

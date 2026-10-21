@@ -55,7 +55,7 @@
 ### 1.2 Sampling frame
 - [x] 1.2.1 Enumerate Emerald I–IV entries via LEAGUE-V4, paging through each division
 - [x] 1.2.2 Sample *across* pages rather than taking the first page of each — target ~800–1,000 distinct summoners
-- [ ] 1.2.3 Repeat for Diamond (smaller pull) — this becomes the aspirational comparison set in Phase 8
+- [x] 1.2.3 Repeat for Diamond (smaller pull) — this becomes the aspirational comparison set in Phase 8
 - [x] 1.2.4 Persist the summoner list so pulls are reproducible
 
 ### 1.3 Corpus pull
@@ -64,7 +64,7 @@
 - [x] 1.3.3 Dedupe by matchId (you will get collisions when two sampled players share a game)
 - [x] 1.3.4 **Filter out remakes and early surrenders** (games under ~15 min, or with an early-surrender flag) — they skew baselines and add near-useless rows to win-prob training
 - [ ] 1.3.5 Flag games with AFK/disconnected participants for optional exclusion
-- [ ] 1.3.6 Targets: ~5,000 Emerald matches ✅ (16.18–16.20), ~2,000 Diamond
+- [x] 1.3.6 Targets: ~5,000 Emerald matches ✅ (16.18–16.20), ~2,000 Diamond ✅
 - [x] 1.3.7 Log collection stats: match count, unique players, patch distribution, role distribution
 
 **Exit criteria:** 5k+ deduped Emerald matches cached on disk, collection script resumable and re-runnable.
@@ -80,7 +80,7 @@
 This is the debugging substrate for every hard field later. You cannot verify "was the jungler visible here" or "did they push past river" by reading JSON.
 
 ### 2.1 Timeline replay
-- [ ] 2.1.1 Static Summoner's Rift map image with correct coordinate mapping (built; confirm players land on lanes over the real Data Dragon image)
+- [x] 2.1.1 Static Summoner's Rift map image with correct coordinate mapping (verified over the real Data Dragon image)
 - [x] 2.1.2 Plot all 10 participant positions per frame
 - [x] 2.1.3 Step/scrub through frames
 
