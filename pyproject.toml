@@ -34,3 +34,6 @@ line-length = 100
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Import the package straight from src/ so tests work whichever pytest launches them
+# (e.g. a conda base pytest shadowing the venv's).
+pythonpath = ["src", "tests"]

@@ -22,48 +22,14 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from lolreview.config import PROCESSED_DIR, RAW_DIR, ensure_dirs, load_config
+from lolreview.config import PROCESSED_DIR, RAW_DIR, ensure_dirs
 from lolreview.riot.cache import JsonCache
+from lolreview.riot.client import ExpiredKey
 from lolreview.riot.ddragon import item_names
+from lolreview.riot.games import GameNotFound, find_game
 from lolreview.viz.replay import build_replay_data, fetch_map_image, render_html
 
 log = logging.getLogger("replay")
-
-
-def load_from_disk(cache: JsonCache, mid: str) -> tuple[dict, dict] | None:
-    match, timeline = cache.get("matches", mid), cache.get("timelines", mid)
-    if match and timeline:
-        return match, timeline
-    # Phase 0 spike files were saved as plain JSON alongside the cache
-    m, t = RAW_DIR / f"{mid}_match.json", RAW_DIR / f"{mid}_timeline.json"
-    if m.exists() and t.exists():
-        return json.loads(m.read_text()), json.loads(t.read_text())
-    return None
-
-
-def fetch(mid: str | None, riot_id: str | None, cache: JsonCache) -> tuple[str, dict, dict]:
-    """Fetch from the API (and cache). Imported lazily so cached replays need no key."""
-    from lolreview.riot.client import ExpiredKey, RiotClient
-
-    client = RiotClient(load_config(), cache)
-    try:
-        if riot_id:
-            name, _, tag = riot_id.partition("#")
-            if not tag:
-                sys.exit('Riot ID must look like "Name#TAG"')
-            account = client.account_by_riot_id(name, tag)
-            if not account:
-                sys.exit(f"No account found for {riot_id}")
-            ids = client.match_ids(account["puuid"], count=1)
-            if not ids:
-                sys.exit(f"No recent ranked solo/duo games for {riot_id}")
-            mid = ids[0]
-        match, timeline = client.match(mid), client.timeline(mid)
-    except ExpiredKey as exc:
-        sys.exit(str(exc))
-    if not match or not timeline:
-        sys.exit(f"Match {mid} not found")
-    return mid, match, timeline
 
 
 def main() -> None:
@@ -92,11 +58,11 @@ def main() -> None:
     elif not mid and not args.riot_id:
         ap.error("give a match ID, --random, or --riot-id")
 
-    found = load_from_disk(cache, mid) if mid else None
-    if found:
-        match, timeline = found
-    else:
-        mid, match, timeline = fetch(mid, args.riot_id, cache)
+    try:
+        game = find_game(cache, match_id=mid, riot_id=args.riot_id)
+    except (GameNotFound, ExpiredKey) as exc:
+        sys.exit(str(exc))
+    mid, match, timeline = game.match_id, game.match, game.timeline
 
     ddragon_dir = RAW_DIR / "ddragon"
     patch = ".".join(match["info"].get("gameVersion", "").split(".")[:2])

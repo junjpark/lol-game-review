@@ -35,7 +35,7 @@ proven optimality.
 | 0 — Foundations & extraction contract | ✅ | [`docs/extraction-contract.md`](docs/extraction-contract.md) |
 | 1 — Data collection | ✅ | 5,000 Emerald + 2,000 Diamond ranked games, patches 16.18–16.20 |
 | 2 — Replay visualizer | ✅ | interactive HTML replay of any game |
-| 3 — Extraction | in progress | timelines → per-player-per-minute table |
+| 3 — Extraction | ✅ | 2.1M player-minute rows, validated against Riot's end-of-game summary |
 | 4–10 | | baselines, win-prob model, decision detection, coaching |
 
 Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data gotchas:
@@ -60,6 +60,12 @@ every 24 hours, so expect to re-paste it often — nothing should ever hard-code
 # Collect a corpus (resumable; safe to stop and restart)
 python scripts/collect_summoners.py --tier EMERALD --target 1000
 python scripts/collect_matches.py   --tier emerald --target 5000
+
+# Build the tables (frames, events, teams) — ~2 minutes, no API key
+python scripts/extract.py --tier all
+
+# Print the hand-check numbers for one of your games
+python scripts/inspect_game.py --riot-id "Name#TAG"
 
 # Open a game as an interactive replay
 python scripts/replay.py --riot-id "Name#TAG"        # your latest ranked game

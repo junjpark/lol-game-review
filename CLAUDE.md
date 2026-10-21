@@ -96,6 +96,15 @@ not inference).
 - `CHAMPION_SPECIAL_KILL` (first blood, multikill, ace) is recorded at a **different position**
   from its `CHAMPION_KILL`, typically 300–400 units away (likely killer vs. victim location,
   unverified). Every one matches a kill by the same killer within 50 ms; join on that.
+- `DRAGON_SOUL_GIVEN` with `teamId: 0` fires after the game's **2nd** dragon to reveal the
+  soul type; only `teamId` 100/200 means a team earned it (always at its 4th dragon).
+- `WARD_PLACED`/`WARD_KILL` also fire for champion ability objects: `wardType` `UNDEFINED`
+  (Zyra seeds, Jhin traps, Yorick, Illaoi, …) and `TEEMO_MUSHROOM`. Count only
+  `extract.events.REAL_WARD_TYPES` to match Riot's ward totals.
+- Team kills on the scoreboard = player kills + deaths to turrets/minions (credited to the
+  enemy); deaths to neutral monsters count for nobody. See `is_scoreboard_execution`.
+- Riot's `wasAfk` participant flag is reliable (every flagged player's team lost); prefer it
+  to idle-position heuristics.
 - Map landmarks (turrets, inhibitors, pits, camps) live in `src/lolreview/rift.py`, measured
   from the corpus. The map is point-symmetric via `rift.mirror()`.
 - `gameDuration` is in seconds; timeline event timestamps are in milliseconds.
@@ -152,7 +161,7 @@ without it.
 - **Phase 0 done.** Field mapping lives in `docs/extraction-contract.md`. Read its Gaps
   section: ward events carry no position, there is no vision state, and there are no
   summoner-spell events, so 3 of the 4 `knowable_at_the_time` fields are unavailable.
-- **Phase 1 done** (except optional AFK flagging, 1.3.5). Fetcher in `src/lolreview/riot/`
+- **Phase 1 done.** Fetcher in `src/lolreview/riot/`
   (rate limiter, gzip cache, client); `scripts/collect_summoners.py` and
   `scripts/collect_matches.py`.
   - **Emerald corpus complete:** 5,000 matches on `TARGET_PATCHES=16.18,16.19,16.20`
@@ -178,8 +187,24 @@ without it.
   `data/raw/ddragon/`); `--offline` skips downloads.
   `build_replay_data(..., winprob=)` is the Phase 5 overlay hook.
 
-**Next:** Phase 3 extraction — timelines → one tidy table (participant × minute), lane
-opponent diffs, per-minute event aggregates, validated against the replay and op.gg.
+- **Phase 3 done** (`src/lolreview/extract/`, `scripts/extract.py`, `scripts/inspect_game.py`).
+  Owner verified one of their own games against op.gg: all stats match.
+  - `extract_game(match, timeline, tier)` is pure and per-game; `build.py` runs it over a
+    tier and writes `frames_/events_/teams_<tier>.parquet` (keys and column types in
+    `extract/schema.py`). Read with `extract.build.load(name, tier, columns=, filters=)`.
+  - 7,000 games → 2.15M player-minute rows, 6.0M events, 430K team-minute rows; ~15 ms/game.
+  - **Validated against Riot's own end-of-game summary on every game** (runs inside every
+    build; results in `extract_<tier>.json`): player K/D/A, CS, gold, damage, level, wards
+    killed 100%; wards placed 99.99%; team towers/inhibs/dragons/barons/heralds/grubs 100%;
+    team kills 99.83%.
+  - `teams` columns describe the game *as of that minute* — no future leakage (e.g.
+    `first_blood` turns true only when it happens). `win`, `game_has_afk`, `afk_players`,
+    `was_afk`, `idle_max` describe the whole game: **filters/labels, never model features.**
+  - 162 of 7,000 games have an AFK player (Riot `wasAfk`); exclude via `game_has_afk`.
+  - Built tables total ~190 MB of Parquet in `data/processed/`.
+
+**Next:** Phase 4 baselines (rank × role × minute aggregates from `frames_emerald`) → v0
+percentile report on the owner's games, the plan's go/no-go gate.
 
 ## Conventions
 

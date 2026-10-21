@@ -63,7 +63,7 @@
 - [x] 1.3.2 Filter to current patch (or last 2–3) — patch drift invalidates baselines
 - [x] 1.3.3 Dedupe by matchId (you will get collisions when two sampled players share a game)
 - [x] 1.3.4 **Filter out remakes and early surrenders** (games under ~15 min, or with an early-surrender flag) — they skew baselines and add near-useless rows to win-prob training
-- [ ] 1.3.5 Flag games with AFK/disconnected participants for optional exclusion
+- [x] 1.3.5 Flag games with AFK/disconnected participants for optional exclusion (Riot's `wasAfk`; done in Phase 3)
 - [x] 1.3.6 Targets: ~5,000 Emerald matches ✅ (16.18–16.20), ~2,000 Diamond ✅
 - [x] 1.3.7 Log collection stats: match count, unique players, patch distribution, role distribution
 
@@ -102,25 +102,25 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 *Est: 3–4 evenings · Depends on: 1.3, 2.x*
 
 ### 3.1 Frame parser
-- [ ] 3.1.1 `participantFrames` → tidy dataframe, one row per participant per minute
-- [ ] 3.1.2 Role assignment from `teamPosition` (more reliable than `role`/`lane`, which misclassify autofills and lane swaps)
-- [ ] 3.1.3 Lane opponent pairing (participant ↔ their direct matchup)
+- [x] 3.1.1 `participantFrames` → tidy dataframe, one row per participant per minute
+- [x] 3.1.2 Role assignment from `teamPosition` (more reliable than `role`/`lane`, which misclassify autofills and lane swaps)
+- [x] 3.1.3 Lane opponent pairing (participant ↔ their direct matchup)
 
 ### 3.2 Core features
-- [ ] 3.2.1 Gold diff, XP diff, level diff vs lane opponent
-- [ ] 3.2.2 CS = `minionsKilled + jungleMinionsKilled`; CS/min
-- [ ] 3.2.3 Game phase labels (thresholds on minute)
-- [ ] 3.2.4 Team-level aggregates: total gold diff, objective counts
+- [x] 3.2.1 Gold diff, XP diff, level diff vs lane opponent
+- [x] 3.2.2 CS = `minionsKilled + jungleMinionsKilled`; CS/min
+- [x] 3.2.3 Game phase labels (thresholds on minute)
+- [x] 3.2.4 Team-level aggregates: total gold diff, objective counts
 
 ### 3.3 Event aggregation
-- [ ] 3.3.1 K/D/A and kill participation
-- [ ] 3.3.2 Wards placed, wards killed, control wards purchased
-- [ ] 3.3.3 Objective participation; first blood and first tower timings
-- [ ] 3.3.4 Bucket all events into the same per-minute windows as the frames
+- [x] 3.3.1 K/D/A and kill participation
+- [x] 3.3.2 Wards placed, wards killed, control wards purchased
+- [x] 3.3.3 Objective participation; first blood and first tower timings
+- [x] 3.3.4 Bucket all events into the same per-minute windows as the frames
 
 ### 3.4 Validation
-- [ ] 3.4.1 Spot-check extracted numbers for one match against the visualizer
-- [ ] 3.4.2 Cross-check the same match against op.gg — your CS@10 and gold diffs should match
+- [x] 3.4.1 Spot-check extracted numbers for one match against the visualizer
+- [x] 3.4.2 Cross-check the same match against op.gg — your CS@10 and gold diffs should match
 
 **Exit criteria:** a processed parquet of per-participant-per-minute rows for the whole corpus, numbers verified against an external source.
 

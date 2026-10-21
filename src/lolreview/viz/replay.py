@@ -18,6 +18,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from ..extract.events import CATEGORY, category  # noqa: F401  (shared with the tables)
 from ..rift import (  # noqa: F401  (bounds re-exported for callers/tests)
     CAMPS,
     INHIBITOR_RESPAWN_MS,
@@ -38,22 +39,6 @@ _STRUCTURE_BY_ID = {s["id"]: s for s in STRUCTURES}
 TEAM_NAME = {100: "Blue", 200: "Red"}
 ROLE_ORDER = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
 
-CATEGORY = {
-    "CHAMPION_KILL": "kill",
-    "ELITE_MONSTER_KILL": "special",
-    "DRAGON_SOUL_GIVEN": "special",
-    "BUILDING_KILL": "special",
-    "TURRET_PLATE_DESTROYED": "plate",
-    "WARD_PLACED": "ward",
-    "WARD_KILL": "ward",
-    "ITEM_PURCHASED": "item",
-    "ITEM_SOLD": "item",
-    "ITEM_DESTROYED": "item",
-    "ITEM_UNDO": "item",
-    "LEVEL_UP": "level",
-    "SKILL_LEVEL_UP": "level",
-}
-
 MONSTER_NAMES = {
     "HORDE": "Voidgrubs",
     "RIFTHERALD": "Rift Herald",
@@ -66,22 +51,14 @@ WARD_NAMES = {
     "CONTROL_WARD": "a control ward",
     "SIGHT_WARD": "a ward",
     "BLUE_TRINKET": "a farsight ward",
-    "UNDEFINED": "a ward",
+    # Not wards: Riot logs champion ability objects as ward events (Zyra seeds, Jhin
+    # traps, Yorick graves, Illaoi tentacles, ...) and Teemo's mushrooms.
+    "UNDEFINED": "an ability object (trap, plant, etc.)",
+    "TEEMO_MUSHROOM": "a mushroom",
 }
 
 MULTI = {2: "double kill", 3: "triple kill", 4: "quadra kill", 5: "penta kill"}
 SKILL_KEYS = {1: "Q", 2: "W", 3: "E", 4: "R"}
-
-
-def category(e: dict) -> str:
-    """Event category. "special" = first blood, 3+ multikills, aces, epic monsters, dragon
-    soul, and turrets/inhibitors destroyed. Double kills stay ordinary kills (there are
-    ~6 a game); turret plates get their own category since they're chip damage."""
-    if e["type"] == "CHAMPION_SPECIAL_KILL":
-        if e.get("killType") == "KILL_MULTI" and (e.get("multiKillLength") or 0) < 3:
-            return "kill"
-        return "special"
-    return CATEGORY.get(e["type"], "other")
 
 
 def _other(team: int) -> int:
@@ -172,7 +149,9 @@ def describe(
 
     if t == "DRAGON_SOUL_GIVEN":
         tm = e.get("teamId")
-        return f"{TEAM_NAME.get(tm, '?')} secured {_title(e.get('name', ''))} Soul", tm
+        if tm not in TEAM_NAME:  # teamId 0: fires after the 2nd dragon to reveal the soul type
+            return f"Dragon soul revealed: {_title(e.get('name', ''))}", None
+        return f"{TEAM_NAME[tm]} secured {_title(e.get('name', ''))} Soul", tm
 
     if t == "BUILDING_KILL":
         owner = e.get("teamId")
