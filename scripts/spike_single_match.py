@@ -24,7 +24,7 @@ def get(url: str, key: str, **params):
     if r.status_code == 403:
         raise SystemExit(
             "403 Forbidden — your key is almost certainly expired.\n"
-            "Personal keys last 24h. Grab a fresh one at developer.riotgames.com "
+            "Development keys last 24h. Grab a fresh one at developer.riotgames.com "
             "and paste it into .env."
         )
     if r.status_code == 404:

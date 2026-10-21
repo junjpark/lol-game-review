@@ -86,6 +86,18 @@ not inference).
 - Two routing schemes: platform (`na1`) for LEAGUE-V4, regional (`americas`) for
   MATCH-V5 and ACCOUNT-V1. See `src/lolreview/riot/routing.py`.
 - `gameMode: CLASSIC` does **not** mean ranked — `queueId: 420` does.
+- **Patch numbering:** `gameVersion` uses `16.x` in 2026; Riot's public patch names use
+  the year (`26.x`). Patch notes "26.19" = `gameVersion` "16.19". `TARGET_PATCHES` must
+  use the 16.x form — a 26.x value silently rejected an entire 5,000-match pull once.
+- Match IDs increase over time, so sorting cached files by name sorts oldest-first.
+- `TURRET_PLATE_DESTROYED` positions are **not** at the turret (they scatter by thousands of
+  units). Use the owner team + lane's outer turret from `lolreview/rift.py` instead.
+  `BUILDING_KILL` positions, by contrast, are exact.
+- `CHAMPION_SPECIAL_KILL` (first blood, multikill, ace) is recorded at a **different position**
+  from its `CHAMPION_KILL`, typically 300–400 units away (likely killer vs. victim location,
+  unverified). Every one matches a kill by the same killer within 50 ms; join on that.
+- Map landmarks (turrets, inhibitors, pits, camps) live in `src/lolreview/rift.py`, measured
+  from the corpus. The map is point-symmetric via `rift.mirror()`.
 - `gameDuration` is in seconds; timeline event timestamps are in milliseconds.
 - Use `teamPosition` for role, not `role`/`lane`/`individualPosition`.
 - Timeline indexes players by participant ID; the match file by PUUID. Join via
@@ -93,7 +105,7 @@ not inference).
 - CS is `minionsKilled + jungleMinionsKilled`, not one field.
 - `totalGold` (cumulative earned) vs `currentGold` (held now) — using the wrong one
   silently corrupts every gold-diff feature.
-- Personal API keys expire every 24h. Never hard-code; always via `.env`.
+- Development API keys expire every 24h. Never hard-code; always via `.env`.
 - Timelines are ~1.8 MB pretty-printed. The real fetcher must gzip or minify — at 5k
   matches, `indent=2` would mean ~9 GB of cache.
 
@@ -137,12 +149,33 @@ without it.
 
 ## Status
 
-Phase 0 nearly complete. Key, venv, config, routing, and repo scaffold are done. One
-match pulled to `data/raw/` via `scripts/spike_single_match.py` (throwaway — delete once
-the extraction contract exists).
+- **Phase 0 done.** Field mapping lives in `docs/extraction-contract.md`. Read its Gaps
+  section: ward events carry no position, there is no vision state, and there are no
+  summoner-spell events, so 3 of the 4 `knowable_at_the_time` fields are unavailable.
+  `scripts/spike_single_match.py` has served its purpose and can be deleted.
+- **Phase 1 mostly done.** Fetcher in `src/lolreview/riot/` (rate limiter, gzip cache,
+  client); `scripts/collect_summoners.py` and `scripts/collect_matches.py`.
+  - **Emerald corpus complete:** 5,000 matches on `TARGET_PATCHES=16.18,16.19,16.20`
+    (765 / 898 / 3,337). About 45% of sampled Emerald players have no recent ranked games,
+    so yield is ~2.3 usable matches per player.
+  - **The corpus is defined by `data/processed/matches_<tier>.json` → `"kept"`.** The raw
+    cache in `data/raw/` is shared across tiers and also holds rejected matches, so never
+    treat "everything in the cache" as a tier's corpus.
+  - Diamond pull not yet run.
+- Long runs on a laptop: `caffeinate -i python ...`. The Emerald run lost ~70 minutes to
+  what was probably the Mac sleeping.
 
-**Next:** 0.3.3, the extraction contract — a mapping from each payload field to its
-concrete JSON path, written from reading the spike output. Then Phase 1, the fetcher.
+- **Phase 2 built.** `scripts/replay.py <matchId> | --random | --riot-id "Name#TAG"` writes a
+  self-contained HTML replay to `data/processed/replays/` (logic in `src/lolreview/viz/replay.py`).
+  Steps minute to minute and deliberately does **not** interpolate positions. Uses the Data
+  Dragon minimap if reachable, else a schematic. Draws turrets/inhibitors with live
+  destroyed/respawning state, Dragon/Baron pits, jungle camps, and a symbol key. Item IDs
+  are named per patch via `src/lolreview/riot/ddragon.py` (Data Dragon, cached in
+  `data/raw/ddragon/`); `--offline` skips downloads.
+  `build_replay_data(..., winprob=)` is the Phase 5 overlay hook.
+
+**Next:** Diamond pull (overnight) → confirm replay alignment on the real minimap → Phase 3
+extraction.
 
 ## Conventions
 

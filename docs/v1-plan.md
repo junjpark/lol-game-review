@@ -23,8 +23,8 @@
 *Est: 1 evening · Blocks: everything*
 
 ### 0.1 Riot API access
-- [x] 0.1.1 Register a developer account and generate a personal API key
-- [x] 0.1.2 Store the key in an env var or gitignored config — personal keys expire every 24h, you'll rotate it constantly
+- [x] 0.1.1 Register a developer account and generate a development API key
+- [x] 0.1.2 Store the key in an env var or gitignored config — development keys expire every 24h, you'll rotate it constantly
 - [x] 0.1.3 Note the binding rate limit: 100 requests / 2 minutes (not the 20/s)
 - [x] 0.1.4 Pick and pin your region/routing values
 
@@ -47,25 +47,25 @@
 *Est: 2–3 evenings to build, then overnight runs · Start this before Phase 2 and let it run in background*
 
 ### 1.1 Fetcher
-- [ ] 1.1.1 Token-bucket rate limiter respecting 100/2min
-- [ ] 1.1.2 Disk cache keyed by matchId — never re-fetch anything
-- [ ] 1.1.3 Retry with exponential backoff on 429 and 5xx
-- [ ] 1.1.4 Resumable — a crash at hour 4 must not lose hours 1–3
+- [x] 1.1.1 Token-bucket rate limiter respecting 100/2min
+- [x] 1.1.2 Disk cache keyed by matchId — never re-fetch anything
+- [x] 1.1.3 Retry with exponential backoff on 429 and 5xx
+- [x] 1.1.4 Resumable — a crash at hour 4 must not lose hours 1–3
 
 ### 1.2 Sampling frame
-- [ ] 1.2.1 Enumerate Emerald I–IV entries via LEAGUE-V4, paging through each division
-- [ ] 1.2.2 Sample *across* pages rather than taking the first page of each — target ~800–1,000 distinct summoners
+- [x] 1.2.1 Enumerate Emerald I–IV entries via LEAGUE-V4, paging through each division
+- [x] 1.2.2 Sample *across* pages rather than taking the first page of each — target ~800–1,000 distinct summoners
 - [ ] 1.2.3 Repeat for Diamond (smaller pull) — this becomes the aspirational comparison set in Phase 8
-- [ ] 1.2.4 Persist the summoner list so pulls are reproducible
+- [x] 1.2.4 Persist the summoner list so pulls are reproducible
 
 ### 1.3 Corpus pull
-- [ ] 1.3.1 4–5 recent matches per summoner, queue 420 only
-- [ ] 1.3.2 Filter to current patch (or last 2–3) — patch drift invalidates baselines
-- [ ] 1.3.3 Dedupe by matchId (you will get collisions when two sampled players share a game)
-- [ ] 1.3.4 **Filter out remakes and early surrenders** (games under ~15 min, or with an early-surrender flag) — they skew baselines and add near-useless rows to win-prob training
+- [x] 1.3.1 4–5 recent matches per summoner, queue 420 only
+- [x] 1.3.2 Filter to current patch (or last 2–3) — patch drift invalidates baselines
+- [x] 1.3.3 Dedupe by matchId (you will get collisions when two sampled players share a game)
+- [x] 1.3.4 **Filter out remakes and early surrenders** (games under ~15 min, or with an early-surrender flag) — they skew baselines and add near-useless rows to win-prob training
 - [ ] 1.3.5 Flag games with AFK/disconnected participants for optional exclusion
-- [ ] 1.3.6 Targets: ~5,000 Emerald matches, ~2,000 Diamond
-- [ ] 1.3.7 Log collection stats: match count, unique players, patch distribution, role distribution
+- [ ] 1.3.6 Targets: ~5,000 Emerald matches ✅ (16.18–16.20), ~2,000 Diamond
+- [x] 1.3.7 Log collection stats: match count, unique players, patch distribution, role distribution
 
 **Exit criteria:** 5k+ deduped Emerald matches cached on disk, collection script resumable and re-runnable.
 
@@ -80,18 +80,18 @@
 This is the debugging substrate for every hard field later. You cannot verify "was the jungler visible here" or "did they push past river" by reading JSON.
 
 ### 2.1 Timeline replay
-- [ ] 2.1.1 Static Summoner's Rift map image with correct coordinate mapping
-- [ ] 2.1.2 Plot all 10 participant positions per frame
-- [ ] 2.1.3 Step/scrub through frames
+- [ ] 2.1.1 Static Summoner's Rift map image with correct coordinate mapping (built; confirm players land on lanes over the real Data Dragon image)
+- [x] 2.1.2 Plot all 10 participant positions per frame
+- [x] 2.1.3 Step/scrub through frames
 
 ### 2.2 Event track
-- [ ] 2.2.1 Kills, deaths, wards placed/killed on a time axis
-- [ ] 2.2.2 Objectives (dragon, herald, baron) and building kills
-- [ ] 2.2.3 Click an event → jump the replay to that frame
+- [x] 2.2.1 Kills, deaths, wards placed/killed on a time axis
+- [x] 2.2.2 Objectives (dragon, herald, baron) and building kills
+- [x] 2.2.3 Click an event → jump the replay to that frame
 
 ### 2.3 Curves
-- [ ] 2.3.1 Team gold and XP differential over time
-- [ ] 2.3.2 Leave a hook to overlay the win-prob curve later (Phase 5.4)
+- [x] 2.3.1 Team gold and XP differential over time
+- [x] 2.3.2 Leave a hook to overlay the win-prob curve later (Phase 5.4)
 
 **Exit criteria:** you can load any cached match and watch it back well enough to answer "what was happening at minute 14."
 
@@ -308,7 +308,7 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 
 **Scope creep into the app.** Building UI before v1 produces useful text is the most likely way this stalls. The eval graph is tempting and it is not v1.
 
-**Key expiry and rate limits.** Personal keys die every 24h. Anything long-running needs to survive a key swap without losing progress.
+**Key expiry and rate limits.** Development keys die every 24h. Anything long-running needs to survive a key swap without losing progress.
 
 **Effective sample size confusion.** 500k minute-rows looks like a lot; for a per-game label it behaves like the number of games. Don't be fooled by row counts when judging whether the model has enough data.
 

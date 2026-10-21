@@ -43,7 +43,7 @@ pip install -e .
 cp .env.example .env               # then paste your Riot key into .env
 ```
 
-Get a personal API key at https://developer.riotgames.com. Personal keys expire every
+Get a development API key at https://developer.riotgames.com. Development keys expire every
 24 hours, so expect to re-paste it often — nothing should ever hard-code it.
 
 ## Layout

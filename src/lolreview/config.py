@@ -53,7 +53,7 @@ def load_config(dotenv_path: Path | None = None) -> Config:
     if not api_key:
         raise MissingAPIKey(
             "RIOT_API_KEY is not set. Copy .env.example to .env and paste a current "
-            "key from https://developer.riotgames.com — personal keys expire daily."
+            "key from https://developer.riotgames.com — development keys expire daily."
         )
 
     patches = tuple(
