@@ -131,17 +131,17 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 *Est: 1–2 evenings · Depends on: 3.x*
 
 ### 4.1 Aggregation
-- [ ] 4.1.1 GROUP BY rank × role × minute → mean and std for every feature
-- [ ] 4.1.2 Store as a lookup table (parquet or sqlite)
-- [ ] 4.1.3 Record sample counts per cell — flag thin cells (late-game minutes have fewer games)
+- [x] 4.1.1 GROUP BY rank × role × minute → percentile curve (0th–100th), plus n, mean and std, for 21 stats
+- [x] 4.1.2 Store as a lookup table — `data/baselines/baselines_<tier>.parquet` + `.json` (games, patches, versions)
+- [x] 4.1.3 Record sample counts per cell; cells under 300 player-rows refuse to answer (Emerald reliable to min 42, Diamond to 38)
 
 ### 4.2 Z-scoring
-- [ ] 4.2.1 Convert raw features to rank-matched z-scores
-- [ ] 4.2.2 Sanity check: distributions should be approximately N(0,1)
-- [ ] 4.2.3 Decide handling for minutes beyond typical game length
+- [x] 4.2.1 ~~Z-scores~~ Percentiles instead, for every stat: z-scores misplace count stats (0 deaths: z-score says top 14%, really a third of players tie)
+- [x] 4.2.2 Sanity check: build on 80% of games, place the other 20% — every stat's average percentile 49.1–50.5
+- [x] 4.2.3 Minutes beyond typical game length: no answer past the reliable minute rather than a guess
 
 ### 4.3 v0 output — first useful artifact
-- [ ] 4.3.1 Generate a percentile report for a single game, no model involved
+- [x] 4.3.1 Generate a percentile report for a single game, no model involved — `scripts/report.py`
 - [ ] 4.3.2 Run it on 3–5 of your own games and judge honestly whether it tells you anything you didn't know
 
 **Exit criteria:** you can produce a rank-matched percentile breakdown of any game. If 4.3.2 reads as useless, that's important signal to address before investing in Phase 5.

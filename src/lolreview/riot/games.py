@@ -25,6 +25,29 @@ class Game:
     puuid: str | None = None  # the player a --riot-id lookup was for, if any
 
 
+def pick_player(match: dict, puuid: str | None = None, name: str | None = None) -> dict | None:
+    """The participant a lookup was for: by PUUID (from --riot-id) or by champion / Riot
+    name (case-insensitive, '#TAG' optional). None if no match."""
+    parts = match["info"]["participants"]
+    if puuid:
+        for p in parts:
+            if p.get("puuid") == puuid:
+                return p
+    if name:
+        key = name.lower().split("#")[0]
+        for p in parts:
+            if key in ((p.get("championName") or "").lower(), (p.get("riotIdGameName") or "").lower()):
+                return p
+    return None
+
+
+def describe_player(p: dict) -> str:
+    teams = {100: "Blue", 200: "Red"}
+    name, tag = p.get("riotIdGameName") or "", p.get("riotIdTagline")
+    return (f"{p.get('championName')} ({teams.get(p.get('teamId'))} {p.get('teamPosition') or '?'})"
+            + (f" — {name}#{tag}" if name and tag else ""))
+
+
 def load_from_disk(cache: JsonCache, match_id: str) -> tuple[dict, dict] | None:
     match, timeline = cache.get("matches", match_id), cache.get("timelines", match_id)
     if match and timeline:
@@ -36,8 +59,11 @@ def load_from_disk(cache: JsonCache, match_id: str) -> tuple[dict, dict] | None:
     return None
 
 
-def find_game(cache: JsonCache, match_id: str | None = None, riot_id: str | None = None) -> Game:
-    """By match ID (disk first, then API), or a Riot ID's most recent ranked game (API)."""
+def find_game(
+    cache: JsonCache, match_id: str | None = None, riot_id: str | None = None, back: int = 0
+) -> Game:
+    """By match ID (disk first, then API), or a Riot ID's recent ranked game (API):
+    back=0 is the latest, back=1 the one before, and so on."""
     if match_id:
         found = load_from_disk(cache, match_id)
         if found:
@@ -58,9 +84,9 @@ def find_game(cache: JsonCache, match_id: str | None = None, riot_id: str | None
             raise GameNotFound(f"No account found for {riot_id}")
         puuid = account["puuid"]
         if not match_id:
-            ids = client.match_ids(puuid, count=1)
+            ids = client.match_ids(puuid, count=1, start=back)
             if not ids:
-                raise GameNotFound(f"No recent ranked solo/duo games for {riot_id}")
+                raise GameNotFound(f"No ranked solo/duo game #{back + 1} back for {riot_id}")
             match_id = ids[0]
             found = load_from_disk(cache, match_id)
             if found:

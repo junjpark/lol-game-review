@@ -19,36 +19,16 @@ from lolreview.extract.events import category
 from lolreview.extract.validate import PLAYER_CHECKS
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey
-from lolreview.riot.games import GameNotFound, find_game
+from lolreview.riot.games import GameNotFound, describe_player, find_game, pick_player
 from lolreview.viz.replay import describe
 
 TEAM = {100: "Blue", 200: "Red"}
+who = describe_player
 
 
 def mmss(ms: int) -> str:
     s = round(ms / 1000)
     return f"{s // 60}:{s % 60:02d}"
-
-
-def who(p: dict) -> str:
-    name = p.get("riotIdGameName") or ""
-    tag = p.get("riotIdTagline")
-    return f"{p.get('championName')} ({TEAM.get(p['teamId'])} {p.get('teamPosition') or '?'})" + \
-        (f" — {name}#{tag}" if name and tag else "")
-
-
-def pick_player(parts: dict[int, dict], puuid: str | None, player: str | None) -> dict:
-    if puuid:
-        for p in parts.values():
-            if p.get("puuid") == puuid:
-                return p
-    if player:
-        key = player.lower().split("#")[0]
-        for p in parts.values():
-            if key in ((p.get("championName") or "").lower(), (p.get("riotIdGameName") or "").lower()):
-                return p
-    listing = "\n".join(f"  {who(p)}" for p in parts.values())
-    sys.exit(f"Which player? Pass --player <champion or name>. Players:\n{listing}")
 
 
 def main() -> None:
@@ -67,7 +47,10 @@ def main() -> None:
 
     info = game.match["info"]
     parts = {p["participantId"]: p for p in info["participants"]}
-    me = pick_player(parts, game.puuid, args.player)
+    me = pick_player(game.match, game.puuid, args.player)
+    if me is None:
+        listing = "\n".join(f"  {who(p)}" for p in parts.values())
+        sys.exit(f"Which player? Pass --player <champion or name>. Players:\n{listing}")
     pid = me["participantId"]
     tables = extract_game(game.match, game.timeline, tier="adhoc")
     frames = tables["frames"]

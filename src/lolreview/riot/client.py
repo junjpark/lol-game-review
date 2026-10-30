@@ -87,11 +87,15 @@ class RiotClient:
                 return resp.json()
             if resp.status_code == 404:
                 return None
-            if resp.status_code == 403:
+            if resp.status_code in (401, 403):
+                # Riot answers 401 "Unknown apikey" or 403 "Forbidden" for expired,
+                # regenerated, or mistyped keys.
                 raise ExpiredKey(
-                    "403 Forbidden from Riot. Your development key has almost certainly "
-                    "expired (they last 24h). Get a new one at developer.riotgames.com "
-                    "and update .env — then re-run; cached matches will be skipped."
+                    f"{resp.status_code} from Riot: your API key isn't accepted. Development keys "
+                    "expire after 24h, and regenerating one kills the previous key.\n"
+                    "Get the current key at developer.riotgames.com, paste it into .env as\n"
+                    "    RIOT_API_KEY=RGAPI-...\n"
+                    "then re-run. Anything already downloaded stays cached."
                 )
             if resp.status_code in RETRYABLE_STATUS:
                 self.stats["retries"] += 1

@@ -47,7 +47,9 @@ class Config:
 
 def load_config(dotenv_path: Path | None = None) -> Config:
     """Load configuration from the environment, falling back to a .env file."""
-    load_dotenv(dotenv_path or PROJECT_ROOT / ".env")
+    # override=True: .env is the single place the key lives. Without it, a stale
+    # RIOT_API_KEY exported in the shell (or ~/.zshrc) silently wins over a fresh .env.
+    load_dotenv(dotenv_path or PROJECT_ROOT / ".env", override=True)
 
     api_key = os.getenv("RIOT_API_KEY", "").strip()
     if not api_key:

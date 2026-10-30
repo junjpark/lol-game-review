@@ -108,6 +108,9 @@ not inference).
 - Map landmarks (turrets, inhibitors, pits, camps) live in `src/lolreview/rift.py`, measured
   from the corpus. The map is point-symmetric via `rift.mirror()`.
 - `gameDuration` is in seconds; timeline event timestamps are in milliseconds.
+- `timeEnemySpentControlled` (participant frames) is **milliseconds** of CC dealt, summed
+  over enemies; it equals the match summary's `totalTimeCCDealt` (seconds) × 1000 — not
+  `timeCCingOthers`.
 - Use `teamPosition` for role, not `role`/`lane`/`individualPosition`.
 - Timeline indexes players by participant ID; the match file by PUUID. Join via
   `info.participants[]`.
@@ -203,8 +206,27 @@ without it.
   - 162 of 7,000 games have an AFK player (Riot `wasAfk`); exclude via `game_has_afk`.
   - Built tables total ~190 MB of Parquet in `data/processed/`.
 
-**Next:** Phase 4 baselines (rank × role × minute aggregates from `frames_emerald`) → v0
-percentile report on the owner's games, the plan's go/no-go gate.
+- **Phase 4 built** (`src/lolreview/baselines/`, `scripts/build_baselines.py`,
+  `scripts/report.py`). Awaiting the owner's checkpoint (4.3.2).
+  - **Percentiles, not z-scores, for every stat** (decided with the owner). Z-scores are
+    fine for bell-shaped stats (gold diff matches a normal curve almost exactly) but
+    misplace count stats: 0 deaths at 10:00 as a jungler is "top 14%" by z-score, but a
+    third of junglers tie on 0. Reports word ties explicitly. Mean/std are still stored.
+  - **Role-level, not champion-level** (decided with the owner; ~170 champions would
+    leave most cells empty). Reports say so.
+  - Cells need 300+ player-rows: Emerald reliable through minute 42, Diamond through 38.
+    Past that, lookups return None rather than a guess.
+  - Holdout check (build on 80% of games, place the other 20%): every stat's average
+    percentile 49.1–50.5; continuous stats put ~9% in each extreme tenth.
+  - **Finding: Emerald and Diamond are statistically indistinguishable on these stats**
+    (median gap 0, identical spread). What separates the tiers is not average CS / gold /
+    kills / wards — it must be in conversion, timing, decisions. Implications: the report's
+    Diamond column mostly echoes Emerald; for Phase 8's "a tier above" comparison,
+    consider Master+ — adjacent tiers share lobbies (Emerald I ↔ Diamond IV), which
+    likely blurs the difference.
+
+**Next:** owner runs `scripts/report.py` on 3–5 of their own games and judges whether it
+tells them anything new (4.3.2, the go/no-go gate) → Phase 5 win-probability model.
 
 ## Conventions
 

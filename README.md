@@ -36,7 +36,8 @@ proven optimality.
 | 1 — Data collection | ✅ | 5,000 Emerald + 2,000 Diamond ranked games, patches 16.18–16.20 |
 | 2 — Replay visualizer | ✅ | interactive HTML replay of any game |
 | 3 — Extraction | ✅ | 2.1M player-minute rows, validated against Riot's end-of-game summary |
-| 4–10 | | baselines, win-prob model, decision detection, coaching |
+| 4 — Baselines | built | percentile of every stat vs. same rank, role and minute |
+| 5–10 | | win-prob model, decision detection, coaching |
 
 Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data gotchas:
 [`CLAUDE.md`](CLAUDE.md).
@@ -63,6 +64,10 @@ python scripts/collect_matches.py   --tier emerald --target 5000
 
 # Build the tables (frames, events, teams) — ~2 minutes, no API key
 python scripts/extract.py --tier all
+
+# Build baselines (seconds) and compare one of your games against them
+python scripts/build_baselines.py --tier all
+python scripts/report.py --riot-id "Name#TAG"        # add --back 1, 2, ... for older games
 
 # Print the hand-check numbers for one of your games
 python scripts/inspect_game.py --riot-id "Name#TAG"
