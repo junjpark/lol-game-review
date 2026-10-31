@@ -28,6 +28,10 @@ For long runs on a laptop, stop it sleeping:  caffeinate -i python scripts/colle
 
 Usage:
     python scripts/collect_matches.py --tier emerald --per-summoner 5 --target 5000
+
+    # held-out test set: newest patch, fresh players, no match shared with the corpus
+    python scripts/collect_matches.py --name emerald_holdout --patches 16.21 \\
+        --exclude emerald,diamond --since 2026-10-21 --target 6000
 """
 
 from __future__ import annotations
@@ -39,6 +43,7 @@ import logging
 import sys
 import time
 from collections import Counter
+from dataclasses import replace
 from pathlib import Path
 
 from lolreview.config import PROCESSED_DIR, RAW_DIR, ensure_dirs, load_config
@@ -149,12 +154,30 @@ def main() -> None:
         help="only request games on/after this date, YYYY-MM-DD (UTC). "
         "Default: derived from this tier's cached matches on TARGET_PATCHES",
     )
+    ap.add_argument("--name", help="corpus label for summoners_/progress_/matches_<name>.json "
+                    "(default: the tier, e.g. --name emerald_holdout)")
+    ap.add_argument("--patches", help="comma-separated gameVersion patches (16.x) for this run; "
+                    "overrides TARGET_PATCHES in .env")
+    ap.add_argument("--exclude", default="",
+                    help="comma-separated corpus names whose matches never count here, "
+                         "e.g. emerald,diamond for a held-out test set")
     args = ap.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    tier = args.tier.lower()
+    tier = (args.name or args.tier).lower()
 
     cfg = load_config()
+    if args.patches:
+        cfg = replace(cfg, target_patches=tuple(p.strip() for p in args.patches.split(",") if p.strip()))
+    excluded: set[str] = set()
+    for other in filter(None, (x.strip().lower() for x in args.exclude.split(","))):
+        path = PROCESSED_DIR / f"matches_{other}.json"
+        if not path.exists():
+            sys.exit(f"--exclude {other}: {path} not found")
+        m = json.loads(path.read_text())
+        excluded.update(m.get("seen", [])), excluded.update(m.get("kept", []))
+    if excluded:
+        log.info("excluding %d matches already seen by: %s", len(excluded), args.exclude)
     ensure_dirs()
     cache = JsonCache(RAW_DIR)
     client = RiotClient(cfg, cache)
@@ -203,7 +226,7 @@ def main() -> None:
 
     try:
         # ---- 1. re-check this tier's cached matches against current filters --------
-        mine = sorted(mid for mid in seen if cache.has("matches", mid))
+        mine = sorted(mid for mid in seen - excluded if cache.has("matches", mid))
         if mine:
             log.info("re-checking %d cached %s matches against current filters", len(mine), tier)
         else:
@@ -247,6 +270,9 @@ def main() -> None:
                 s["puuid"], count=args.per_summoner, start_time=start_time
             ):
                 if mid in seen:
+                    continue
+                if mid in excluded:
+                    rejected["in_other_corpus"] += 1
                     continue
                 seen.add(mid)
                 match = client.match(mid)  # cache hit if another tier already has it

@@ -33,11 +33,12 @@ proven optimality.
 | Phase | | |
 |---|---|---|
 | 0 — Foundations & extraction contract | ✅ | [`docs/extraction-contract.md`](docs/extraction-contract.md) |
-| 1 — Data collection | ✅ | 5,000 Emerald + 2,000 Diamond ranked games, patches 16.18–16.20 |
-| 2 — Replay visualizer | ✅ | interactive HTML replay of any game |
+| 1 — Data collection | ✅ | 12,000 Emerald + 2,000 Diamond ranked games (16.18–16.21), plus a 5,885-game fresh holdout |
+| 2 — Replay visualizer | ✅ | interactive HTML replay of any game, with the win-probability curve |
 | 3 — Extraction | ✅ | 2.1M player-minute rows, validated against Riot's end-of-game summary |
 | 4 — Baselines | built | percentile of every stat vs. same rank, role and minute |
-| 5–10 | | win-prob model, decision detection, coaching |
+| 5 — Win probability | released | XGBoost + time-aware calibration; passed the calibration gate on fresh games (ECE 0.8 pts) |
+| 6–10 | | decision detection, coaching |
 
 Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data gotchas:
 [`CLAUDE.md`](CLAUDE.md).
@@ -68,6 +69,16 @@ python scripts/extract.py --tier all
 # Build baselines (seconds) and compare one of your games against them
 python scripts/build_baselines.py --tier all
 python scripts/report.py --riot-id "Name#TAG"        # add --back 1, 2, ... for older games
+
+# Win-probability model: dataset (~1 min), then train + calibration report (a few minutes)
+python scripts/build_winprob_dataset.py
+python scripts/train_winprob.py                      # --no-nn skips the neural-net comparison
+
+# Release check: the same calibration gate on fresh games (newest patch, new players)
+python scripts/collect_summoners.py --tier EMERALD --target 5000 --name emerald_holdout --exclude emerald,diamond --seed 1
+python scripts/collect_matches.py --name emerald_holdout --patches 16.21 --exclude emerald,diamond --since 2026-10-21 --target 6000
+python scripts/extract.py --tier emerald_holdout
+python scripts/check_holdout.py
 
 # Print the hand-check numbers for one of your games
 python scripts/inspect_game.py --riot-id "Name#TAG"

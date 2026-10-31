@@ -175,8 +175,15 @@ without it.
     treat "everything in the cache" as a tier's corpus.
   - **Diamond corpus complete:** 2,000 matches, same patches, from 2,056 downloaded (97%
     yield, thanks to the `startTime` filter and Diamond players being more active).
-  - Patch 16.21 is out (Data Dragon lists it). Both corpora stay on 16.18–16.20 so the
-    Diamond comparison set matches Emerald; refresh both together later.
+  - **Emerald expansion (Oct 30):** 8,605 kept on 16.18–16.20 after a second pull toward
+    the model's 15–20k target. 3,937 patch-16.21 games are cached but were rejected because
+    `.env` still had `TARGET_PATCHES=16.18,16.19,16.20`; adding 16.21 and re-running keeps
+    them (timelines only). Decision: the Emerald corpus takes 16.21 for the Phase 5 model;
+    baselines get rebuilt on it. Diamond stays 16.18–16.20 for now — it's statistically
+    indistinguishable from Emerald anyway (see Phase 4).
+  - `collect_summoners.py` capacity = per_page × max_page × 4 divisions. The old default
+    (20 × 40 × 4 = 3,200) silently capped larger targets; default max_page is now 150 and
+    it warns when short.
 - Long runs on a laptop: `caffeinate -i python ...`. The Emerald run lost ~70 minutes to
   what was probably the Mac sleeping.
 
@@ -188,7 +195,10 @@ without it.
   destroyed/respawning state, Dragon/Baron pits, jungle camps, and a symbol key. Item IDs
   are named per patch via `src/lolreview/riot/ddragon.py` (Data Dragon, cached in
   `data/raw/ddragon/`); `--offline` skips downloads.
-  `build_replay_data(..., winprob=)` is the Phase 5 overlay hook.
+  `build_replay_data(..., winprob=)` draws P(Blue wins) as its **own chart** under the gold/XP
+  chart (owner's request; it used to be overlaid). Shown only when a trained model exists.
+  The final point comes after the nexus falls, and the model can't see the nexus, so it isn't
+  pinned to 0/100%.
 
 - **Phase 3 done** (`src/lolreview/extract/`, `scripts/extract.py`, `scripts/inspect_game.py`).
   Owner verified one of their own games against op.gg: all stats match.
@@ -206,8 +216,18 @@ without it.
   - 162 of 7,000 games have an AFK player (Riot `wasAfk`); exclude via `game_has_afk`.
   - Built tables total ~190 MB of Parquet in `data/processed/`.
 
-- **Phase 4 built** (`src/lolreview/baselines/`, `scripts/build_baselines.py`,
-  `scripts/report.py`). Awaiting the owner's checkpoint (4.3.2).
+- **Phase 4 done** (`src/lolreview/baselines/`, `scripts/build_baselines.py`,
+  `scripts/report.py`).
+  - **Checkpoint result (4.3.2): the percentile report told the owner nothing new.** It
+    restates box-score outcomes players already see post-game. Consequence: **percentiles
+    are background context, not the product.** The bar for Phases 5–6: the moment-level
+    review (when and why win probability swung) must surface something the percentile
+    report couldn't. Check this explicitly at Phase 6 on the owner's games.
+  - The owner found **population patterns over time** interesting where their own box score
+    wasn't: e.g. mid kill participation is 25% at 8:00 (tied lowest) but joins kills at
+    near-bot rate after 14:00 (48% vs 49%) — early kills are bot-side 2v2s that credit
+    2–3 players, while early mid kills are often 1v1 solo kills. Same in Diamond.
+    Timing/phase framing resonates; box-score framing doesn't.
   - **Percentiles, not z-scores, for every stat** (decided with the owner). Z-scores are
     fine for bell-shaped stats (gold diff matches a normal curve almost exactly) but
     misplace count stats: 0 deaths at 10:00 as a jungler is "top 14%" by z-score, but a
@@ -225,8 +245,61 @@ without it.
     consider Master+ — adjacent tiers share lobbies (Emerald I ↔ Diamond IV), which
     likely blurs the difference.
 
-**Next:** owner runs `scripts/report.py` on 3–5 of their own games and judges whether it
-tells them anything new (4.3.2, the go/no-go gate) → Phase 5 win-probability model.
+- **Phase 5: model RELEASED (Oct 31); 5.3.3 eyeball check + exit check still open** (`src/lolreview/model/`, `scripts/build_winprob_dataset.py`,
+  `scripts/train_winprob.py`, `scripts/check_holdout.py`). Training runs on the owner's Mac
+  (the sandbox has no xgboost/sklearn).
+  - **Dataset:** one row per game-minute from Blue's side, 29 features (`dataset.FEATURES`, with
+    monotone constraints). 13,654 games / 408,740 rows (Emerald 12,000 on 16.18–16.21, Diamond
+    2,000 on 16.18–16.20; AFK games and each final post-nexus snapshot dropped; 5 games in
+    both corpora kept once).
+  - **Shipped model:** XGBoost (depth 4, min_child_weight 50, 446 trees) trained on all
+    games, plus `models.TimeCalibrator`: logit(p') = a + b·m + (c + d·m)·logit(p). Smooth in
+    time, because a per-phase correction would jump at 14:00/25:00 and fake a "moment". It
+    never reorders predictions. Trust by minute: 0:1.10, 15:1.00, 25:0.93, 35:0.86, 45:0.79;
+    late game was really overconfident by up to ~4 pts before it.
+  - **Side by side** (test split, all trained on the same 9.5k games, log loss): gold-diff
+    logistic 0.5702 · XGBoost 0.5544 · MLP 0.5522 · XGBoost + time calibration 0.5534. The MLP's
+    best epoch was 1. A 9-setting regularisation search moved val log loss by < 0.001: the
+    model is at the limit of these features, not overfitting.
+  - **Calibration gate history (read before touching the gate):**
+    - Thresholds were fixed before training (`metrics.GateSpec`): ECE ≤ 2 pts overall, ≤ 3 per
+      phase/tier/patch; bins with ≥ 200 games within ±4 pts. They have never been loosened.
+    - v1 scored overall+phase on the 1,971 test games. Every variant failed by 4.1–5.0 pts in
+      bins whose noise was ~±3.5, and *which* bins failed moved between variants. A
+      well-calibrated stand-in failed too. The gate's sample size was the problem.
+    - **Gate v2 (owner's explicit post-hoc decision):** (1) development gate = every check on
+      out-of-fold predictions over all games, calibration cross-fitted
+      (`models.cross_fit_time_calibration`): passed 88/88, worst bin +2.0, noise ±1.1.
+      (2) **release gate = the same unchanged gate on a fresh holdout**: newest patch, players
+      not in the corpus, no shared matches.
+    - **Holdout result:** `emerald_holdout`, 5,739 games after AFK removal (5,885 collected),
+      all 16.21, 0 shared matches/players. **Passed all 55 checks.** Log loss 0.5426, ECE 0.78
+      (early 1.01, mid 1.06, late 0.49), worst bin −3.0 (early 90–100%, 368 games, noise
+      −4.6…−1.5). Recorded in `winprob_meta.json` (`holdout`, `released: true`).
+    - **Run a holdout check once per fresh set.** Re-checking the same games after changing
+      the model turns it into training signal. A 16.22 set (live Nov 4) would test patch drift.
+  - **Known mild bias:** very lopsided *early* states (> 90% before 14:00) are slightly
+    underconfident (−3.0 pts on the holdout, outside noise but inside the limit). Early stomps
+    read a little less decisive than they are. Watch for it in Phase 6; don't patch it on the
+    holdout.
+  - **Owner's requirement: late game must not drift toward 50% by default.** A lopsided late
+    state should read lopsided, and the curve must swing hard on decisive events. Measured by
+    `metrics.volatility_profile` (share of predictions above 90%/below 10%; mean move toward
+    the team that just took Baron or Elder, took an inhibitor, or won a fight by 3+ kills, via
+    `decisive_events`, where that team wins 81% of the time late). Holdout: late >90/<10 30%,
+    decisive move +9.5 pts vs quiet 5.7. Watch out: `min_child_weight` sums p(1−p), so large
+    values block splits mostly in lopsided states.
+  - `model/predict.py`: `WinProb.load().for_game(extract_game(...))`, `WinProb.released`; the
+    replay draws the curve automatically. `wpa_distribution.json` = per-minute quantiles of
+    |ΔP| from calibrated out-of-fold predictions over all games: Phase 6's yardstick for
+    "unusual" swings.
+  - Effective sample size is games, not rows: small slices need large samples. With ~300
+    games per bin, coin-flip noise alone gives ECE ≈ 3 pts. Size any future check so per-bin
+    noise is well inside its limit.
+
+**Next:** 5.3.3 — eyeball known stomps and comebacks in the replay (`scripts/replay.py
+--riot-id "Bradley#1960"`), then the Phase 5 exit check: on games the owner remembers,
+does the curve slip where they felt it slip? Then Phase 6 (decision detection).
 
 ## Conventions
 

@@ -142,7 +142,7 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 
 ### 4.3 v0 output — first useful artifact
 - [x] 4.3.1 Generate a percentile report for a single game, no model involved — `scripts/report.py`
-- [ ] 4.3.2 Run it on 3–5 of your own games and judge honestly whether it tells you anything you didn't know
+- [x] 4.3.2 Run it on 3–5 of your own games and judge honestly whether it tells you anything you didn't know — **no: box scores restate what players already see; value must come from timing (Phases 5–6)**
 
 **Exit criteria:** you can produce a rank-matched percentile breakdown of any game. If 4.3.2 reads as useless, that's important signal to address before investing in Phase 5.
 
@@ -153,25 +153,25 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 *Est: 2–3 evenings (training is fast, validation is the time) · Depends on: 4.x*
 
 ### 5.1 Dataset prep
-- [ ] 5.1.1 One row per team per minute; label = did this team win
-- [ ] 5.1.2 Features: z-scored diffs, objective state, phase, rank
-- [ ] 5.1.3 **Split by match, never by row** — rows from the same game in both train and test is leakage and will fake great numbers
+- [x] 5.1.1 One row per **game**-minute from Blue's side (Blue − Red diffs); label = did Blue win. (Changed from one row per team: two mirror rows let a model say Blue 60% / Red 45% at once.)
+- [x] 5.1.2 Features: raw diffs (not z-scored — trees don't need it), objective state, Baron/Elder buff active, recent deaths, inhibitors down, minute, tier. 29 features in `model/dataset.py`
+- [x] 5.1.3 **Split by match, never by row** — rows from the same game in both train and test is leakage and will fake great numbers. 70/15/15 by hash of match ID; 5 games in both corpora kept once
 
 ### 5.2 Train
-- [ ] 5.2.1 XGBoost / LightGBM baseline
-- [ ] 5.2.2 Add lagged and 5-minute rolling features to capture momentum
-- [ ] 5.2.3 Review feature importances — anything absurd at the top means a bug upstream
+- [x] 5.2.1 XGBoost / LightGBM baseline (XGBoost, monotone constraints; beats the gold-diff logistic by 0.017 log loss)
+- [x] 5.2.2 Add lagged and 5-minute rolling features to capture momentum (gold-diff change over 3 and 5 min)
+- [x] 5.2.3 Review feature importances — anything absurd at the top means a bug upstream (gold diff 65%, XP 12%, kills, dragons: sane)
 
 ### 5.3 Validate
-- [ ] 5.3.1 **Calibration plot** — when it predicts 70%, do ~70% of those teams win? This matters more than accuracy
-- [ ] 5.3.2 Accuracy by game phase — should sit near 50% at minute 0 and climb
+- [x] 5.3.1 **Calibration plot** — when it predicts 70%, do ~70% of those teams win? This matters more than accuracy
+- [x] 5.3.2 Accuracy by game phase — should sit near 50% at minute 0 and climb
 - [ ] 5.3.3 Eyeball known stomps and known comebacks; curves should look right
-- [ ] 5.3.4 Check calibration separately for Emerald vs Diamond subsets
+- [x] 5.3.4 Check calibration separately for Emerald vs Diamond subsets (+ patch groups; then the unchanged gate passed on a fresh 5,739-game holdout)
 
 ### 5.4 Integrate
-- [ ] 5.4.1 Overlay the win-prob curve in the visualizer (the hook from 2.3.2)
-- [ ] 5.4.2 Compute WPA (win probability added) per minute across the corpus
-- [ ] 5.4.3 Build the WPA distribution needed for percentile context later
+- [x] 5.4.1 Overlay the win-prob curve in the visualizer (the hook from 2.3.2) — automatic once a model is trained
+- [x] 5.4.2 Compute WPA (win probability added) per minute across the corpus
+- [x] 5.4.3 Build the WPA distribution needed for percentile context later
 
 **Exit criteria:** a calibrated model whose curve, viewed over a game you remember, matches your intuition about when it was slipping away.
 

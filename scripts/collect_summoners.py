@@ -12,6 +12,10 @@ the bias being averaged out, so breadth of players matters more than depth.
 Usage:
     python scripts/collect_summoners.py --tier EMERALD --target 1000
     python scripts/collect_summoners.py --tier DIAMOND --target 300
+
+    # fresh players for the held-out test set (none shared with the training corpus)
+    python scripts/collect_summoners.py --tier EMERALD --target 4000 --name emerald_holdout \\
+        --exclude emerald,diamond --seed 1
 """
 
 from __future__ import annotations
@@ -95,19 +99,34 @@ def main() -> None:
     ap.add_argument("--tier", default="EMERALD")
     ap.add_argument("--target", type=int, default=1000, help="distinct players wanted")
     ap.add_argument("--per-page", type=int, default=20, help="max players taken per page")
-    ap.add_argument("--max-page", type=int, default=40, help="highest page to sample from")
+    # Capacity = per_page x max_page x 4 divisions; pages are only fetched as needed, so a
+    # high ceiling costs nothing. (At 40 it silently capped a 6,000 target at 3,200.)
+    ap.add_argument("--max-page", type=int, default=150, help="highest page to sample from")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--name", help="output label: summoners_<name>.json (default: the tier, "
+                    "e.g. --name emerald_holdout for the fresh test set)")
+    ap.add_argument("--exclude", default="",
+                    help="comma-separated summoner-list names whose players are skipped, "
+                         "e.g. emerald,diamond so a holdout sample shares no players with the corpus")
     args = ap.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     rng = random.Random(args.seed)
     tier = args.tier.upper()
+    name = (args.name or tier).lower()
 
     cfg = load_config()
     ensure_dirs()
     client = RiotClient(cfg, JsonCache(RAW_DIR))
 
-    seen: set[str] = set()
+    seen: set[str] = set()   # PUUIDs never to pick: already picked, or excluded
+    for other in filter(None, (x.strip().lower() for x in args.exclude.split(","))):
+        path = PROCESSED_DIR / f"summoners_{other}.json"
+        if not path.exists():
+            sys.exit(f"--exclude {other}: {path} not found")
+        before = len(seen)
+        seen.update(r["puuid"] for r in json.loads(path.read_text()))
+        log.info("excluding %d players from %s", len(seen) - before, path.name)
     rows: list[dict] = []
     try:
         for division, quota in zip(DIVISIONS, split_quota(args.target, len(DIVISIONS))):
@@ -127,8 +146,11 @@ def main() -> None:
     except KeyboardInterrupt:
         log.warning("interrupted — writing what we have")
 
-    out = PROCESSED_DIR / f"summoners_{tier.lower()}.json"
+    out = PROCESSED_DIR / f"summoners_{name}.json"
     out.write_text(json.dumps(rows, indent=2))
+    if len(rows) < args.target:
+        log.warning("only %d of the %d players requested — the ladder ran out of pages "
+                    "(raise --max-page) or the division is small", len(rows), args.target)
 
     by_div = Counter(r["division"] for r in rows)
     pages_used = {d: len({r["page"] for r in rows if r["division"] == d}) for d in DIVISIONS}

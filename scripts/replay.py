@@ -10,6 +10,8 @@ Cached matches open instantly and need no API key. Anything not cached is fetche
 then cached), which does need a current key in .env.
 
 Output goes to data/processed/replays/<matchId>.html and opens in your browser.
+Once scripts/train_winprob.py has run, the chart also draws P(Blue wins) per minute
+(green) and the clock shows it; --tier says which corpus the game counts as (default emerald).
 """
 
 from __future__ import annotations
@@ -22,7 +24,8 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from lolreview.config import PROCESSED_DIR, RAW_DIR, ensure_dirs
+from lolreview.config import MODEL_DIR, PROCESSED_DIR, RAW_DIR, ensure_dirs
+from lolreview.model.predict import MODEL_FILE
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey
 from lolreview.riot.ddragon import item_names
@@ -30,6 +33,23 @@ from lolreview.riot.games import GameNotFound, find_game
 from lolreview.viz.replay import build_replay_data, fetch_map_image, render_html
 
 log = logging.getLogger("replay")
+
+
+def win_probability(match: dict, timeline: dict, args) -> list[float] | None:
+    """P(Blue wins) per frame from the Phase 5 model, or None if it isn't trained yet."""
+    if args.no_winprob or not (MODEL_DIR / MODEL_FILE).exists():
+        return None
+    try:
+        from lolreview.extract import extract_game
+        from lolreview.model.predict import WinProb
+
+        curve = WinProb.load().for_game(extract_game(match, timeline, args.tier.lower()))
+    except Exception as exc:  # the replay should still render without the overlay
+        log.warning("win probability skipped: %s", exc)
+        return None
+    by_minute = dict(zip(curve["minute"], curve["p_blue"]))
+    return [float(by_minute[i]) if i in by_minute else None
+            for i in range(len(timeline["info"]["frames"]))]
 
 
 def main() -> None:
@@ -43,6 +63,8 @@ def main() -> None:
     ap.add_argument("--offline", action="store_true",
                     help="no Data Dragon downloads: schematic map, item IDs instead of names "
                          "(anything already cached is still used)")
+    ap.add_argument("--no-winprob", action="store_true",
+                    help="don't draw the win-probability curve even if a model is trained")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
@@ -74,7 +96,8 @@ def main() -> None:
     if items:
         log.info("item names: patch %s (%d items)", patch, len(items))
 
-    data = build_replay_data(match, timeline, item_names=items)
+    data = build_replay_data(match, timeline, winprob=win_probability(match, timeline, args),
+                             item_names=items)
     want_map = not (args.no_map or (args.offline and not (ddragon_dir / "map11.png").exists()))
     map_png = fetch_map_image(ddragon_dir) if want_map else None
 

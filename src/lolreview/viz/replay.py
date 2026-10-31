@@ -224,8 +224,8 @@ def build_replay_data(
 ) -> dict:
     """Compact, render-ready view of one game.
 
-    `winprob`, if given, is P(blue wins) per frame — the Phase 5 model's output, overlaid
-    on the chart. `item_names` (from `riot.ddragon.item_names`) turns item IDs into names.
+    `winprob`, if given, is P(blue wins) per frame — the Phase 5 model's output, drawn as
+    its own chart under the gold/XP chart. `item_names` (from `riot.ddragon.item_names`) turns item IDs into names.
     """
     info = match["info"]
     players: dict[int, dict] = {}
@@ -402,6 +402,8 @@ _TEMPLATE = r"""<!doctype html>
   button:hover { background:#2f3542 }
   #clock { font-variant-numeric:tabular-nums; min-width:92px }
   #chart { width:512px; height:170px; margin-top:10px; cursor:pointer }
+  #wpchart { width:512px; height:150px; margin-top:6px; cursor:pointer; display:block }
+  #wpchart[hidden] { display:none }
   .opts { margin-top:6px; color:var(--muted) }
   .opts label, .filters label { margin-right:12px; white-space:nowrap; cursor:pointer }
   #events { position:relative; height:300px; overflow:auto; margin-top:6px;
@@ -459,6 +461,7 @@ _TEMPLATE = r"""<!doctype html>
       <div class="note">Positions are one snapshot per minute. Markers show events since the
         previous snapshot; dashed lines connect each player's last two snapshots (not their path).</div>
       <svg id="chart" viewBox="0 0 512 170"></svg>
+      <svg id="wpchart" viewBox="0 0 512 150" hidden></svg>
     </section>
   </div>
   <div class="right">
@@ -721,11 +724,6 @@ function drawChart() {
   svg("polyline", { points: pts.map(p => p.join(",")).join(" "), fill: "none", stroke: "#e5e7eb", "stroke-width": 1.8 }, chart);
   svg("polyline", { points: D.frames.map((f, i) => `${cx(f.t)},${cy(D.curves.xp[i])}`).join(" "),
                     fill: "none", stroke: "#a78bfa", "stroke-width": 1.4, "stroke-dasharray": "4 3" }, chart);
-  if (D.winprob) {
-    const wy = p => PT + (1 - p) * (CH - PT - PB);
-    svg("polyline", { points: D.frames.map((f, i) => `${cx(f.t)},${wy(D.winprob[i])}`).join(" "),
-                      fill: "none", stroke: "#34d399", "stroke-width": 1.8 }, chart);
-  }
   for (const e of D.events) {
     if (e.cat !== "kill" && e.cat !== "special") continue;
     if (e.type === "CHAMPION_SPECIAL_KILL") continue;  // already ticked as the kill itself
@@ -735,18 +733,67 @@ function drawChart() {
                   "stroke-width": special ? 2 : 1 }, chart);
   }
   const legend = svg("text", { x: PL, y: CH - 2, "font-size": 10, fill: "#9ca3af" }, chart);
-  legend.textContent = "gold diff (solid) · XP diff (dashed)" + (D.winprob ? " · P(blue win) (green)" : "") +
-                       " · above 0 = Blue ahead · ticks: kills, special (yellow)";
+  legend.textContent = "gold diff (solid) · XP diff (dashed) · above 0 = Blue ahead · ticks: kills, special (yellow)";
   cursor = svg("line", { y1: PT, y2: CH - PB, stroke: "#fbbf24", "stroke-width": 1.5 }, chart);
 }
 
-chart.addEventListener("click", ev => {
-  const r = chart.getBoundingClientRect();
-  const t = ((ev.clientX - r.left) * (CW / r.width) - PL) / (CW - PL - PR) * LAST_T;
-  let best = 0;
-  D.frames.forEach((f, i) => { if (Math.abs(f.t - t) < Math.abs(D.frames[best].t - t)) best = i; });
-  setFrame(best);
-});
+// ---- win-probability chart (Phase 5 model; only when the replay has it) -------------
+const wpchart = document.getElementById("wpchart");
+const WH = 150, WT = 12, WB = 22;
+const wy = p => WT + (1 - p) * (WH - WT - WB);
+let wpCursor, wpDot, wpLabel;
+
+function drawWinProb() {
+  if (!D.winprob) return;
+  wpchart.removeAttribute("hidden");   // .hidden = false doesn't work on SVG elements
+  wpchart.replaceChildren();
+  const ok = D.frames.map((f, i) => D.winprob[i] != null);
+  const pts = D.frames.map((f, i) => [cx(f.t), wy(ok[i] ? D.winprob[i] : 0.5)]);
+  svg("rect", { x: PL, y: WT, width: CW - PL - PR, height: WH - WT - WB, fill: "#12161c" }, wpchart);
+  for (const v of [1, 0.75, 0.5, 0.25, 0]) {
+    svg("line", { x1: PL, x2: CW - PR, y1: wy(v), y2: wy(v), stroke: v === 0.5 ? "#4b5563" : "#232833" }, wpchart);
+    const lab = svg("text", { x: PL - 6, y: wy(v), dy: "0.35em", "text-anchor": "end", "font-size": 10, fill: "#9ca3af" }, wpchart);
+    lab.textContent = `${Math.round(v * 100)}%`;
+  }
+  // shade Blue-favoured (above 50%) blue and Red-favoured red, like the gold chart
+  const area = (clampFn, color) => {
+    const top = pts.map(([x, y]) => `${x},${clampFn(y)}`).join(" ");
+    svg("polygon", { points: `${cx(0)},${wy(0.5)} ${top} ${cx(LAST_T)},${wy(0.5)}`, fill: color, "fill-opacity": 0.22 }, wpchart);
+  };
+  area(y => Math.min(y, wy(0.5)), "#3b82f6");
+  area(y => Math.max(y, wy(0.5)), "#ef4444");
+  svg("polyline", { points: pts.map(p => p.join(",")).join(" "), fill: "none", stroke: "#e5e7eb", "stroke-width": 1.8 }, wpchart);
+  const legend = svg("text", { x: PL, y: WH - 4, "font-size": 10, fill: "#9ca3af" }, wpchart);
+  legend.textContent = "Blue win probability · above 50% = Blue favoured · model estimate, not a verdict";
+  wpCursor = svg("line", { y1: WT, y2: WH - WB, stroke: "#fbbf24", "stroke-width": 1.5 }, wpchart);
+  wpDot = svg("circle", { r: 3.5, fill: "#fbbf24" }, wpchart);
+  wpLabel = svg("text", { "font-size": 11, fill: "#fbbf24", "font-weight": 600 }, wpchart);
+}
+
+function markWinProb(t1) {
+  if (!D.winprob || !wpCursor) return;
+  wpCursor.setAttribute("x1", cx(t1)); wpCursor.setAttribute("x2", cx(t1));
+  const p = D.winprob[frame];
+  wpDot.setAttribute("visibility", p == null ? "hidden" : "visible");
+  wpLabel.setAttribute("visibility", p == null ? "hidden" : "visible");
+  if (p == null) return;
+  const x = cx(t1), y = wy(p), right = x > CW - 120;
+  wpDot.setAttribute("cx", x); wpDot.setAttribute("cy", y);
+  wpLabel.setAttribute("x", right ? x - 6 : x + 6);
+  wpLabel.setAttribute("text-anchor", right ? "end" : "start");
+  wpLabel.setAttribute("y", Math.max(WT + 10, Math.min(WH - WB - 4, y - 6)));
+  wpLabel.textContent = `Blue ${Math.round(100 * p)}% · Red ${100 - Math.round(100 * p)}%`;
+}
+
+for (const el of [chart, wpchart]) {
+  el.addEventListener("click", ev => {
+    const r = el.getBoundingClientRect();
+    const t = ((ev.clientX - r.left) * (CW / r.width) - PL) / (CW - PL - PR) * LAST_T;
+    let best = 0;
+    D.frames.forEach((f, i) => { if (Math.abs(f.t - t) < Math.abs(D.frames[best].t - t)) best = i; });
+    setFrame(best);
+  });
+}
 
 // ---- players table -----------------------------------------------------------------
 function drawPlayers() {
@@ -818,9 +865,11 @@ function markEvents(scroll) {
 function render(scroll) {
   slider.value = frame;
   const [t0, t1] = windowOf(frame);
-  document.getElementById("clock").textContent = `${mmss(t1)}  (${frame}/${D.frames.length - 1})`;
+  const wp = D.winprob && D.winprob[frame] != null ? `  ·  Blue ${Math.round(100 * D.winprob[frame])}%` : "";
+  document.getElementById("clock").textContent = `${mmss(t1)}  (${frame}/${D.frames.length - 1})${wp}`;
   drawMap(); drawPlayers(); markEvents(scroll);
   cursor.setAttribute("x1", cx(t1)); cursor.setAttribute("x2", cx(t1));
+  markWinProb(t1);
 }
 function setFrame(f) { frame = Math.max(0, Math.min(D.frames.length - 1, f)); render(true); }
 function togglePlay() {
@@ -848,7 +897,7 @@ document.addEventListener("keydown", ev => {
   if (ev.key === " ") { togglePlay(); ev.preventDefault(); }
 });
 
-buildKey(); drawChart(); buildEvents(); setFrame(Math.min(10, D.frames.length - 1));
+buildKey(); drawChart(); drawWinProb(); buildEvents(); setFrame(Math.min(10, D.frames.length - 1));
 </script>
 </body></html>
 """
