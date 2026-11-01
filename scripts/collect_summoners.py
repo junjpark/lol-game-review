@@ -146,6 +146,8 @@ def main() -> None:
     except KeyboardInterrupt:
         log.warning("interrupted — writing what we have")
 
+    for r in rows:  # which server's ladder they came from (collect_matches checks it)
+        r["platform"] = cfg.platform
     out = PROCESSED_DIR / f"summoners_{name}.json"
     out.write_text(json.dumps(rows, indent=2))
     if len(rows) < args.target:

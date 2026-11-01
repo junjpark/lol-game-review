@@ -24,7 +24,7 @@ import requests
 from ..config import Config
 from .cache import JsonCache
 from .ratelimit import RateLimiter
-from .routing import platform_host, regional_host
+from .routing import account_host, match_host, platform_host, regional_host
 
 log = logging.getLogger(__name__)
 
@@ -55,6 +55,7 @@ class RiotClient:
         self.session.headers.update({"X-Riot-Token": cfg.api_key})
         self.platform_host = platform_host(cfg.platform)
         self.regional_host = regional_host(cfg.platform)
+        self.account_host = account_host(cfg.platform)
         self.stats = {
             "requests": 0,
             "cache_hits": 0,
@@ -131,7 +132,7 @@ class RiotClient:
 
     def account_by_riot_id(self, game_name: str, tag_line: str) -> Any | None:
         url = (
-            f"{self.regional_host}/riot/account/v1/accounts/by-riot-id/"
+            f"{self.account_host}/riot/account/v1/accounts/by-riot-id/"
             f"{quote(game_name)}/{quote(tag_line)}"
         )
         return self._request(url)
@@ -145,26 +146,30 @@ class RiotClient:
         return self._request(url, params={"page": page}) or []
 
     def match_ids(
-        self, puuid: str, count: int = 5, start: int = 0, start_time: int | None = None
+        self, puuid: str, count: int = 5, start: int = 0, start_time: int | None = None,
+        queue: int | None | str = "config",
     ) -> list[str]:
         """Most recent match IDs for a player, newest first.
 
         `start_time` is epoch SECONDS. There is no patch filter on this endpoint, but
         patches map to date ranges, so a start time skips old-patch games before they
-        cost a download.
+        cost a download. `queue`: default RIOT_QUEUE (420); an ID; or None for every queue.
         """
         url = f"{self.regional_host}/lol/match/v5/matches/by-puuid/{quote(puuid)}/ids"
-        params: dict[str, int] = {"queue": self.cfg.queue, "count": count, "start": start}
+        q = self.cfg.queue if queue == "config" else queue
+        params: dict[str, int] = {"count": count, "start": start}
+        if q is not None:
+            params["queue"] = q
         if start_time is not None:
             params["startTime"] = start_time
         return self._request(url, params=params) or []
 
     def match(self, match_id: str) -> Any | None:
-        url = f"{self.regional_host}/lol/match/v5/matches/{quote(match_id)}"
+        url = f"{match_host(match_id, self.cfg.platform)}/lol/match/v5/matches/{quote(match_id)}"
         return self._cached("matches", match_id, url)
 
     def timeline(self, match_id: str) -> Any | None:
-        url = f"{self.regional_host}/lol/match/v5/matches/{quote(match_id)}/timeline"
+        url = f"{match_host(match_id, self.cfg.platform)}/lol/match/v5/matches/{quote(match_id)}/timeline"
         return self._cached("timelines", match_id, url)
 
     # ---- reporting ----------------------------------------------------

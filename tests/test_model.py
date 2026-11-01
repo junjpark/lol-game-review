@@ -46,6 +46,57 @@ def test_features_for_synthetic_game():
     assert (f["blue_win"] == 1).all() and f[FEATURE_NAMES].notna().all().all()
 
 
+def test_gold_spread_features_match_the_timeline():
+    match, timeline = make_game()   # minute 1: every Blue player 900 gold, every Red player 600
+    f = features_for_game(extract_game(match, timeline, "emerald")).set_index("minute")
+    for col in ("gold_diff_top", "gold_diff_jungle", "gold_diff_mid", "gold_diff_bot", "gold_diff_support"):
+        assert f.loc[1, col] == 300
+    assert f.loc[1, "richest_gap"] == 300
+    assert f.loc[1, "blue_gold_top_share"] == pytest.approx(0.2)    # evenly spread: 1/5 each
+    assert f.loc[1, ["gold_diff_top", "gold_diff_jungle", "gold_diff_mid", "gold_diff_bot",
+                     "gold_diff_support"]].sum() == f.loc[1, "gold_diff"]
+
+
+def test_fed_carry_shows_up_in_spread_features():
+    match, timeline = make_game()
+    pf = timeline["info"]["frames"][1]["participantFrames"]
+    for pid in range(1, 6):                       # Blue: one fed carry (BOT, pid 4), rest poor
+        pf[str(pid)]["totalGold"] = 2300 if pid == 4 else 400
+    for pid in range(6, 11):                      # Red: 3,000 total, evenly spread
+        pf[str(pid)]["totalGold"] = 600
+    f = features_for_game(extract_game(match, timeline, "emerald")).set_index("minute")
+    assert f.loc[1, "gold_diff"] == 900
+    assert f.loc[1, "richest_gap"] == 1700
+    assert f.loc[1, "gold_diff_bot"] == 1700 and f.loc[1, "gold_diff_top"] == -200
+    assert f.loc[1, "blue_gold_top_share"] == pytest.approx(2300 / 3900)
+    assert f.loc[1, "red_gold_top_share"] == pytest.approx(0.2)
+
+
+def test_missing_role_blanks_only_that_role():
+    from lolreview.model.dataset import ROLE_FEATURES
+    match, timeline = make_game()
+    for p in match["info"]["participants"]:
+        if p["participantId"] == 1:               # Blue TOP lost its role in Riot's data
+            p["teamPosition"] = ""
+    f = features_for_game(extract_game(match, timeline, "emerald")).set_index("minute")
+    assert np.isnan(f.loc[1, "gold_diff_top"])
+    assert not f.loc[1, [c for c in ROLE_FEATURES if c != "gold_diff_top"]].isna().any()
+    assert f.loc[1, "richest_gap"] == 300         # team-level spread features don't need roles
+
+
+def test_gold_spread_check_table():
+    rows = []
+    for i in range(400):
+        fed = i % 2 == 0
+        rows.append({"match_id": f"G{i}", "minute": 20, "gold_diff": 0.0,
+                     "richest_gap": 2000.0 if fed else -500.0, "blue_win": int(fed and i % 4 == 0 or (not fed and i % 8 == 1))})
+    df = pd.DataFrame(rows)
+    t = metrics.gold_spread_check(df, {"flat": np.full(len(df), 0.5)})
+    assert list(t["case"]) == ["Blue has the richest player by 1.5k+", "Red has the richest player"]
+    assert t["games"].tolist() == [200, 200] and t["flat"].tolist() == [0.5, 0.5]
+    assert t["Blue won"].iloc[0] > t["Blue won"].iloc[1]
+
+
 def test_baron_buff_window():
     match, timeline = make_game()
     add_events(timeline, 1, {"type": "ELITE_MONSTER_KILL", "timestamp": 50_000, "killerId": 7,
@@ -326,6 +377,23 @@ def test_tune_xgb_picks_lowest_validation_log_loss():
     assert len(table) == 2 and table["chosen"].sum() == 1
     assert table.loc[table["chosen"], "val_log_loss"].iloc[0] == table["val_log_loss"].min()
     assert params in grid
+
+
+def test_archived_v1_model_still_loads_and_predicts(tmp_path):
+    pytest.importorskip("xgboost")
+    from lolreview.model.dataset import V1_FEATURE_NAMES
+    from lolreview.model.predict import META_FILE, MODEL_FILE, WinProb
+    df = _synthetic_training(n_games=600)
+    train, val = df[df.split == "train"], df[df.split != "train"]
+    v1 = models.train_xgb(train, val, {"n_estimators": 50, "early_stopping_rounds": 10}, V1_FEATURE_NAMES)
+    assert v1.feature_names == V1_FEATURE_NAMES
+    v1.save_model(str(tmp_path / MODEL_FILE))
+    (tmp_path / META_FILE).write_text(json.dumps({"features": V1_FEATURE_NAMES, "calibrator": None,
+                                                  "gate_passed": True}))
+    wp = WinProb.load(tmp_path)
+    assert wp.version == "v1"
+    p = wp.predict(val)                              # val has all 37 columns; v1 uses its 29
+    assert np.allclose(p, models.predict_xgb(v1, val))
 
 
 def test_monotone_list_matches_features():

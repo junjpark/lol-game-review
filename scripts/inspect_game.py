@@ -19,6 +19,7 @@ from lolreview.extract.events import category
 from lolreview.extract.validate import PLAYER_CHECKS
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey
+from lolreview.riot.queues import parse_queue
 from lolreview.riot.games import GameNotFound, describe_player, find_game, pick_player
 from lolreview.viz.replay import describe
 
@@ -35,14 +36,21 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Print hand-check numbers for one game")
     ap.add_argument("match_id", nargs="?")
     ap.add_argument("--riot-id", help='e.g. "Name#NA1" — uses your latest ranked game')
+    ap.add_argument("--back", type=int, default=0, help="0 = latest ranked game, 1 = the one before, ...")
+    ap.add_argument("--platform", help="server to search a Riot ID's games on, e.g. tw2 "
+                    "(default: RIOT_PLATFORM in .env)")
+    ap.add_argument("--queue", help="with --riot-id: which games to search: ranked (default), "
+                    "draft, blind, flex, any, or a queue number")
     ap.add_argument("--player", help="champion or Riot name to inspect (default: the --riot-id player)")
     args = ap.parse_args()
     if not args.match_id and not args.riot_id:
         ap.error("give a match ID or --riot-id")
 
     try:
-        game = find_game(JsonCache(RAW_DIR), match_id=args.match_id, riot_id=args.riot_id)
-    except (GameNotFound, ExpiredKey) as exc:
+        game = find_game(JsonCache(RAW_DIR), match_id=args.match_id, riot_id=args.riot_id,
+                         back=args.back, platform=args.platform,
+                         queue=parse_queue(args.queue, default="config"))
+    except (GameNotFound, ExpiredKey, ValueError) as exc:  # ValueError: bad --queue/--platform
         sys.exit(str(exc))
 
     info = game.match["info"]

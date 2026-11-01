@@ -36,7 +36,8 @@ PLATFORM_TO_REGION: dict[str, str] = {
     # Asia
     "kr": "asia",
     "jp1": "asia",
-    # SEA / OCE
+    # SEA / OCE. ph2 and th2 merged into sg2 in January 2025 (patch 15.1); they stay here
+    # so older match IDs still route. tw2 = Taiwan, Hong Kong and Macao.
     "oc1": "sea",
     "ph2": "sea",
     "sg2": "sea",
@@ -44,6 +45,10 @@ PLATFORM_TO_REGION: dict[str, str] = {
     "tw2": "sea",
     "vn2": "sea",
 }
+
+# ACCOUNT-V1 (Riot ID -> PUUID) is only served from these three clusters, but any of them
+# can look up any account. SEA servers use ASIA, the nearest.
+ACCOUNT_REGIONS = frozenset({"americas", "asia", "europe"})
 
 VALID_PLATFORMS = frozenset(PLATFORM_TO_REGION)
 VALID_REGIONS = frozenset(PLATFORM_TO_REGION.values())
@@ -75,6 +80,22 @@ def platform_host(platform: str) -> str:
 def regional_host(platform: str) -> str:
     """Base URL for cluster endpoints (MATCH-V5, ACCOUNT-V1), derived from platform."""
     return f"https://{region_for(platform)}.api.riotgames.com"
+
+
+def account_host(platform: str) -> str:
+    """Base URL for ACCOUNT-V1. Not every cluster serves it (SEA doesn't)."""
+    region = region_for(platform)
+    return f"https://{region if region in ACCOUNT_REGIONS else 'asia'}.api.riotgames.com"
+
+
+def match_host(match_id: str, fallback_platform: str) -> str:
+    """Base URL for a specific match: the cluster of the server it was played on, read
+    from its ID prefix (TW2_... -> sea), so a game from another server can be fetched
+    without editing .env. Falls back to the configured platform if the prefix is unknown."""
+    try:
+        return regional_host(platform_of_match_id(match_id))
+    except ValueError:
+        return regional_host(fallback_platform)
 
 
 def platform_of_match_id(match_id: str) -> str:

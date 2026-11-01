@@ -49,6 +49,7 @@ from pathlib import Path
 from lolreview.config import PROCESSED_DIR, RAW_DIR, ensure_dirs, load_config
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey, RiotClient
+from lolreview.riot.routing import platform_of_match_id
 
 log = logging.getLogger("collect_matches")
 
@@ -193,6 +194,17 @@ def main() -> None:
     manifest_file = PROCESSED_DIR / f"matches_{tier}.json"
     done = load_done(progress_file)
     seen = load_seen(manifest_file)
+
+    # Baselines must be single-region (CLAUDE.md): never let two servers share a corpus.
+    servers = {platform_of_match_id(m) for m in seen}
+    sampled_on = {s["platform"] for s in summoners if s.get("platform")}
+    if (servers and servers != {cfg.platform}) or (sampled_on and sampled_on != {cfg.platform}):
+        sys.exit(
+            f"RIOT_PLATFORM is {cfg.platform}, but corpus '{tier}' holds games from "
+            f"{', '.join(sorted(servers | sampled_on))}. Each server needs its own corpus name, e.g.\n"
+            f"  python scripts/collect_summoners.py --tier EMERALD --name emerald_{cfg.platform} ...\n"
+            f"  python scripts/collect_matches.py --name emerald_{cfg.platform} ..."
+        )
 
     log.info("TARGET_PATCHES: %s", ",".join(cfg.target_patches) or "(unset — all patches)")
     log.info("loaded %d summoners, %d already processed", len(summoners), len(done))

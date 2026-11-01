@@ -23,6 +23,7 @@ from lolreview.config import RAW_DIR
 from lolreview.extract.frames import extract_frames
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey
+from lolreview.riot.queues import RANKED_SOLO, parse_queue, queue_name
 from lolreview.riot.games import GameNotFound, describe_player, find_game, pick_player
 
 
@@ -30,6 +31,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="v0 percentile report for one game")
     ap.add_argument("match_id", nargs="?")
     ap.add_argument("--riot-id", help='e.g. "Name#NA1" — uses your latest ranked game')
+    ap.add_argument("--platform", help="server to search a Riot ID's games on, e.g. tw2 "
+                    "(default: RIOT_PLATFORM in .env)")
+    ap.add_argument("--queue", help="with --riot-id: which games to search: ranked (default), "
+                    "draft, blind, flex, any, or a queue number")
     ap.add_argument("--back", type=int, default=0,
                     help="with --riot-id: 0 = latest game, 1 = the one before, ...")
     ap.add_argument("--player", help="champion or Riot name (default: the --riot-id player)")
@@ -45,14 +50,19 @@ def main() -> None:
     except FileNotFoundError as exc:
         sys.exit(str(exc))
     try:
-        game = find_game(JsonCache(RAW_DIR), match_id=args.match_id, riot_id=args.riot_id, back=args.back)
-    except (GameNotFound, ExpiredKey) as exc:
+        game = find_game(JsonCache(RAW_DIR), match_id=args.match_id, riot_id=args.riot_id, back=args.back,
+                         platform=args.platform, queue=parse_queue(args.queue, default="config"))
+    except (GameNotFound, ExpiredKey, ValueError) as exc:  # ValueError: bad --queue/--platform
         sys.exit(str(exc))
 
     me = pick_player(game.match, game.puuid, args.player)
     if me is None:
         listing = "\n".join(f"  {describe_player(p)}" for p in game.match["info"]["participants"])
         sys.exit(f"Which player? Pass --player <champion or name>. Players:\n{listing}")
+    qid = game.match["info"].get("queueId")
+    if qid != RANKED_SOLO:
+        print(f"NOTE: this is a {queue_name(qid)} game; the baselines are ranked solo/duo, "
+              "so the percentiles below compare against a different population.\n")
     role = me.get("teamPosition")
     if not role:
         sys.exit("Riot's data has no role for this player in this game, so there's no baseline to compare with.")

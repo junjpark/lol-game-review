@@ -11,7 +11,10 @@ pulled from Riot's developer API. Output: per-moment verdicts — what the decis
 how much it moved win probability, and what stronger players tend to do in comparable
 spots.
 
-Owner plays Emerald on NA. v1 is validated against the owner's own games.
+Owner plays Emerald on NA. v1 is validated against the owner's own games. **As of Oct 31 the
+owner is playing on the Hong Kong server (TW2).** Everything so far (corpus, baselines, win-prob
+model, holdout) is NA-only, so on TW2 games the model is unvalidated and the NA baselines don't
+apply (baselines must be single-region). Scope decision pending.
 
 ## Architecture: two models, separate jobs
 
@@ -85,6 +88,14 @@ not inference).
 
 - Two routing schemes: platform (`na1`) for LEAGUE-V4, regional (`americas`) for
   MATCH-V5 and ACCOUNT-V1. See `src/lolreview/riot/routing.py`.
+- **Hong Kong = server `tw2`** (Taiwan/HK/Macao): ladder on `tw2.api…`, match history on
+  `sea.api…`, Riot ID lookups on `asia.api…`. ACCOUNT-V1 is only served by americas/asia/europe
+  (`routing.account_host`). Match downloads route by the match ID's own prefix
+  (`routing.match_host`), so `TW2_…` games fetch fine whatever `.env` says. ph2/th2 merged into
+  sg2 in Jan 2025.
+- **One corpus per server.** `collect_summoners.py` stamps each player with `platform`;
+  `collect_matches.py` refuses to add games from another server to an existing corpus name.
+  Use names like `emerald_tw2`.
 - `gameMode: CLASSIC` does **not** mean ranked — `queueId: 420` does.
 - **Patch numbering:** `gameVersion` uses `16.x` in 2026; Riot's public patch names use
   the year (`26.x`). Patch notes "26.19" = `gameVersion` "16.19". `TARGET_PATCHES` must
@@ -199,6 +210,11 @@ without it.
   chart (owner's request; it used to be overlaid). Shown only when a trained model exists.
   The final point comes after the nexus falls, and the model can't see the nexus, so it isn't
   pinned to 0/100%.
+  `replay.py`, `report.py` and `inspect_game.py` take `--riot-id` with `--back N`, `--platform`
+  (e.g. tw2) and `--queue` (ranked by default; draft/blind/flex/any/number; see
+  `riot/queues.py`). Games that aren't ranked solo/duo load fine but are flagged: an amber
+  warning on the win-probability chart and in the terminal, and a NOTE in the percentile report.
+  The model and baselines are queue-420 only.
 
 - **Phase 3 done** (`src/lolreview/extract/`, `scripts/extract.py`, `scripts/inspect_game.py`).
   Owner verified one of their own games against op.gg: all stats match.
@@ -293,17 +309,66 @@ without it.
     replay draws the curve automatically. `wpa_distribution.json` = per-minute quantiles of
     |ΔP| from calibrated out-of-fold predictions over all games: Phase 6's yardstick for
     "unusual" swings.
+  - **v1 blind spot: gold distribution (owner's hypothesis, confirmed Nov 1).** Every gold
+    feature is a team total, so a lead held by one fed carry and a lead spread evenly look the
+    same. Test on 11,704 Emerald corpus games (holdout untouched), logistic, 5-fold CV by
+    game, minute 8+:
+    - At even team gold (±500) in minutes 15–30, Blue wins **57.4%** when it has the richest
+      player by 1.5k+ (600 games) vs **45.8%** when Red has the richest player (2,584 games).
+      Team-gold-only predicts ~49–50% for both. Down 2–4k: 36.8% vs 23.9%.
+    - Per-role gold matters: 1k of support gold is worth about 40% of 1k of carry gold at
+      10:00 (logit 0.18 vs ~0.5 per 1k); bot gold holds its value best late.
+    - CV log-loss gain vs team gold only: per-role diffs +0.0026; + richest-player gap +0.0031;
+      + concentration +0.0035 (90% range +0.0024…+0.0048). Small on average because these
+      states are uncommon, but they're exactly the moments a review cares about. With both
+      added, the even-gold case is predicted 57.3% / 45.6%, matching the actual outcomes.
+    - Proposed v2 features: 5 per-role gold diffs, richest-player gold gap, gold-concentration
+      shares. Per-player gold comes from the frames table, no re-extraction needed. Release
+      needs a fresh holdout (16.22); the 16.21 holdout can join training.
+    - **XP/level distribution tested too (Nov 1): adds nothing beyond the gold features. Don't
+      add it.** On top of v2 gold + team XP/level (same 11,704 games, minute 3+): per-role XP
+      +0.0001 (−0.0003…+0.0004), level-6/11/16 spike counts +0.0001, highest-XP-player gap
+      −0.0000, all three +0.0001. Per-player XP mostly duplicates per-player gold. The v2 gold
+      features still add +0.0038 (+0.0027…+0.0049) even with team XP/level present.
+      Level-6 race (2+ more players at 6, minutes 6–9, gold and XP even): 55.6% vs 44.7%, but
+      only ~150 games per side. Real-looking but too rare to matter. A player 2+ levels above
+      everyone, at even team XP, goes with *losing* (45.4%), and the gold features already
+      predict that (45.1%).
+  - **v2 built (Nov 1), not yet trained.** `dataset.FEATURES` now has 37 features (v1's 29 +
+    `gold_diff_top/jungle/mid/bot/support`, `richest_gap` [unconstrained], `blue_/red_gold_top_share`
+    [unconstrained]); role diffs are monotone +1 and NaN when a role is missing or doubled (0 of
+    1,468 sampled games). `V1_FEATURE_NAMES` = the first 29. Per-player gold comes from
+    `frames_<corpus>.parquet` (`dataset.gold_spread`). Default corpora: emerald, diamond,
+    emerald_holdout (~19.4k games). The tier comes from the corpus name (`tier_of`). The training
+    report adds an "XGBoost, v1 features" side-by-side model and a **fed-carry check** table
+    (`metrics.gold_spread_check`). `train_winprob.py` archives the current model to
+    `models/archive/<version>_<built>/` before overwriting. `WinProb` predicts with the feature list
+    in the model's own metadata, so archived v1 models still load. `check_holdout.py --name` is now
+    required and refuses any corpus the model trained on. **v1 stays the released model until v2
+    passes the gate on a fresh 16.22 set.** Sandbox end-to-end dry run (stand-in XGBoost, 4.5k
+    games): pipeline OK.
+  - **v2 trained (Nov 1): development gate PASSED.** Now the current model in `models/` (v1 archived
+    to `models/archive/v1_2026-10-30T184751/`); `released` is unset until the 16.22 check. Test-split
+    log loss: XGBoost on v1 features 0.5549 → v2 0.5521 (**+0.0028**, as the logistic analysis
+    predicted) → v2 + time calibration 0.5512; MLP 0.5525; gold-diff logistic 0.5712.
+    Fed-carry check, out-of-fold over all games, minutes 15–30: at even team gold, Blue-richest
+    actual 58.6% vs v2 55.7% (970 games); Red-richest 45.7% vs 46.1% (4,296 games). Down 2–4k:
+    36.4% vs 33.0%. v2 captures most of the effect but **still underrates the fed-carry side by
+    ~3–4 pts in every band**. That's a known residual; don't tune it away on the holdout.
   - Effective sample size is games, not rows: small slices need large samples. With ~300
     games per bin, coin-flip noise alone gives ECE ≈ 3 pts. Size any future check so per-bin
     noise is well inside its limit.
 
-**Next:** 5.3.3 — eyeball known stomps and comebacks in the replay (`scripts/replay.py
---riot-id "Bradley#1960"`), then the Phase 5 exit check: on games the owner remembers,
-does the curve slip where they felt it slip? Then Phase 6 (decision detection).
+**Next:** ~Nov 11, collect a fresh 16.22 holdout and run `check_holdout.py --name
+emerald_holdout_1622` once (the v2 release). Meanwhile: 5.3.3 (eyeball stomps/comebacks in the replay) and the
+Phase 5 exit check on the owner's games, then Phase 6 (decision detection).
 
 ## Conventions
 
 - Package lives in `src/lolreview/`, installed with `pip install -e .`
 - Subpackages mirror pipeline stages: `riot`, `extract`, `baselines`, `model`, `review`, `viz`
 - Everything under `data/` and `models/` is gitignored; never commit cache or keys
+- **Assistants: don't run git in the sandbox** (not even `git status`). It creates
+  `.git/index.lock` and can't delete it from the mounted folder, which blocks the owner's next
+  `git add`. Inspect files directly instead; the owner runs git.
 - Build the walking skeleton end-to-end before deepening any one component

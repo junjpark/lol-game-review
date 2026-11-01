@@ -31,6 +31,7 @@ from ..rift import (  # noqa: F401  (bounds re-exported for callers/tests)
     normalize,
     structure_for_event,
 )
+from ..riot.queues import RANKED_SOLO, queue_name
 
 log = logging.getLogger(__name__)
 
@@ -342,6 +343,9 @@ def build_replay_data(
         "matchId": match["metadata"]["matchId"],
         "patch": ".".join(info.get("gameVersion", "").split(".")[:2]),
         "durationS": info.get("gameDuration"),
+        "queueId": info.get("queueId"),
+        "queueName": queue_name(info.get("queueId")),
+        "ranked": info.get("queueId") == RANKED_SOLO,   # the model is only validated on these
         "created": info.get("gameCreation"),
         "winner": winner,
         "participants": ordered,
@@ -506,7 +510,7 @@ const fmtK = v => (v >= 0 ? "+" : "−") + (Math.abs(v) / 1000).toFixed(1) + "k"
 document.getElementById("title").textContent = `${D.matchId}`;
 const created = D.created ? new Date(D.created).toLocaleString() : "";
 document.getElementById("meta").textContent =
-  `patch ${D.patch} · ${mmss((D.durationS || 0) * 1000)} · ${TEAM[D.winner] ? TEAM[D.winner].name + " won" : ""} · ${created}`;
+  `${D.queueName || ""} · patch ${D.patch} · ${mmss((D.durationS || 0) * 1000)} · ${TEAM[D.winner] ? TEAM[D.winner].name + " won" : ""} · ${created}`;
 
 // ---- map background ----------------------------------------------------------------
 const map = document.getElementById("map");
@@ -763,8 +767,10 @@ function drawWinProb() {
   area(y => Math.min(y, wy(0.5)), "#3b82f6");
   area(y => Math.max(y, wy(0.5)), "#ef4444");
   svg("polyline", { points: pts.map(p => p.join(",")).join(" "), fill: "none", stroke: "#e5e7eb", "stroke-width": 1.8 }, wpchart);
-  const legend = svg("text", { x: PL, y: WH - 4, "font-size": 10, fill: "#9ca3af" }, wpchart);
-  legend.textContent = "Blue win probability · above 50% = Blue favoured · model estimate, not a verdict";
+  const legend = svg("text", { x: PL, y: WH - 4, "font-size": 10, fill: D.ranked === false ? "#f59e0b" : "#9ca3af" }, wpchart);
+  legend.textContent = D.ranked === false
+    ? `⚠ ${D.queueName}: model trained on ranked solo/duo only, so treat this curve as rough`
+    : "Blue win probability · above 50% = Blue favoured · model estimate, not a verdict";
   wpCursor = svg("line", { y1: WT, y2: WH - WB, stroke: "#fbbf24", "stroke-width": 1.5 }, wpchart);
   wpDot = svg("circle", { r: 3.5, fill: "#fbbf24" }, wpchart);
   wpLabel = svg("text", { "font-size": 11, fill: "#fbbf24", "font-weight": 600 }, wpchart);

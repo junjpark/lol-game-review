@@ -25,6 +25,12 @@ import numpy as np
 import pandas as pd
 
 from .dataset import FEATURE_NAMES, MONOTONE
+
+_MONO = dict(zip(FEATURE_NAMES, MONOTONE))
+
+
+def _monotone(features: list[str]) -> str:
+    return "(" + ",".join(str(_MONO[f]) for f in features) + ")"
 from .metrics import log_loss
 
 EPS = 1e-6
@@ -82,15 +88,18 @@ XGB_PARAMS = dict(
 )
 
 
-def train_xgb(train: pd.DataFrame, val: pd.DataFrame, params: dict | None = None):
-    """Returns a Booster cut at the best validation round."""
+def train_xgb(train: pd.DataFrame, val: pd.DataFrame, params: dict | None = None,
+              features: list[str] | None = None):
+    """Returns a Booster cut at the best validation round. `features` defaults to all of
+    FEATURE_NAMES (pass V1_FEATURE_NAMES to reproduce the v1 feature set)."""
+    features = features or FEATURE_NAMES
     import xgboost as xgb
 
     p = {**XGB_PARAMS, **(params or {})}
     model = xgb.XGBClassifier(
-        **p, monotone_constraints="(" + ",".join(str(c) for c in MONOTONE) + ")")
-    model.fit(train[FEATURE_NAMES], train["blue_win"],
-              eval_set=[(val[FEATURE_NAMES], val["blue_win"])], verbose=False)
+        **p, monotone_constraints=_monotone(features))
+    model.fit(train[features], train["blue_win"],
+              eval_set=[(val[features], val["blue_win"])], verbose=False)
     booster = model.get_booster()
     best = int(model.best_iteration)
     return booster[: best + 1]
@@ -158,7 +167,7 @@ def out_of_fold_xgb(df: pd.DataFrame, n_rounds: int, k: int = 5, log=print,
     for f in range(k):
         hold = folds == f
         model = xgb.XGBClassifier(
-            **params, monotone_constraints="(" + ",".join(str(c) for c in MONOTONE) + ")")
+            **params, monotone_constraints=_monotone(FEATURE_NAMES))
         model.fit(df.loc[~hold, FEATURE_NAMES], df.loc[~hold, "blue_win"], verbose=False)
         out[hold] = model.predict_proba(df.loc[hold, FEATURE_NAMES])[:, 1]
         log(f"    fold {f + 1}/{k}: {int(hold.sum()):,} rows scored")
@@ -172,7 +181,7 @@ def train_xgb_fixed(df: pd.DataFrame, n_rounds: int, params: dict | None = None)
 
     p = {**XGB_PARAMS, **(params or {}), "n_estimators": n_rounds, "early_stopping_rounds": None}
     model = xgb.XGBClassifier(
-        **p, monotone_constraints="(" + ",".join(str(c) for c in MONOTONE) + ")")
+        **p, monotone_constraints=_monotone(FEATURE_NAMES))
     model.fit(df[FEATURE_NAMES], df["blue_win"], verbose=False)
     return model.get_booster()
 
@@ -196,7 +205,8 @@ def cross_fit_time_calibration(p_oof, df: pd.DataFrame, k: int = 5) -> np.ndarra
 def predict_xgb(booster, df: pd.DataFrame) -> np.ndarray:
     import xgboost as xgb
 
-    return booster.predict(xgb.DMatrix(df[FEATURE_NAMES], feature_names=FEATURE_NAMES))
+    feats = booster.feature_names or FEATURE_NAMES   # a v1 booster knows its 29 features
+    return booster.predict(xgb.DMatrix(df[feats], feature_names=feats))
 
 
 def xgb_size(booster) -> dict:
@@ -213,7 +223,7 @@ def xgb_importance(booster) -> dict[str, float]:
     """Total gain per feature, as a share of the sum."""
     g = booster.get_score(importance_type="total_gain")
     tot = sum(g.values()) or 1.0
-    return {f: g.get(f, 0.0) / tot for f in FEATURE_NAMES}
+    return {f: g.get(f, 0.0) / tot for f in (booster.feature_names or FEATURE_NAMES)}
 
 
 # ---- neural net (comparison) ---------------------------------------------
@@ -226,7 +236,7 @@ class MLPResult:
     curve: list[tuple[int, float, float]]   # (epoch, train log loss, val log loss)
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
-        return self.net.predict_proba(self.scaler.transform(df[FEATURE_NAMES].to_numpy()))[:, 1]
+        return self.net.predict_proba(self.scaler.transform(df[FEATURE_NAMES].fillna(0).to_numpy()))[:, 1]
 
     @property
     def n_params(self) -> int:
@@ -240,9 +250,10 @@ def train_mlp(train: pd.DataFrame, val: pd.DataFrame, hidden=(64, 32), max_epoch
     from sklearn.neural_network import MLPClassifier
     from sklearn.preprocessing import StandardScaler
 
-    scaler = StandardScaler().fit(train[FEATURE_NAMES].to_numpy())
-    Xtr = scaler.transform(train[FEATURE_NAMES].to_numpy())
-    Xva = scaler.transform(val[FEATURE_NAMES].to_numpy())
+    # the net can't take NaN (a role missing from Riot's data); 0 = no difference
+    scaler = StandardScaler().fit(train[FEATURE_NAMES].fillna(0).to_numpy())
+    Xtr = scaler.transform(train[FEATURE_NAMES].fillna(0).to_numpy())
+    Xva = scaler.transform(val[FEATURE_NAMES].fillna(0).to_numpy())
     ytr, yva = train["blue_win"].to_numpy(), val["blue_win"].to_numpy()
     # sub-sample of train for a cheap train-loss readout
     rs = np.random.default_rng(seed).choice(len(Xtr), size=min(50_000, len(Xtr)), replace=False)

@@ -46,15 +46,19 @@ class WinProb:
         if not (d / MODEL_FILE).exists():
             raise FileNotFoundError(f"No model in {d}. Run: python scripts/train_winprob.py")
         meta = json.loads((d / META_FILE).read_text())
-        if meta.get("features") != FEATURE_NAMES:
-            raise ValueError("Saved model was trained on a different feature list than "
-                             "dataset.FEATURES now has — retrain it.")
+        unknown = [f for f in meta.get("features", []) if f not in FEATURE_NAMES]
+        if not meta.get("features") or unknown:
+            raise ValueError(f"Saved model uses features this code can't build ({unknown}); retrain it.")
         if not meta.get("gate_passed"):
             warnings.warn("This win-probability model FAILED its calibration gate; severity "
                           "labels built on it can't be trusted (see winprob_report.html).")
         booster = xgb.Booster()
         booster.load_model(str(d / MODEL_FILE))
         return cls(booster, calibrator_from_dict(meta.get("calibrator")), meta)
+
+    @property
+    def version(self) -> str:
+        return self.meta.get("model_version", "v1")
 
     @property
     def released(self) -> bool:
@@ -64,7 +68,8 @@ class WinProb:
     def predict(self, features: pd.DataFrame) -> np.ndarray:
         import xgboost as xgb
 
-        p = self.booster.predict(xgb.DMatrix(features[FEATURE_NAMES], feature_names=FEATURE_NAMES))
+        feats = self.meta.get("features") or FEATURE_NAMES   # v1 models use the first 29
+        p = self.booster.predict(xgb.DMatrix(features[feats], feature_names=feats))
         if self.calibrator is None:
             return p
         return self.calibrator.apply(p, features["minute"].to_numpy())

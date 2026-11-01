@@ -60,10 +60,16 @@ def load_from_disk(cache: JsonCache, match_id: str) -> tuple[dict, dict] | None:
 
 
 def find_game(
-    cache: JsonCache, match_id: str | None = None, riot_id: str | None = None, back: int = 0
+    cache: JsonCache, match_id: str | None = None, riot_id: str | None = None, back: int = 0,
+    platform: str | None = None, queue: int | None | str = "config",
 ) -> Game:
     """By match ID (disk first, then API), or a Riot ID's recent ranked game (API):
-    back=0 is the latest, back=1 the one before, and so on."""
+    back=0 is the latest, back=1 the one before, and so on.
+
+    `platform` (e.g. "tw2") picks the server whose match history a Riot ID is searched on;
+    default RIOT_PLATFORM from .env. A match ID always routes by its own prefix.
+    `queue` filters a Riot ID's history: default RIOT_QUEUE (ranked solo/duo), an ID such as
+    400 (draft), or None for the most recent game of any kind."""
     if match_id:
         found = load_from_disk(cache, match_id)
         if found:
@@ -73,7 +79,15 @@ def find_game(
 
     from .client import RiotClient  # lazy: only needed when fetching
 
-    client = RiotClient(load_config(), cache)
+    cfg = load_config()
+    if platform:
+        from dataclasses import replace
+
+        from .routing import region_for
+
+        region_for(platform)  # raises a clear error for an unknown server code
+        cfg = replace(cfg, platform=platform.lower())
+    client = RiotClient(cfg, cache)
     puuid = None
     if riot_id:
         name, _, tag = riot_id.partition("#")
@@ -84,9 +98,14 @@ def find_game(
             raise GameNotFound(f"No account found for {riot_id}")
         puuid = account["puuid"]
         if not match_id:
-            ids = client.match_ids(puuid, count=1, start=back)
+            from .queues import queue_name
+
+            ids = client.match_ids(puuid, count=1, start=back, queue=queue)
             if not ids:
-                raise GameNotFound(f"No ranked solo/duo game #{back + 1} back for {riot_id}")
+                q = cfg.queue if queue == "config" else queue
+                raise GameNotFound(
+                    f"No {queue_name(q)} game #{back + 1} back for {riot_id} on {cfg.platform}. "
+                    "Wrong server? Try --platform (e.g. tw2). Different mode? Try --queue any.")
             match_id = ids[0]
             found = load_from_disk(cache, match_id)
             if found:

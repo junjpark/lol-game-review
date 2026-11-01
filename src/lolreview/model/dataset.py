@@ -51,9 +51,26 @@ FEATURES: list[tuple[str, int, str]] = [
     ("gold_diff_3m", 0, "change in gold diff over the last 3 minutes (momentum)"),
     ("gold_diff_5m", 0, "change in gold diff over the last 5 minutes"),
     ("is_diamond", 0, "1 if the game is from the Diamond corpus"),
+    # ---- v2 (Nov 1): how the gold is spread across players (owner's hypothesis, confirmed on
+    # the corpus; see CLAUDE.md). NaN when a role isn't uniquely filled; XGBoost handles it.
+    ("gold_diff_top", +1, "Blue top minus Red top gold"),
+    ("gold_diff_jungle", +1, "Blue jungle minus Red jungle gold"),
+    ("gold_diff_mid", +1, "Blue mid minus Red mid gold"),
+    ("gold_diff_bot", +1, "Blue bot minus Red bot gold"),
+    ("gold_diff_support", +1, "Blue support minus Red support gold"),
+    ("richest_gap", 0, "Blue's richest player minus Red's richest player (gold)"),
+    ("blue_gold_top_share", 0, "share of Blue's gold held by its richest player"),
+    ("red_gold_top_share", 0, "share of Red's gold held by its richest player"),
 ]
 FEATURE_NAMES = [f for f, _, _ in FEATURES]
 MONOTONE = [m for _, m, _ in FEATURES]
+V1_FEATURE_NAMES = FEATURE_NAMES[: FEATURE_NAMES.index("is_diamond") + 1]   # the released v1 model
+MODEL_VERSION = "v2"
+
+ROLES = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
+ROLE_FEATURES = ["gold_diff_top", "gold_diff_jungle", "gold_diff_mid", "gold_diff_bot", "gold_diff_support"]
+SPREAD_FEATURES = [*ROLE_FEATURES, "richest_gap", "blue_gold_top_share", "red_gold_top_share"]
+FRAME_COLUMNS = ["match_id", "minute", "team_id", "role", "gold"]
 
 ELDER_BUFF_MS = 150_000
 BARON_BUFF_MS = 180_000
@@ -117,11 +134,35 @@ def _event_features(frames: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(out, index=frames.index)
 
 
-def build_features(teams: pd.DataFrame, events: pd.DataFrame, keep_final: bool = False,
-                   drop_afk: bool = True) -> pd.DataFrame:
+def gold_spread(frames: pd.DataFrame) -> pd.DataFrame:
+    """Per (match_id, minute): per-role gold diffs, richest-player gap, and each team's
+    gold concentration. `frames`: rows of the frames table (at least FRAME_COLUMNS)."""
+    f = frames[FRAME_COLUMNS]
+    g = f.groupby(["match_id", "minute", "team_id"])["gold"]
+    agg = pd.DataFrame({"mx": g.max(), "tot": g.sum()}).unstack("team_id")
+    out = pd.DataFrame(index=agg.index)
+    out["richest_gap"] = agg[("mx", 100)] - agg[("mx", 200)]
+    out["blue_gold_top_share"] = agg[("mx", 100)] / agg[("tot", 100)].replace(0, np.nan)
+    out["red_gold_top_share"] = agg[("mx", 200)] / agg[("tot", 200)].replace(0, np.nan)
+    rf = f[f["role"].isin(ROLES)]
+    keys = ["match_id", "minute", "team_id", "role"]
+    by_role = rf.groupby(keys)["gold"].agg(["sum", "size"])
+    gold = by_role["sum"].where(by_role["size"] == 1)          # role missing or doubled -> NaN
+    piv = gold.unstack(["team_id", "role"])
+    for role, name in zip(ROLES, ROLE_FEATURES):
+        b, r = piv.get((100, role)), piv.get((200, role))
+        out[name] = (b - r).reindex(out.index) if b is not None and r is not None else np.nan
+    # the team totals ignore roles, so a game with an unassigned role still gets them
+    return out.reset_index()
+
+
+def build_features(teams: pd.DataFrame, events: pd.DataFrame, frames: pd.DataFrame | None = None,
+                   keep_final: bool = False, drop_afk: bool = True) -> pd.DataFrame:
     """teams: rows of the teams table (any number of games). events: rows of the events
-    table for the same games (at least EVENT_COLUMNS). Returns one row per game-minute
-    with FEATURE_NAMES plus match_id, tier, patch, minute, t_ms, blue_win, split."""
+    table for the same games (at least EVENT_COLUMNS). frames: rows of the frames table
+    (at least FRAME_COLUMNS) for the v2 gold-spread features; without it those features are
+    NaN (only acceptable in tests). Returns one row per game-minute with FEATURE_NAMES plus
+    match_id, tier, patch, minute, t_ms, blue_win, split."""
     t = teams[TEAM_COLUMNS]
     blue = t[t["team_id"] == 100].set_index(["match_id", "minute"]).sort_index()
     red = t[t["team_id"] == 200].set_index(["match_id", "minute"]).sort_index()
@@ -154,6 +195,11 @@ def build_features(teams: pd.DataFrame, events: pd.DataFrame, keep_final: bool =
     df["gold_diff_5m"] = df["gold_diff"] - by_game.shift(5).fillna(0)
     df["is_diamond"] = (df["tier"] == "diamond").astype(int)
     df = pd.concat([df, _event_features(df, events)], axis=1)
+    if frames is not None and len(frames):
+        df = df.merge(gold_spread(frames), on=["match_id", "minute"], how="left")   # keeps row order
+    else:
+        for c in SPREAD_FEATURES:
+            df[c] = np.nan
 
     if drop_afk:
         df = df[~df["game_has_afk"]]
@@ -165,28 +211,41 @@ def build_features(teams: pd.DataFrame, events: pd.DataFrame, keep_final: bool =
     return out.reset_index(drop=True)
 
 
-def build_dataset(tiers: tuple[str, ...] = ("emerald", "diamond"), processed_dir=None) -> pd.DataFrame:
-    """The full training table from the extracted teams + events Parquet files.
+DEFAULT_CORPORA = ("emerald", "diamond", "emerald_holdout")
 
-    A game can sit in two corpora — Emerald I and Diamond IV share lobbies (5 such games
-    on the Oct 30 corpus). Each game is kept once, under the first tier listed; otherwise
-    it would count twice.
+
+def tier_of(corpus: str) -> str:
+    """Corpus name -> rank tier: 'emerald_holdout' -> 'emerald', 'diamond' -> 'diamond'."""
+    return corpus.split("_")[0]
+
+
+def build_dataset(corpora: tuple[str, ...] = DEFAULT_CORPORA, processed_dir=None) -> pd.DataFrame:
+    """The full training table from the extracted teams + events + frames Parquet files.
+
+    `corpora` are corpus names (matches_<name>.json). The 16.21 holdout joined training
+    in v2, since it was spent on v1's release check. A game can sit in two corpora (Emerald I and
+    Diamond IV share lobbies): each is kept once, under the first corpus listed.
     """
     from ..extract.build import load
 
     parts = []
-    for tier in tiers:
-        teams = load("teams", tier, processed_dir, columns=TEAM_COLUMNS)
-        events = load("events", tier, processed_dir, columns=EVENT_COLUMNS,
+    for corpus in corpora:
+        teams = load("teams", corpus, processed_dir, columns=TEAM_COLUMNS)
+        events = load("events", corpus, processed_dir, columns=EVENT_COLUMNS,
                       filters=[("type", "in", EVENT_TYPES)])
-        parts.append(build_features(teams, events))
+        frames = load("frames", corpus, processed_dir, columns=FRAME_COLUMNS)
+        part = build_features(teams, events, frames)
+        part["corpus"] = corpus
+        part["tier"] = tier_of(corpus)
+        part["is_diamond"] = (part["tier"] == "diamond").astype("float32")
+        parts.append(part)
     df = pd.concat(parts, ignore_index=True)
-    owner = df.groupby("match_id", sort=False)["tier"].transform("first")
-    return df[df["tier"] == owner].reset_index(drop=True)
+    owner = df.groupby("match_id", sort=False)["corpus"].transform("first")
+    return df[df["corpus"] == owner].reset_index(drop=True)
 
 
 def features_for_game(extracted: dict[str, list[dict]]) -> pd.DataFrame:
     """Features for one game straight from extract_game() output — every snapshot,
     including the final one, for drawing a curve."""
     return build_features(pd.DataFrame(extracted["teams"]), pd.DataFrame(extracted["events"]),
-                          keep_final=True, drop_afk=False)
+                          pd.DataFrame(extracted["frames"]), keep_final=True, drop_afk=False)

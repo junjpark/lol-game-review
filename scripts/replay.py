@@ -29,6 +29,7 @@ from lolreview.model.predict import MODEL_FILE
 from lolreview.riot.cache import JsonCache
 from lolreview.riot.client import ExpiredKey
 from lolreview.riot.ddragon import item_names
+from lolreview.riot.queues import RANKED_SOLO, parse_queue, queue_name
 from lolreview.riot.games import GameNotFound, find_game
 from lolreview.viz.replay import build_replay_data, fetch_map_image, render_html
 
@@ -58,6 +59,12 @@ def main() -> None:
     ap.add_argument("--random", action="store_true", help="pick a random match from a tier's corpus")
     ap.add_argument("--tier", default="emerald")
     ap.add_argument("--riot-id", help='your latest ranked game, e.g. "Name#NA1"')
+    ap.add_argument("--back", type=int, default=0,
+                    help="with --riot-id: 0 = latest ranked game, 1 = the one before, ...")
+    ap.add_argument("--platform", help="server to search a Riot ID's games on, e.g. tw2, na1 "
+                    "(default: RIOT_PLATFORM in .env). Match IDs route by their own prefix.")
+    ap.add_argument("--queue", help="with --riot-id: which games to search: ranked (default), "
+                    "draft, blind, flex, any, or a queue number")
     ap.add_argument("--no-open", action="store_true", help="write the file but don't open it")
     ap.add_argument("--no-map", action="store_true", help="skip the map image (schematic only)")
     ap.add_argument("--offline", action="store_true",
@@ -81,10 +88,16 @@ def main() -> None:
         ap.error("give a match ID, --random, or --riot-id")
 
     try:
-        game = find_game(cache, match_id=mid, riot_id=args.riot_id)
-    except (GameNotFound, ExpiredKey) as exc:
+        game = find_game(cache, match_id=mid, riot_id=args.riot_id, back=args.back,
+                         platform=args.platform, queue=parse_queue(args.queue, default="config"))
+    except (GameNotFound, ExpiredKey, ValueError) as exc:  # ValueError: bad --queue/--platform
         sys.exit(str(exc))
     mid, match, timeline = game.match_id, game.match, game.timeline
+    qid = match["info"].get("queueId")
+    log.info("%s · %s", mid, queue_name(qid))
+    if qid != RANKED_SOLO:
+        log.warning("not ranked solo/duo: the win-probability curve is a rough guide here "
+                    "(the model is trained and validated on ranked solo/duo only)")
 
     ddragon_dir = RAW_DIR / "ddragon"
     patch = ".".join(match["info"].get("gameVersion", "").split(".")[:2])

@@ -37,7 +37,7 @@ proven optimality.
 | 2 — Replay visualizer | ✅ | interactive HTML replay of any game, with the win-probability curve |
 | 3 — Extraction | ✅ | 2.1M player-minute rows, validated against Riot's end-of-game summary |
 | 4 — Baselines | built | percentile of every stat vs. same rank, role and minute |
-| 5 — Win probability | released | XGBoost + time-aware calibration; passed the calibration gate on fresh games (ECE 0.8 pts) |
+| 5 — Win probability | released (v1) | XGBoost + time-aware calibration; passed the calibration gate on fresh games (ECE 0.8 pts). v2 adds how gold is spread across players |
 | 6–10 | | decision detection, coaching |
 
 Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data gotchas:
@@ -75,10 +75,11 @@ python scripts/build_winprob_dataset.py
 python scripts/train_winprob.py                      # --no-nn skips the neural-net comparison
 
 # Release check: the same calibration gate on fresh games (newest patch, new players)
-python scripts/collect_summoners.py --tier EMERALD --target 5000 --name emerald_holdout --exclude emerald,diamond --seed 1
-python scripts/collect_matches.py --name emerald_holdout --patches 16.21 --exclude emerald,diamond --since 2026-10-21 --target 6000
-python scripts/extract.py --tier emerald_holdout
-python scripts/check_holdout.py
+# (use a NEW name each time; a set the model trained on is refused)
+python scripts/collect_summoners.py --tier EMERALD --target 5000 --name emerald_holdout_1622 --exclude emerald,diamond,emerald_holdout --seed 2
+python scripts/collect_matches.py --name emerald_holdout_1622 --patches 16.22 --exclude emerald,diamond,emerald_holdout --since 2026-11-04 --target 6000
+python scripts/extract.py --tier emerald_holdout_1622
+python scripts/check_holdout.py --name emerald_holdout_1622
 
 # Print the hand-check numbers for one of your games
 python scripts/inspect_game.py --riot-id "Name#TAG"

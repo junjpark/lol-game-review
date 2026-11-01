@@ -4,12 +4,12 @@ The ~13.6k training games were looked at while the gate was being redesigned (CL
 Oct 31), so the final word comes from a fresh set: newest patch, players not in the
 training corpus, no shared matches. Same thresholds (metrics.GateSpec), same checks.
 
-    python scripts/collect_summoners.py --tier EMERALD --target 5000 --name emerald_holdout \\
-        --exclude emerald,diamond --seed 1
-    python scripts/collect_matches.py --name emerald_holdout --patches 16.21 \\
-        --exclude emerald,diamond --since 2026-10-21 --target 6000
-    python scripts/extract.py --tier emerald_holdout
-    python scripts/check_holdout.py
+    python scripts/collect_summoners.py --tier EMERALD --target 5000 --name emerald_holdout_1622 \\
+        --exclude emerald,diamond,emerald_holdout --seed 2
+    python scripts/collect_matches.py --name emerald_holdout_1622 --patches 16.22 \\
+        --exclude emerald,diamond,emerald_holdout --since 2026-11-04 --target 6000
+    python scripts/extract.py --tier emerald_holdout_1622
+    python scripts/check_holdout.py --name emerald_holdout_1622
 
 Records the result in models/winprob_meta.json ("holdout", "released") and writes
 data/processed/holdout_report.html. Run it ONCE per fresh set; re-running on the same
@@ -29,7 +29,9 @@ import pandas as pd
 from lolreview.config import MODEL_DIR, PROCESSED_DIR
 from lolreview.extract.build import load as load_table, table_path
 from lolreview.model import metrics, report
-from lolreview.model.dataset import EVENT_COLUMNS, EVENT_TYPES, TEAM_COLUMNS, build_features
+from lolreview.model.dataset import (
+    EVENT_COLUMNS, EVENT_TYPES, FRAME_COLUMNS, TEAM_COLUMNS, build_features, tier_of,
+)
 from lolreview.model.predict import META_FILE, WinProb
 
 OUT_HTML = PROCESSED_DIR / "holdout_report.html"
@@ -45,12 +47,13 @@ def corpus_ids(name: str) -> set[str]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--name", default="emerald_holdout", help="corpus name of the fresh set")
-    ap.add_argument("--train-corpora", default="emerald,diamond")
+    ap.add_argument("--name", required=True,
+                    help="corpus name of the fresh set, e.g. emerald_holdout_1622")
+    ap.add_argument("--train-corpora", help="default: the corpora recorded in the model's metadata")
     args = ap.parse_args()
     name = args.name.lower()
 
-    for t in ("teams", "events"):
+    for t in ("teams", "events", "frames"):
         if not table_path(PROCESSED_DIR, t, name).exists():
             sys.exit(f"No {t} table for {name}. Run: python scripts/extract.py --tier {name}")
     meta_path = MODEL_DIR / META_FILE
@@ -65,15 +68,22 @@ def main() -> None:
               "model weakens the test.")
 
     # ---- leakage guards ---------------------------------------------------------
+    train_corpora = ([c.strip() for c in args.train_corpora.split(",")] if args.train_corpora
+                     else (meta.get("dataset") or {}).get("corpora") or ["emerald", "diamond"])
+    if name in train_corpora:
+        sys.exit(f"{name} is one of this model's training corpora ({', '.join(train_corpora)}): "
+                 "it can't test it. Collect a fresh set (see the docstring).")
     teams = load_table("teams", name, columns=TEAM_COLUMNS)
     events = load_table("events", name, columns=EVENT_COLUMNS, filters=[("type", "in", EVENT_TYPES)])
-    trained = set().union(*(corpus_ids(c.strip()) for c in args.train_corpora.split(",")))
+    frames = load_table("frames", name, columns=FRAME_COLUMNS)
+    trained = set().union(*(corpus_ids(c) for c in train_corpora))
     overlap = set(teams["match_id"].unique()) & trained
     if overlap:
         sys.exit(f"{len(overlap)} holdout matches are in the training corpus — not a fair test.")
 
-    df = build_features(teams, events)
-    df["tier"] = name.split("_")[0]         # e.g. emerald_holdout -> emerald (is_diamond stays 0)
+    df = build_features(teams, events, frames)
+    df["tier"] = tier_of(name)               # e.g. emerald_holdout_1622 -> emerald
+    df["is_diamond"] = (df["tier"] == "diamond").astype("float32")
     df = df.sort_values(["match_id", "minute"], kind="stable").reset_index(drop=True)
     n_games = df["match_id"].nunique()
     print(f"{name}: {n_games:,} games, {len(df):,} game-minutes, patches "

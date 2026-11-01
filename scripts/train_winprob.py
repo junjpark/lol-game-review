@@ -6,8 +6,13 @@
 
 Side by side, on the same train/val/test games:
   simple   logistic on gold diff × minute: the benchmark the real model must beat
-  xgb      gradient-boosted trees with monotone constraints: the production model
+  xgb_v1   XGBoost on the v1 features (team gold only), to show what v2's gold spread adds
+  xgb      gradient-boosted trees with monotone constraints: the production model (v2)
   mlp      a 2-layer neural net: comparison only, not saved
+
+v2 (Nov 1) adds how gold is spread across players (per-role gold, richest-player gap,
+concentration) and trains on the 16.21 holdout too. The previous model is archived to
+models/archive/ before anything is overwritten.
 
 Calibration gate, v2 (owner's explicit decision, Oct 31, after v1 and its fallbacks failed
 on the 1,971 test games; see CLAUDE.md for why). Thresholds are unchanged (metrics.GateSpec):
@@ -39,11 +44,28 @@ import pandas as pd
 
 from lolreview.config import MODEL_DIR, PROCESSED_DIR, ensure_dirs
 from lolreview.model import metrics, models, report
-from lolreview.model.dataset import FEATURE_NAMES, FEATURES, MONOTONE
+from lolreview.model.dataset import FEATURE_NAMES, FEATURES, MODEL_VERSION, MONOTONE, V1_FEATURE_NAMES
 from lolreview.model.predict import META_FILE, MODEL_FILE, WPA_FILE, wpa_distribution
 
 DATASET = PROCESSED_DIR / "winprob_dataset.parquet"
 REPORT = PROCESSED_DIR / "winprob_report.html"
+
+
+def archive_current_model():
+    """Copy the current model files to models/archive/<version>_<built> before overwriting,
+    so the released model is never lost. Returns the archive folder, or None if no model."""
+    import shutil
+
+    if not (MODEL_DIR / MODEL_FILE).exists():
+        return None
+    meta = json.loads((MODEL_DIR / META_FILE).read_text()) if (MODEL_DIR / META_FILE).exists() else {}
+    stamp = (meta.get("built") or "unknown").replace(":", "").replace("+0000", "Z")[:17]
+    dest = MODEL_DIR / "archive" / f"{meta.get('model_version', 'v1')}_{stamp}"
+    dest.mkdir(parents=True, exist_ok=True)
+    for name in (MODEL_FILE, META_FILE, WPA_FILE):
+        if (MODEL_DIR / name).exists():
+            shutil.copy2(MODEL_DIR / name, dest / name)
+    return dest
 
 
 def ms_per_game(predict, df: pd.DataFrame, n_games: int = 50) -> float:
@@ -104,6 +126,14 @@ def main() -> None:
                     "size_bytes": len(booster.save_raw("json")), "train_s": t,
                     "ms_per_game": ms_per_game(lambda d: models.predict_xgb(booster, d), test)})
 
+    # 2b. same settings, v1 features only: what does the gold spread add?
+    print("XGBoost on the v1 features (team gold only), same settings ...")
+    booster_v1, t = models.timed(models.train_xgb, train, val, xgb_params, V1_FEATURE_NAMES)
+    preds["xgb_v1"] = models.predict_xgb(booster_v1, test)
+    entries.append({"key": "xgb_v1", "label": "XGBoost, v1 features", "n_params": models.xgb_size(booster_v1)["learned_numbers"],
+                    "size_bytes": len(booster_v1.save_raw("json")), "train_s": t,
+                    "ms_per_game": ms_per_game(lambda d: models.predict_xgb(booster_v1, d), test)})
+
     # 3. neural net
     mlp_curve = None
     if not args.no_nn:
@@ -133,8 +163,9 @@ def main() -> None:
     production = "xgb_time"
     gate_name = f"{xgb_label} + time-aware calibration"
     preds[production] = calibrator.apply(preds["xgb"], test["minute"].to_numpy())
-    entries.append({**entries[1], "key": production, "label": gate_name, "train_s": None,
-                    "n_params": entries[1]["n_params"] + calibrator.n_params})
+    xgb_entry = next(e for e in entries if e["key"] == "xgb")
+    entries.append({**xgb_entry, "key": production, "label": gate_name, "train_s": None,
+                    "n_params": xgb_entry["n_params"] + calibrator.n_params})
     gates = {k: metrics.calibration_gate(test, p) for k, p in preds.items()}
     for e in entries:
         e["summary"] = metrics.summarize(y_test, preds[e["key"]], g_test)
@@ -147,11 +178,18 @@ def main() -> None:
     # 5. the shipped model: same settings and tree count, trained on ALL games
     print(f"final model: XGBoost on all {df['match_id'].nunique():,} games ...")
     final_booster, t_final = models.timed(models.train_xgb_fixed, df, size["trees"], xgb_params)
+    archived = archive_current_model()
+    if archived:
+        print(f"  previous model archived -> {archived}")
     final_booster.save_model(str(model_path))
     print(f"  {t_final:.0f}s -> {model_path}")
 
     # 6. swing distribution: calibrated out-of-fold predictions, every game honestly held out
     wpa = wpa_distribution(df, oof_cal)
+
+    # 6b. the "fed carry" check: actual vs predicted when one side owns the richest player
+    spread_oof = metrics.gold_spread_check(df, {"v2, out-of-fold": oof_cal})
+    spread_test = metrics.gold_spread_check(test, {e["label"]: preds[e["key"]] for e in entries})
     (MODEL_DIR / WPA_FILE).write_text(json.dumps(wpa, indent=2))
     late_check = final.bins.get(("phase", "late (25+)"))
 
@@ -160,6 +198,7 @@ def main() -> None:
     importance = models.xgb_importance(final_booster)
     meta = {
         "built": built,
+        "model_version": MODEL_VERSION,
         "features": FEATURE_NAMES,
         "feature_meanings": {f: m for f, _, m in FEATURES},
         "monotone": dict(zip(FEATURE_NAMES, MONOTONE)),
@@ -182,7 +221,9 @@ def main() -> None:
         "out_of_fold_seconds": oof_s,
         "test_metrics": {e["key"]: e["summary"] for e in entries},
         "benchmark_gain": gains,
+        "gold_spread_check_oof": spread_oof.to_dict(orient="records"),
         "dataset": {"rows": len(df), "games": games, "tiers": sorted(df["tier"].unique().tolist()),
+                    "corpora": sorted(df["corpus"].unique().tolist()) if "corpus" in df else None,
                     "patches": sorted(df["patch"].unique().tolist())},
         "importance": importance,
     }
@@ -200,6 +241,7 @@ def main() -> None:
         "gates": gates,
         "by_minute": metrics.by_minute(test, preds),
         "tuning": tuning, "volatility": volatility,
+        "spread_oof": spread_oof, "spread_test": spread_test,
         "importance": importance, "mlp_curve": mlp_curve, "wpa": wpa,
     }
     REPORT.write_text(report.render(ctx))
@@ -219,12 +261,16 @@ def main() -> None:
           "that just won a decisive event; mean move in quiet minutes")
     g = gains[production]
     print(f"\n{gate_name} vs benchmark: log loss {g[0]:+.4f} (90% range {g[1]:+.4f} to {g[2]:+.4f})")
-    print("(table above: test-split side by side, every model trained on the same 9.5k games)")
+    print(f"(table above: test-split side by side, every model trained on the same {games['train']:,} games)")
+    print("\nfed-carry check, minutes 15-30, all games out-of-fold (Blue win %, actual vs v2):")
+    for r in spread_oof.itertuples():
+        print(f"  team gold {r[1]:>11}k  {r.case:37} {r.games:5,} games  actual {100 * r[5]:5.1f}%  v2 {100 * r[6]:5.1f}%")
     print(f"\ncalibration gate v2 (all {df['match_id'].nunique():,} games, out-of-fold): "
           f"{'PASSED' if final.passed else 'FAILED'}")
     if final.passed:
-        print("Phase 6 can build on this model. RELEASE still requires the same gate on fresh games:\n"
-              "  python scripts/check_holdout.py")
+        print("Phase 6 can build on this model. RELEASE still requires the same gate on a fresh set\n"
+              "that isn't in training (see scripts/check_holdout.py), e.g.:\n"
+              "  python scripts/check_holdout.py --name emerald_holdout_1622")
     else:
         print(final.checks[~final.checks.passed].to_string(index=False))
         print("\nThe gate blocks release (CLAUDE.md). Don't build Phase 6 severity labels on this model.")

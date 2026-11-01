@@ -325,6 +325,34 @@ def volatility_profile(df: pd.DataFrame, p) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def gold_spread_check(df: pd.DataFrame, preds: dict[str, np.ndarray],
+                      minutes: tuple[int, int] = (15, 30)) -> pd.DataFrame:
+    """The owner's "fed carry" scenario (v2): within a band of team gold diff, compare games
+    where Blue owns the richest player by 1.5k+ with games where Red owns it. Shows the actual
+    Blue win rate next to each model's average prediction. A model that only sees team gold
+    predicts the same for both rows; the actual rates differ by ~10 pts."""
+    m = df["minute"].to_numpy()
+    g = df["gold_diff"].to_numpy() / 1000
+    gap = df["richest_gap"].to_numpy() / 1000
+    y = df["blue_win"].to_numpy()
+    games = df["match_id"].to_numpy()
+    band = (m >= minutes[0]) & (m < minutes[1])
+    rows = []
+    for lo, hi in [(-4, -2), (-2, -0.5), (-0.5, 0.5), (0.5, 2), (2, 4)]:
+        sel = band & (g >= lo) & (g < hi)
+        for case, mask in (("Blue has the richest player by 1.5k+", sel & (gap >= 1.5)),
+                           ("Red has the richest player", sel & (gap <= 0))):
+            if mask.sum() == 0:
+                continue
+            row = {"team gold diff (k)": f"{lo:+g} to {hi:+g}", "case": case,
+                   "games": int(pd.Series(games[mask]).nunique()), "rows": int(mask.sum()),
+                   "Blue won": float(y[mask].mean())}
+            for name, p in preds.items():
+                row[name] = float(np.asarray(p)[mask].mean())
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def by_minute(df: pd.DataFrame, preds: dict[str, np.ndarray], max_minute: int = 45) -> pd.DataFrame:
     """Accuracy and log loss per game minute for each model (minutes with ≥ 200 games)."""
     y = df["blue_win"].to_numpy()

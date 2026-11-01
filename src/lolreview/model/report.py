@@ -201,6 +201,27 @@ def render(ctx: dict) -> str:
                "model. Only the production model has to pass it, and only the production model gets the out-of-fold tier and patch "
                "checks. The comparison models' gate column covers overall and phase on test games.</p>")
 
+    # v2: does the model see how gold is spread? (owner's fed-carry question)
+    for key, title, note in (
+        ("spread_oof", "Fed-carry check: all games, out-of-fold (production model)",
+         "Minutes 15–30. Within each band of team gold diff, games where Blue owns the richest player by 1.5k+ "
+         "vs games where Red owns it. A model that only sees team gold predicts about the same for both rows, "
+         "but the actual win rates differ by about 10 pts. The v2 column should track 'Blue won'."),
+        ("spread_test", "Fed-carry check: test games, every model side by side",
+         "Same check on the test split. Compare the 'XGBoost, v1 features' column with the v2 XGBoost column. "
+         "The test split is small, so these rows are noisier than the out-of-fold table above."),
+    ):
+        t = ctx.get(key)
+        if t is None or not len(t):
+            continue
+        shown = t.copy()
+        for c in shown.columns[4:]:
+            shown[c] = shown[c].map(lambda v: _pct(v))
+        shown["games"] = shown["games"].map(lambda v: f"{v:,}")
+        out.append(f"<h2>{_esc(title)}</h2>")
+        out.append(table(shown.drop(columns=["rows"])))
+        out.append(f"<p class='note'>{_esc(note)}</p>")
+
     # volatility: decisive and reactive, not hedged toward 50%
     vol = ctx.get("volatility") or {}
     if vol:
