@@ -15,7 +15,11 @@ from dotenv import load_dotenv
 
 from .riot.routing import region_for
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# Where .env, data/ and models/ live. Default: this repo. Another project that installs
+# lolreview as a library sets LOLREVIEW_HOME to ITS OWN root (before importing lolreview), so
+# it reads its own .env and never writes into this repo's data/ or models/.
+PROJECT_ROOT = (Path(os.environ["LOLREVIEW_HOME"]).expanduser().resolve()
+                if os.environ.get("LOLREVIEW_HOME") else Path(__file__).resolve().parents[2])
 
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"

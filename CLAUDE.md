@@ -368,6 +368,11 @@ Phase 5 exit check on the owner's games, then Phase 6 (decision detection).
 - Package lives in `src/lolreview/`, installed with `pip install -e .`
 - Subpackages mirror pipeline stages: `riot`, `extract`, `baselines`, `model`, `review`, `viz`
 - Everything under `data/` and `models/` is gitignored; never commit cache or keys
+- **Used as a library by other projects** (e.g. the owner's separate pro-markets repo, Nov 1).
+  `.env`, `data/` and `models/` resolve from `config.PROJECT_ROOT`, which is this repo unless
+  `LOLREVIEW_HOME` is set. The other project sets it to its own root *before* importing
+  lolreview, so nothing it does lands in this repo. Keep library code free of hard-coded paths
+  outside `config`.
 - **Assistants: don't run git in the sandbox** (not even `git status`). It creates
   `.git/index.lock` and can't delete it from the mounted folder, which blocks the owner's next
   `git add`. Inspect files directly instead; the owner runs git.
