@@ -103,6 +103,56 @@ PITS: list[dict] = [
     {"id": "baron", "name": "Baron pit (Voidgrubs, Herald)", "x": 5007, "y": 10471},
 ]
 
+# ---- rough map regions (Phase 6 labels; full region polygons are Phase 7.1) -----------
+# Plain geometry on Riot coordinates (0..~14,900): lanes run along the map edges (top lane =
+# left + top edges, bot lane = bottom + right edges), mid lane along the main diagonal, the river
+# along the other diagonal. Checked against every outer/inner turret position (tests).
+LANE_EDGE = 2200        # top/bot lane: within this of the map edges
+MID_BAND = 1300         # mid lane: |x − y| below this
+RIVER_BAND = 1300       # river: |x + y − 14,800| below this
+PIT_RADIUS = 900         # scuttle crabs sit ~1,000 from the pits and must read as river
+_DIAG = 14800
+
+
+def _base_center(team: int) -> tuple[float, float, float]:
+    nex = [s for s in STRUCTURES if s["team"] == team and s["tier"] == "nexus"]
+    cx, cy = sum(s["x"] for s in nex) / len(nex), sum(s["y"] for s in nex) / len(nex)
+    r = max(((s["x"] - cx) ** 2 + (s["y"] - cy) ** 2) ** 0.5
+            for s in STRUCTURES if s["team"] == team and s["tier"] == "base") + 300
+    return cx, cy, r
+
+
+def region_of(x: float | None, y: float | None, team: int | None = None) -> str:
+    """'top lane', 'Dragon pit', 'your base', 'enemy jungle (top side)', ... Approximate.
+    With `team`, bases and jungles are named relative to that team; without, Blue/Red."""
+    if x is None or y is None:
+        return "unknown"
+
+    def side_name(side: int) -> str:
+        if team is None:
+            return "Blue" if side == 100 else "Red"
+        return "your" if side == team else "enemy"
+
+    for side in (100, 200):
+        cx, cy, r = _base_center(side)
+        if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
+            return f"{side_name(side)} base"
+    for pit in PITS:
+        if (x - pit["x"]) ** 2 + (y - pit["y"]) ** 2 <= PIT_RADIUS ** 2:
+            return pit["name"].split(" (")[0]
+    if x < LANE_EDGE or y > (MAX_Y - LANE_EDGE):
+        return "top lane"
+    if y < LANE_EDGE or x > (MAX_X - LANE_EDGE):
+        return "bot lane"
+    if abs(x - y) < MID_BAND:
+        return "mid lane"
+    half = "top side" if y > x else "bot side"
+    if abs(x + y - _DIAG) < RIVER_BAND:
+        return f"river ({half})"
+    side = 100 if x + y < _DIAG else 200
+    return f"{side_name(side)} jungle ({half})"
+
+
 # ---- jungle camps (approximate) -------------------------------------------------------
 # Blue side measured; red side is the mirror image.
 _BLUE_CAMPS = [

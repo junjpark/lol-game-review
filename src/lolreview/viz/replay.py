@@ -222,6 +222,8 @@ def build_replay_data(
     timeline: dict,
     winprob: list[float] | None = None,
     item_names: dict[int, str] | None = None,
+    moments: list[dict] | None = None,
+    moments_note: str = "",
 ) -> dict:
     """Compact, render-ready view of one game.
 
@@ -353,6 +355,10 @@ def build_replay_data(
         "events": events,
         "curves": {"gold": gold_diff, "xp": xp_diff},
         "winprob": winprob,
+        # Phase 6: [{t0, t1, frame, rank, mine, direction, heading, detail, title}], from
+        # lolreview.review.moments via moments_markers(); drawn on the win-prob chart
+        "moments": moments or [],
+        "momentsNote": moments_note,
         **_landmarks(raw_events),
     }
 
@@ -408,6 +414,11 @@ _TEMPLATE = r"""<!doctype html>
   #chart { width:512px; height:170px; margin-top:10px; cursor:pointer }
   #wpchart { width:512px; height:150px; margin-top:6px; cursor:pointer; display:block }
   #wpchart[hidden] { display:none }
+  #moments-sec[hidden] { display:none }
+  .mo { padding:4px 6px 4px 8px; border-radius:3px; cursor:pointer; border-left:3px solid var(--line); margin:2px 0 }
+  .mo:hover { background:#1d2430 }
+  .mo.good { border-left-color:#22c55e } .mo.bad { border-left-color:#ef4444 } .mo.ctx { border-left-color:#6b7280; opacity:.85 }
+  .mo .h { font-weight:600 } .mo .s { color:var(--muted); font-size:11px; white-space:pre-line }
   .opts { margin-top:6px; color:var(--muted) }
   .opts label, .filters label { margin-right:12px; white-space:nowrap; cursor:pointer }
   #events { position:relative; height:300px; overflow:auto; margin-top:6px;
@@ -469,6 +480,11 @@ _TEMPLATE = r"""<!doctype html>
     </section>
   </div>
   <div class="right">
+    <section id="moments-sec" hidden>
+      <h2>Moments to review</h2>
+      <div class="note" id="moments-note"></div>
+      <div id="moments"></div>
+    </section>
     <section>
       <h2>Key</h2>
       <div class="key" id="key"></div>
@@ -771,6 +787,19 @@ function drawWinProb() {
   legend.textContent = D.ranked === false
     ? `⚠ ${D.queueName}: model trained on ranked solo/duo only, so treat this curve as rough`
     : "Blue win probability · above 50% = Blue favoured · model estimate, not a verdict";
+  // Phase 6 moments: shaded bands (green = good for the reviewed player's team, red = bad,
+  // grey = game swing you weren't part of), numbered by rank, click to jump there.
+  for (const m of (D.moments || [])) {
+    const x0 = cx(m.t0), x1 = Math.max(cx(m.t1), x0 + 3);
+    const col = !m.mine ? "#6b7280" : m.direction === "good" ? "#22c55e" : "#ef4444";
+    const band = svg("rect", { x: x0, y: WT, width: x1 - x0, height: WH - WT - WB, fill: col,
+                               "fill-opacity": m.mine ? 0.22 : 0.14, style: "cursor:pointer" }, wpchart);
+    const tip = svg("title", {}, band); tip.textContent = m.title;
+    band.addEventListener("click", ev => { ev.stopPropagation(); setFrame(m.frame); });
+    const lab = svg("text", { x: (x0 + x1) / 2, y: WT + 10, "text-anchor": "middle", "font-size": 10,
+                              "font-weight": 700, fill: col }, wpchart);
+    lab.textContent = m.mine ? String(m.rank) : "c";
+  }
   wpCursor = svg("line", { y1: WT, y2: WH - WB, stroke: "#fbbf24", "stroke-width": 1.5 }, wpchart);
   wpDot = svg("circle", { r: 3.5, fill: "#fbbf24" }, wpchart);
   wpLabel = svg("text", { "font-size": 11, fill: "#fbbf24", "font-weight": 600 }, wpchart);
@@ -903,7 +932,24 @@ document.addEventListener("keydown", ev => {
   if (ev.key === " ") { togglePlay(); ev.preventDefault(); }
 });
 
-buildKey(); drawChart(); drawWinProb(); buildEvents(); setFrame(Math.min(10, D.frames.length - 1));
+function buildMoments() {
+  if (!D.moments || !D.moments.length) return;
+  document.getElementById("moments-sec").removeAttribute("hidden");
+  document.getElementById("moments-note").textContent = D.momentsNote || "";
+  const box = document.getElementById("moments");
+  for (const m of D.moments) {
+    const row = document.createElement("div");
+    row.className = "mo " + (m.mine ? m.direction : "ctx");
+    const h = document.createElement("div"); h.className = "h"; h.textContent = m.heading;
+    const s = document.createElement("div"); s.className = "s"; s.textContent = m.detail;
+    row.append(h, s);
+    row.title = m.title;
+    row.addEventListener("click", () => setFrame(m.frame));
+    box.appendChild(row);
+  }
+}
+
+buildKey(); drawChart(); drawWinProb(); buildMoments(); buildEvents(); setFrame(Math.min(10, D.frames.length - 1));
 </script>
 </body></html>
 """
