@@ -359,6 +359,15 @@ without it.
     games per bin, coin-flip noise alone gives ECE ≈ 3 pts. Size any future check so per-bin
     noise is well inside its limit.
 
+- **Sidetrack concluded (Nov 1–2): `../lol-pro-markets`** (trading pro LoL on Kalshi). Stopped
+  on its own pre-set kill criteria: Kalshi prices move a median 2.1 s *before* Baron/inhibitor/
+  fight events appear in pro timelines (so live trading is out), and the market's pre-match
+  prices beat Elo ratings (log loss 0.578 vs 0.606; a 5¢-edge bet rule lost ~7¢/contract).
+  **Useful here:** Leaguepedia has Riot v5 match + timeline JSON for **3,697 recent pro games**
+  (LCK/LEC/LCS/internationals 2024–26; LPL has none), and 523/523 sampled ran through
+  `extract_game` unchanged (not yet checked against end-of-game totals). That's a candidate
+  "stronger players" comparison set for Phase 8. Fetch code: `lol-pro-markets/src/lolpro/pro/`.
+
 **Next:** ~Nov 11, collect a fresh 16.22 holdout and run `check_holdout.py --name
 emerald_holdout_1622` once (the v2 release). Meanwhile: 5.3.3 (eyeball stomps/comebacks in the replay) and the
 Phase 5 exit check on the owner's games, then Phase 6 (decision detection).
