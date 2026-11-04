@@ -1,10 +1,19 @@
 name: CI
 
 # Runs the offline test suite (no API key, no data, no trained model needed) and a bug-only lint
-# on every push and pull request. Golden review tests use the fixtures in tests/golden/.
+# on pull requests, and on pushes to main (to confirm the merged result). Branch pushes without a
+# PR don't run it, so a PR branch isn't tested twice. Golden review tests use tests/golden/.
 on:
-  push:
   pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:     # "Run workflow" button in the Actions tab, for a manual run
+
+# A newer push to the same PR cancels the run that's still going for the old commit.
+# Runs on main are never cancelled, so every merged commit gets a full result.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
