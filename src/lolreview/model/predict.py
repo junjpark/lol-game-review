@@ -91,18 +91,45 @@ def swings(df: pd.DataFrame, p) -> pd.DataFrame:
     return s[s["gap"] == 1].drop(columns="gap")
 
 
-def wpa_distribution(df: pd.DataFrame, p, max_minute: int = 40, min_rows: int = 300) -> dict:
-    """Quantiles of |ΔP| per minute (absolute swing, in probability points 0–1). Minutes
-    with too few rows borrow the last reliable minute's numbers."""
-    s = swings(df, p)
-    s["abs"] = s["delta"].abs()
+WINDOWS = (1, 2, 3)
+# finer grid for Phase 6, so a swing's percentile can be interpolated, not just bucketed
+WINDOW_QUANTILES = (0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.975, 0.99, 0.995)
+
+
+def window_swings(df: pd.DataFrame, p, k: int) -> pd.DataFrame:
+    """|ΔP(Blue)| from snapshot m to snapshot m+k within one game, keyed by the START minute m."""
+    s = pd.DataFrame({"match_id": df["match_id"].to_numpy(),
+                      "minute": df["minute"].to_numpy().astype(int), "p": np.asarray(p, float)})
+    g = s.groupby("match_id", sort=False)
+    later_p, later_m = g["p"].shift(-k), g["minute"].shift(-k)
+    ok = (later_m - s["minute"]) == k
+    return pd.DataFrame({"minute": s["minute"][ok], "abs": (later_p - s["p"])[ok].abs()})
+
+
+def _quantile_rows(s: pd.DataFrame, quantiles, minutes, min_rows: int) -> dict:
     out, last = {}, None
-    for minute in range(1, max_minute + 1):
+    for minute in minutes:
         g = s.loc[s["minute"] == minute, "abs"]
         if len(g) >= min_rows:
-            last = {f"q{int(q * 100)}": float(g.quantile(q)) for q in SWING_QUANTILES}
+            last = {f"q{q * 100:g}": float(g.quantile(q)) for q in quantiles}
             last["rows"] = int(len(g))
         if last is not None:
             out[str(minute)] = last
+    return out
+
+
+def wpa_distribution(df: pd.DataFrame, p, max_minute: int = 40, min_rows: int = 300) -> dict:
+    """Quantiles of |ΔP| (absolute swing, probability points 0–1). Minutes with too few rows
+    borrow the last reliable minute's numbers.
+
+    by_minute: 1-minute swings keyed by the END minute (original, kept for compatibility).
+    windows:   {k: {start minute: quantiles}} for k-minute swings (Phase 6: a moment spanning
+               k minutes is compared with k-minute swings starting at the same minute)."""
+    s = swings(df, p)
+    s["abs"] = s["delta"].abs()
+    out = _quantile_rows(s, SWING_QUANTILES, range(1, max_minute + 1), min_rows)
+    windows = {str(k): _quantile_rows(window_swings(df, p, k), WINDOW_QUANTILES,
+                                      range(0, max_minute + 1), min_rows) for k in WINDOWS}
     return {"quantiles": list(SWING_QUANTILES), "by_minute": out,
-            "overall": {f"q{int(q * 100)}": float(s["abs"].quantile(q)) for q in SWING_QUANTILES}}
+            "overall": {f"q{int(q * 100)}": float(s["abs"].quantile(q)) for q in SWING_QUANTILES},
+            "window_quantiles": list(WINDOW_QUANTILES), "windows": windows}

@@ -178,3 +178,41 @@ wrong. He was "in" dragon fights he wasn't at, and solo kills in different lanes
 What the player *did* (Phase 7 `action_taken`), what they could see (Phase 7
 `knowable_at_the_time`), what stronger players do (Phase 8), coaching text (Phase 9),
 `downstream` consequences (Phase 7.4).
+
+## Build log (moved verbatim from CLAUDE.md, Nov 4)
+
+- **Phase 6 built (Nov 2), validation pending. Read `docs/phase6-spec.md`** (definitions,
+  thresholds, owner decisions D1–D6, amendments, corpus sanity). Code: `src/lolreview/review/`
+  (`moments.py`, `death_timer.py`), `scripts/moments.py`, `scripts/build_death_timers.py`,
+  `tests/test_moments.py`; replay draws moment bands + a "Moments to review" panel.
+  - Owner decisions: two lists (*your moments* vs *game swings*, never graded against you); one
+    combined swing per minute (no splitting credit); percentile vs same-length swings at that
+    minute (≥ 75 shown, ≥ 90 notable, ≥ 99 major) **and ≥ 5 pts**; death cost = measured timer
+    + minute-accurate return; validate on TW2 (qualitative) + any remembered NA games.
+  - **Measured on the corpus (Nov 2):** death timers (health = 0 at snapshots; monotone table
+    in code, ±few s; positions while dead stay at the death spot, so respawn comes only from the
+    timer); "nearby" = 2,500 units (catches 74% of credited participants, 25% of others, so it's
+    labelled "nearby, not credited"); fights = kills ≤ 15 s and ≤ 3,000 units apart; objective
+    helper lists exist for 99% Baron / 81% dragon / 71% inhib / 44% tower.
+  - **Gotcha fixed:** separate fights between the same two snapshots each got the whole
+    minute's swing → `merge_by_snapshot` (spec amendment 2).
+  - **Owner's validation games 1–2 (Nov 2, TW2 draft): "verdicts right, analysis wrong".** The
+    merge had also merged *involvement*, so a top-lane 1v1 made him "in" the dragon fight. Fixed:
+    a moment keeps separate **parts** (own place via `rift.region_of`, own fight size, own
+    involvement), and only the swing is shared (amendment 3). Events link as one fight only if
+    they share a player or are ≤ 1,500 units apart (amendment 4: 92% of kill links share a player).
+    Involvement names what Riot credited ("credited with an assist on Miss Fortune"). Note:
+    **Riot's assist credit can disagree with the player's memory** (game 1 at 23:30). Show the
+    credit, don't argue it. Games 1–2 are now tuning games; pass/fail counts later games
+    (`docs/phase6-validation.md`).
+  - Corpus sanity: winners' moments 67% good. With the 2/3-minute swing windows (written by the
+    Nov 2 retrain), a **median of 3 moments/game** (50% of games < 4; 24% have 6–8). Conservative
+    by design (spec says don't pad); validation's "missed moments" decides if it's too strict.
+  - Current model (retrained Nov 2, identical metrics to the Nov 1 v2): XGBoost **depth 5,
+    min_child_weight 800, 707 trees** (tuning picks it; v1 was depth 4/50/446), trained on
+    19,393 games; calibrator trust 5:1.02, 15:0.98, 25:0.94, 35:0.91, 45:0.87. Test log loss
+    0.5512 (v1 features 0.5549, MLP 0.5525). Dev gate passed; `released` unset until the 16.22
+    holdout.
+  - **Owner to do:** `moments.py` on ≥ 5 remembered games, marking each moment important /
+    minor / unfair, plus anything missed → `docs/phase6-validation.md`. Pass: ≥ 70%
+    important+minor, ≤ 1 unfair per game, "something new" in ≥ half the games.

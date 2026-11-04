@@ -165,7 +165,7 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 ### 5.3 Validate
 - [x] 5.3.1 **Calibration plot** — when it predicts 70%, do ~70% of those teams win? This matters more than accuracy
 - [x] 5.3.2 Accuracy by game phase — should sit near 50% at minute 0 and climb
-- [ ] 5.3.3 Eyeball known stomps and known comebacks; curves should look right
+- [x] 5.3.3 Eyeball known stomps and known comebacks; curves should look right (owner, Nov 2: curve matched in-game feel on several games, qualitative, played on TW2)
 - [x] 5.3.4 Check calibration separately for Emerald vs Diamond subsets (+ patch groups; then the unchanged gate passed on a fresh 5,739-game holdout)
 
 ### 5.4 Integrate
@@ -182,17 +182,17 @@ This is the debugging substrate for every hard field later. You cannot verify "w
 *Est: 2–3 evenings · Depends on: 5.x*
 
 ### 6.1 Candidate moments
-- [ ] 6.1.1 Rule-based triggers: deaths, objective contests, large WPA swings, back timings
-- [ ] 6.1.2 Merge overlapping triggers into single moments
+- [x] 6.1.1 Rule-based triggers: deaths, objective contests, large WPA swings, back timings (fights/objectives/structures + quiet swings; base visits from item purchases are context, not triggers — `docs/phase6-spec.md`)
+- [x] 6.1.2 Merge overlapping triggers into single moments (time+distance clustering, then same-snapshot merge)
 
 ### 6.2 Ranking and selection
-- [ ] 6.2.1 Score candidates by |WPA| and percentile-vs-similar
-- [ ] 6.2.2 Select top 6–8 per game — you are not reviewing every tick
+- [x] 6.2.1 Score candidates by |WPA| and percentile-vs-similar (percentile among same-length swings at that minute, out-of-fold; ≥ 5 pts)
+- [x] 6.2.2 Select top 6–8 per game — you are not reviewing every tick (up to 8, ≥ 2 min apart, no padding: corpus median is 4)
 
 ### 6.3 Direct cost
-- [ ] 6.3.1 Lockout duration **measured** from position data (death → re-entering lane region), not estimated from champion speed
-- [ ] 6.3.2 CS and XP forgone during lockout
-- [ ] 6.3.3 Objectives conceded during lockout
+- [x] 6.3.1 Lockout duration **measured** from position data (death → re-entering lane region), not estimated from champion speed (time dead from a death-timer table *measured* on the corpus; back in play from minute snapshots — owner decision D5)
+- [x] 6.3.2 CS and XP forgone during lockout (vs lane opponent)
+- [x] 6.3.3 Objectives conceded during lockout
 
 **Exit criteria:** for any game, a ranked list of 6–8 reviewable moments with their WPA and direct cost.
 

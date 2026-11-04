@@ -170,7 +170,7 @@ reasonable — is not recoverable.
 
 ### Implication for Phase 7.3
 
-`knowable_at_the_time` was the designed defence against hindsight bias, and `CLAUDE.md`
+`knowable_at_the_time` was the designed defence against hindsight bias, and `docs/decisions.md`
 calls hindsight bias the top product risk. Three of its four fields are now unavailable.
 Options, in rough order of preference:
 

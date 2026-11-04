@@ -1,0 +1,227 @@
+{
+ "review": {
+  "context": [],
+  "match_id": "TW2_459982083",
+  "moments": [
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Aatrox",
+      "t_ms": 305830,
+      "type": "CHAMPION_KILL",
+      "victim": "Garen",
+      "where": "top lane"
+     },
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Locke",
+      "t_ms": 334070,
+      "type": "CHAMPION_KILL",
+      "victim": "Kog'Maw",
+      "where": "mid lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "top lane: killed Garen"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 6,
+    "minute_start": 5,
+    "p_end": 0.6471,
+    "p_start": 0.4287,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "killed Garen"
+      ],
+      "t_first_ms": 305830,
+      "t_last_ms": 305830,
+      "text": "Top lane: you killed Garen",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 334070,
+      "t_last_ms": 334070,
+      "text": "Mid lane: Locke killed Kog'Maw (you weren't there)",
+      "where": "mid lane"
+     }
+    ],
+    "percentile": 98.0,
+    "rank": 1,
+    "shop_visits": [],
+    "summary": "Top lane: you killed Garen · Mid lane: Locke killed Kog'Maw (you weren't there)",
+    "swing": 0.2183,
+    "t_first_ms": 305830,
+    "t_last_ms": 334070
+   }
+  ],
+  "notes": [],
+  "player": {
+   "champion": "Aatrox",
+   "participant_id": 6,
+   "riot_id": "Player6#GOLD",
+   "role": "TOP",
+   "team": 200,
+   "win": true
+  },
+  "series": [
+   {
+    "minute": 0,
+    "p_team": 0.5029,
+    "t_ms": 0
+   },
+   {
+    "minute": 1,
+    "p_team": 0.5023,
+    "t_ms": 60012
+   },
+   {
+    "minute": 2,
+    "p_team": 0.4849,
+    "t_ms": 120043
+   },
+   {
+    "minute": 3,
+    "p_team": 0.5333,
+    "t_ms": 180045
+   },
+   {
+    "minute": 4,
+    "p_team": 0.4112,
+    "t_ms": 240066
+   },
+   {
+    "minute": 5,
+    "p_team": 0.4287,
+    "t_ms": 300075
+   },
+   {
+    "minute": 6,
+    "p_team": 0.6471,
+    "t_ms": 360088
+   },
+   {
+    "minute": 7,
+    "p_team": 0.6456,
+    "t_ms": 420170
+   },
+   {
+    "minute": 8,
+    "p_team": 0.7021,
+    "t_ms": 480200
+   },
+   {
+    "minute": 9,
+    "p_team": 0.7354,
+    "t_ms": 540217
+   },
+   {
+    "minute": 10,
+    "p_team": 0.7677,
+    "t_ms": 600248
+   },
+   {
+    "minute": 11,
+    "p_team": 0.7625,
+    "t_ms": 660270
+   },
+   {
+    "minute": 12,
+    "p_team": 0.7399,
+    "t_ms": 720280
+   },
+   {
+    "minute": 13,
+    "p_team": 0.7088,
+    "t_ms": 780309
+   },
+   {
+    "minute": 14,
+    "p_team": 0.7877,
+    "t_ms": 840327
+   },
+   {
+    "minute": 15,
+    "p_team": 0.8638,
+    "t_ms": 900334
+   },
+   {
+    "minute": 16,
+    "p_team": 0.9387,
+    "t_ms": 960367
+   },
+   {
+    "minute": 17,
+    "p_team": 0.9594,
+    "t_ms": 1020386
+   },
+   {
+    "minute": 18,
+    "p_team": 0.9524,
+    "t_ms": 1080416
+   },
+   {
+    "minute": 19,
+    "p_team": 0.9718,
+    "t_ms": 1140444
+   },
+   {
+    "minute": 20,
+    "p_team": 0.967,
+    "t_ms": 1147065
+   }
+  ],
+  "spec": {
+   "close_units": 1500,
+   "context_pct": 90,
+   "fight_gap_s": 15,
+   "link_units": 3000,
+   "major_pct": 99,
+   "max_context": 3,
+   "max_moments": 8,
+   "max_span_min": 3,
+   "min_abs_swing": 0.05,
+   "min_spacing_min": 2,
+   "nearby_units": 2500,
+   "notable_pct": 90,
+   "objective_lead_s": 30,
+   "quiet_pct": 90,
+   "shop_visit_gap_s": 30,
+   "show_pct": 75
+  },
+  "team_id": 200
+ },
+ "text": [
+  "Aatrox (TOP, Player6#GOLD) — win",
+  "Moments to review: 1 (shown: ≥ 75th percentile swing for that point in the game, ≥ 5 pts)",
+  "  #1 · 5:00–6:00 · notable · +22 pts · 2 things at once",
+  "      Top lane: you killed Garen",
+  "      Mid lane: Locke killed Kog'Maw (you weren't there)",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+ ]
+}

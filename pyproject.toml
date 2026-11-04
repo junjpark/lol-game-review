@@ -31,6 +31,12 @@ where = ["src"]
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["data", "models", "venv"]
+
+[tool.ruff.lint]
+# CI gate: only rules that flag real bugs (syntax errors, undefined names, broken comparisons).
+# Widen deliberately, one rule family at a time, fixing what it finds.
+select = ["E9", "F63", "F7", "F82"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

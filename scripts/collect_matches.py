@@ -195,7 +195,7 @@ def main() -> None:
     done = load_done(progress_file)
     seen = load_seen(manifest_file)
 
-    # Baselines must be single-region (CLAUDE.md): never let two servers share a corpus.
+    # Baselines must be single-region (docs/decisions.md): never let two servers share a corpus.
     servers = {platform_of_match_id(m) for m in seen}
     sampled_on = {s["platform"] for s in summoners if s.get("platform")}
     if (servers and servers != {cfg.platform}) or (sampled_on and sampled_on != {cfg.platform}):

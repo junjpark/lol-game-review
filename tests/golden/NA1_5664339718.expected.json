@@ -1,0 +1,1452 @@
+{
+ "review": {
+  "context": [
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 488702,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "Baron pit"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 494126,
+      "type": "CHAMPION_KILL",
+      "victim": "Yasuo",
+      "where": "Baron pit"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 494894,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 502310,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 507262,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     }
+    ],
+    "involvement": "none",
+    "involvement_detail": [],
+    "kind": "objective",
+    "label": "notable",
+    "minute_end": 9,
+    "minute_start": 8,
+    "p_end": 0.4704,
+    "p_start": 0.6248,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 2,
+       "kills_us": 0,
+       "them": 3,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 488702,
+      "t_last_ms": 507262,
+      "text": "Baron pit: 2v3 teamfight, your team lost 0–2; enemy took Voidgrub; enemy took Voidgrub; enemy took Voidgrub (you weren't there)",
+      "where": "Baron pit"
+     }
+    ],
+    "percentile": 92.2,
+    "rank": 1,
+    "shop_visits": [],
+    "summary": "Baron pit: 2v3 teamfight, your team lost 0–2; enemy took Voidgrub; enemy took Voidgrub; enemy took Voidgrub (you weren't there)",
+    "swing": -0.1544,
+    "t_first_ms": 488702,
+    "t_last_ms": 507262
+   }
+  ],
+  "match_id": "NA1_5664339718",
+  "moments": [
+   {
+    "confidence_notes": [
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 3,
+     "lane_opponent": "Senna",
+     "level_at_death": 1,
+     "lockout_minutes": [
+      1,
+      3
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 118654,
+     "seconds_dead": 9.9,
+     "xp_forgone": 92
+    },
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 105581,
+      "type": "CHAMPION_KILL",
+      "victim": "Zyra",
+      "where": "bot lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Senna",
+      "t_ms": 108754,
+      "type": "CHAMPION_KILL",
+      "victim": "Janna",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: credited with an assist on Zyra",
+     "bot lane: died to Senna"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 2,
+    "minute_start": 1,
+    "p_end": 0.5743,
+    "p_start": 0.5046,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 1,
+       "them": 2,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Zyra",
+       "died to Senna"
+      ],
+      "t_first_ms": 105581,
+      "t_last_ms": 108754,
+      "text": "Bot lane: 2v2 skirmish, your team traded 1–1 (you: credited with an assist on Zyra; died to Senna)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 75.3,
+    "rank": 8,
+    "shop_visits": [
+     [
+      115801,
+      115801
+     ]
+    ],
+    "summary": "Bot lane: 2v2 skirmish, your team traded 1–1 (you: credited with an assist on Zyra; died to Senna)",
+    "swing": 0.0697,
+    "t_first_ms": 105581,
+    "t_last_ms": 108754
+   },
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 7,
+     "lane_opponent": "Senna",
+     "level_at_death": 3,
+     "lockout_minutes": [
+      6,
+      7
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 374491,
+     "seconds_dead": 12.2,
+     "xp_forgone": 190
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Zyra",
+      "t_ms": 362291,
+      "type": "CHAMPION_KILL",
+      "victim": "Janna",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 364562,
+      "type": "CHAMPION_KILL",
+      "victim": "Senna",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 404729,
+      "type": "CHAMPION_KILL",
+      "victim": "Yasuo",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 416523,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: died to Zyra",
+     "bot lane: credited with an assist on Senna"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 7,
+    "minute_start": 6,
+    "p_end": 0.5775,
+    "p_start": 0.7106,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 1,
+       "them": 2,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Zyra",
+       "credited with an assist on Senna"
+      ],
+      "t_first_ms": 362291,
+      "t_last_ms": 364562,
+      "text": "Bot lane: 2v2 skirmish, your team traded 1–1 (you: died to Zyra; credited with an assist on Senna)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 2,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 404729,
+      "t_last_ms": 404729,
+      "text": "Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there)",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 416523,
+      "t_last_ms": 416523,
+      "text": "Bot lane: Fiddlesticks killed Kayn (you weren't there)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 85.5,
+    "rank": 5,
+    "shop_visits": [
+     [
+      373684,
+      373684
+     ]
+    ],
+    "summary": "Bot lane: 2v2 skirmish, your team traded 1–1 (you: died to Zyra; credited with an assist on Senna) · Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there) · Bot lane: Fiddlesticks killed Kayn (you weren't there)",
+    "swing": -0.1331,
+    "t_first_ms": 362291,
+    "t_last_ms": 416523
+   },
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Ezreal",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Brand",
+      "t_ms": 1359744,
+      "type": "CHAMPION_KILL",
+      "victim": "Senna",
+      "where": "river (bot side)"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1361156,
+      "type": "BUILDING_KILL",
+      "what": "your top outer tower",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Ezreal",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Brand",
+      "t_ms": 1363495,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Brand",
+       "Yasuo",
+       "Ezreal",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Kayn",
+      "t_ms": 1364564,
+      "type": "CHAMPION_KILL",
+      "victim": "Fiddlesticks",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Brand",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 1367377,
+      "type": "CHAMPION_KILL",
+      "victim": "Zyra",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "by": "you",
+      "t_ms": 1368613,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Mountain Drake",
+      "where": "Dragon pit"
+     },
+     {
+      "by": "you",
+      "t_ms": 1383066,
+      "type": "BUILDING_KILL",
+      "what": "their mid outer tower",
+      "where": "mid lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 1408520,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Baron",
+      "where": "Baron pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "mid lane: credited with an assist on Senna",
+     "mid lane: credited with an assist on Malzahar",
+     "mid lane: credited with an assist on Fiddlesticks",
+     "mid lane: credited with an assist on Zyra",
+     "mid lane: credited with helping take Mountain Drake",
+     "mid lane: credited with helping take their mid outer tower",
+     "Baron pit: credited with helping take Baron"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 24,
+    "minute_start": 22,
+    "p_end": 0.8777,
+    "p_start": 0.6734,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 4,
+       "them": 4,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Senna",
+       "credited with an assist on Malzahar",
+       "credited with an assist on Fiddlesticks",
+       "credited with an assist on Zyra",
+       "credited with helping take Mountain Drake",
+       "credited with helping take their mid outer tower"
+      ],
+      "t_first_ms": 1359744,
+      "t_last_ms": 1383066,
+      "text": "Mid lane: 5v4 teamfight, your team won 4–0; your team took Mountain Drake; your team took their mid outer tower (you: credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Fiddlesticks; credited with an assist on Zyra; credited with helping take Mountain Drake; credited with helping take their mid outer tower)",
+      "where": "mid lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1361156,
+      "t_last_ms": 1361156,
+      "text": "Top lane: enemy took your top outer tower (you weren't there)",
+      "where": "top lane"
+     },
+     {
+      "fight": null,
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with helping take Baron"
+      ],
+      "t_first_ms": 1408520,
+      "t_last_ms": 1408520,
+      "text": "Baron pit: your team took Baron (you: credited with helping take Baron)",
+      "where": "Baron pit"
+     }
+    ],
+    "percentile": 87.5,
+    "rank": 4,
+    "shop_visits": [
+     [
+      1415292,
+      1418131
+     ]
+    ],
+    "summary": "Mid lane: 5v4 teamfight, your team won 4–0; your team took Mountain Drake; your team took their mid outer tower (you: credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Fiddlesticks; credited with an assist on Zyra; credited with helping take Mountain Drake; credited with helping take their mid outer tower) · Top lane: enemy took your top outer tower (you weren't there) · Baron pit: your team took Baron (you: credited with helping take Baron)",
+    "swing": 0.2043,
+    "t_first_ms": 1359744,
+    "t_last_ms": 1408520
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 26,
+     "lane_opponent": "Senna",
+     "level_at_death": 12,
+     "lockout_minutes": [
+      24,
+      26
+     ],
+     "objectives_lost": [
+      {
+       "t_ms": 1517824,
+       "what": "your mid inner tower"
+      }
+     ],
+     "respawn_ms": 1526556,
+     "seconds_dead": 40.1,
+     "xp_forgone": 1569
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Brand",
+      "t_ms": 1447327,
+      "type": "CHAMPION_KILL",
+      "victim": "Senna",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Heimerdinger",
+       "Malzahar",
+       "Zyra"
+      ],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 1486088,
+      "type": "CHAMPION_KILL",
+      "victim": "Brand",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Heimerdinger",
+       "Zyra"
+      ],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 1486456,
+      "type": "CHAMPION_KILL",
+      "victim": "Janna",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Fiddlesticks",
+       "Malzahar",
+       "Zyra"
+      ],
+      "by": "enemy",
+      "killer": "Heimerdinger",
+      "t_ms": 1488290,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Zyra"
+      ],
+      "by": "enemy",
+      "killer": "Heimerdinger",
+      "t_ms": 1492399,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Heimerdinger",
+       "Fiddlesticks",
+       "Zyra"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 1492942,
+      "type": "CHAMPION_KILL",
+      "victim": "Yasuo",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Yasuo",
+      "t_ms": 1493746,
+      "type": "CHAMPION_KILL",
+      "victim": "Fiddlesticks",
+      "where": "mid lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "your jungle (bot side): within 2,500 units at minute 24",
+     "mid lane: died to Fiddlesticks",
+     "mid lane: credited with an assist on Fiddlesticks"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 25,
+    "minute_start": 24,
+    "p_end": 0.663,
+    "p_start": 0.8777,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 24"
+      ],
+      "t_first_ms": 1447327,
+      "t_last_ms": 1447327,
+      "text": "Your jungle (bot side): Brand killed Senna (you were nearby, not credited)",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "fight": {
+       "kills_them": 5,
+       "kills_us": 1,
+       "them": 4,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Fiddlesticks",
+       "credited with an assist on Fiddlesticks"
+      ],
+      "t_first_ms": 1486088,
+      "t_last_ms": 1493746,
+      "text": "Mid lane: 5v4 teamfight, your team lost 1–5 (you: died to Fiddlesticks; credited with an assist on Fiddlesticks)",
+      "where": "mid lane"
+     }
+    ],
+    "percentile": 95.1,
+    "rank": 1,
+    "shop_visits": [],
+    "summary": "Your jungle (bot side): Brand killed Senna (you were nearby, not credited) · Mid lane: 5v4 teamfight, your team lost 1–5 (you: died to Fiddlesticks; credited with an assist on Fiddlesticks)",
+    "swing": -0.2147,
+    "t_first_ms": 1447327,
+    "t_last_ms": 1493746
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective"
+    ],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Kayn",
+       "Yasuo",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 1922470,
+      "type": "CHAMPION_KILL",
+      "victim": "Heimerdinger",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Zyra",
+      "t_ms": 1951831,
+      "type": "CHAMPION_KILL",
+      "victim": "Brand",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Fiddlesticks",
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Zyra",
+      "t_ms": 1962588,
+      "type": "CHAMPION_KILL",
+      "victim": "Yasuo",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Zyra",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 1969507,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Fiddlesticks",
+       "Zyra",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 1972982,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "mid lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: credited with an assist on Heimerdinger",
+     "your jungle (bot side): within 2,500 units at minute 32"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 33,
+    "minute_start": 32,
+    "p_end": 0.4,
+    "p_start": 0.5393,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 4
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Heimerdinger"
+      ],
+      "t_first_ms": 1922470,
+      "t_last_ms": 1922470,
+      "text": "Bot lane: 4v1 teamfight, your team won 1–0 (you: credited with an assist on Heimerdinger)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 4,
+       "kills_us": 0,
+       "them": 4,
+       "us": 4
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 32"
+      ],
+      "t_first_ms": 1951831,
+      "t_last_ms": 1972982,
+      "text": "Your jungle (bot side): 4v4 teamfight, your team lost 0–4 (you were nearby, not credited)",
+      "where": "your jungle (bot side)"
+     }
+    ],
+    "percentile": 79.8,
+    "rank": 7,
+    "shop_visits": [],
+    "summary": "Bot lane: 4v1 teamfight, your team won 1–0 (you: credited with an assist on Heimerdinger) · Your jungle (bot side): 4v4 teamfight, your team lost 0–4 (you were nearby, not credited)",
+    "swing": -0.1393,
+    "t_first_ms": 1922470,
+    "t_last_ms": 1972982
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 37,
+     "lane_opponent": "Senna",
+     "level_at_death": 15,
+     "lockout_minutes": [
+      35,
+      37
+     ],
+     "objectives_lost": [
+      {
+       "t_ms": 2157279,
+       "what": "your top inner tower"
+      },
+      {
+       "t_ms": 2180287,
+       "what": "your top base tower"
+      }
+     ],
+     "respawn_ms": 2200601,
+     "seconds_dead": 52.4,
+     "xp_forgone": 515
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Heimerdinger"
+      ],
+      "by": "enemy",
+      "killer": "Fiddlesticks",
+      "t_ms": 2117343,
+      "type": "CHAMPION_KILL",
+      "victim": "Brand",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Fiddlesticks",
+       "Malzahar"
+      ],
+      "by": "enemy",
+      "killer": "Senna",
+      "t_ms": 2135003,
+      "type": "CHAMPION_KILL",
+      "victim": "Yasuo",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Kayn",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 2139778,
+      "type": "CHAMPION_KILL",
+      "victim": "Fiddlesticks",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Fiddlesticks",
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Heimerdinger",
+      "t_ms": 2145205,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Yasuo",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 2145982,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Heimerdinger",
+      "t_ms": 2148201,
+      "type": "CHAMPION_KILL",
+      "victim": "Janna",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Heimerdinger",
+       "Malzahar",
+       "Senna"
+      ],
+      "by": "enemy",
+      "killer": "Zyra",
+      "t_ms": 2148938,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "your jungle (top side)"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 2157279,
+      "type": "BUILDING_KILL",
+      "what": "your top inner tower",
+      "where": "top lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "top lane: within 2,500 units at minute 36",
+     "top lane: credited with an assist on Fiddlesticks",
+     "top lane: credited with an assist on Malzahar",
+     "top lane: died to Heimerdinger"
+    ],
+    "kind": "structure",
+    "label": "moderate",
+    "minute_end": 36,
+    "minute_start": 35,
+    "p_end": 0.1968,
+    "p_start": 0.3698,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 2,
+       "us": 1
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 36"
+      ],
+      "t_first_ms": 2117343,
+      "t_last_ms": 2117343,
+      "text": "Top lane: 1v2 skirmish, your team lost 0–1 (you were nearby, not credited)",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 4,
+       "kills_us": 2,
+       "them": 5,
+       "us": 4
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Fiddlesticks",
+       "credited with an assist on Malzahar",
+       "died to Heimerdinger"
+      ],
+      "t_first_ms": 2135003,
+      "t_last_ms": 2157279,
+      "text": "Top lane: 4v5 teamfight, your team lost 2–4; enemy took your top inner tower (you: credited with an assist on Fiddlesticks; credited with an assist on Malzahar; died to Heimerdinger)",
+      "where": "top lane"
+     }
+    ],
+    "percentile": 82.4,
+    "rank": 6,
+    "shop_visits": [],
+    "summary": "Top lane: 1v2 skirmish, your team lost 0–1 (you were nearby, not credited) · Top lane: 4v5 teamfight, your team lost 2–4; enemy took your top inner tower (you: credited with an assist on Fiddlesticks; credited with an assist on Malzahar; died to Heimerdinger)",
+    "swing": -0.173,
+    "t_first_ms": 2117343,
+    "t_last_ms": 2157279
+   },
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "by": "enemy",
+      "t_ms": 2243924,
+      "type": "BUILDING_KILL",
+      "what": "your bot inner tower",
+      "where": "bot lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 2250472,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Baron",
+      "where": "Baron pit"
+     },
+     {
+      "assists": [
+       "Brand",
+       "Yasuo",
+       "Ezreal",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Kayn",
+      "t_ms": 2251666,
+      "type": "CHAMPION_KILL",
+      "victim": "Fiddlesticks",
+      "where": "Baron pit"
+     },
+     {
+      "assists": [
+       "Ezreal",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Brand",
+      "t_ms": 2255234,
+      "type": "CHAMPION_KILL",
+      "victim": "Senna",
+      "where": "enemy jungle (top side)"
+     },
+     {
+      "assists": [
+       "Brand",
+       "Yasuo",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 2256110,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "river (top side)"
+     },
+     {
+      "assists": [
+       "Brand",
+       "Kayn",
+       "Janna"
+      ],
+      "by": "you",
+      "killer": "Ezreal",
+      "t_ms": 2258575,
+      "type": "CHAMPION_KILL",
+      "victim": "Zyra",
+      "where": "river (top side)"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 2261207,
+      "type": "BUILDING_KILL",
+      "what": "your bot base tower",
+      "where": "your base"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 2269390,
+      "type": "BUILDING_KILL",
+      "what": "your bot inhibitor",
+      "where": "your base"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "Baron pit: credited with helping take Baron",
+     "Baron pit: credited with an assist on Fiddlesticks",
+     "Baron pit: credited with an assist on Senna",
+     "Baron pit: credited with an assist on Malzahar",
+     "Baron pit: credited with an assist on Zyra"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 38,
+    "minute_start": 37,
+    "p_end": 0.4343,
+    "p_start": 0.2238,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2243924,
+      "t_last_ms": 2243924,
+      "text": "Bot lane: enemy took your bot inner tower (you weren't there)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 4,
+       "them": 4,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with helping take Baron",
+       "credited with an assist on Fiddlesticks",
+       "credited with an assist on Senna",
+       "credited with an assist on Malzahar",
+       "credited with an assist on Zyra"
+      ],
+      "t_first_ms": 2250472,
+      "t_last_ms": 2258575,
+      "text": "Baron pit: 5v4 teamfight, your team won 4–0; your team took Baron (you: credited with helping take Baron; credited with an assist on Fiddlesticks; credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Zyra)",
+      "where": "Baron pit"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2261207,
+      "t_last_ms": 2269390,
+      "text": "Your base: enemy took your bot base tower; enemy took your bot inhibitor (you weren't there)",
+      "where": "your base"
+     }
+    ],
+    "percentile": 89.9,
+    "rank": 2,
+    "shop_visits": [
+     [
+      2267921,
+      2269190
+     ]
+    ],
+    "summary": "Bot lane: enemy took your bot inner tower (you weren't there) · Baron pit: 5v4 teamfight, your team won 4–0; your team took Baron (you: credited with helping take Baron; credited with an assist on Fiddlesticks; credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Zyra) · Your base: enemy took your bot base tower; enemy took your bot inhibitor (you weren't there)",
+    "swing": 0.2105,
+    "t_first_ms": 2243924,
+    "t_last_ms": 2269390
+   },
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "by": "you",
+      "t_ms": 2341924,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Mountain Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "Dragon pit: credited with helping take Mountain Drake"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 40,
+    "minute_start": 39,
+    "p_end": 0.5091,
+    "p_start": 0.2874,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with helping take Mountain Drake"
+      ],
+      "t_first_ms": 2341924,
+      "t_last_ms": 2341924,
+      "text": "Dragon pit: your team took Mountain Drake (you: credited with helping take Mountain Drake)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 89.7,
+    "rank": 3,
+    "shop_visits": [],
+    "summary": "Dragon pit: your team took Mountain Drake (you: credited with helping take Mountain Drake)",
+    "swing": 0.2217,
+    "t_first_ms": 2341924,
+    "t_last_ms": 2341924
+   }
+  ],
+  "notes": [],
+  "player": {
+   "champion": "Janna",
+   "participant_id": 10,
+   "riot_id": "Player10#GOLD",
+   "role": "UTILITY",
+   "team": 200,
+   "win": true
+  },
+  "series": [
+   {
+    "minute": 0,
+    "p_team": 0.5029,
+    "t_ms": 0
+   },
+   {
+    "minute": 1,
+    "p_team": 0.5046,
+    "t_ms": 60000
+   },
+   {
+    "minute": 2,
+    "p_team": 0.5743,
+    "t_ms": 120010
+   },
+   {
+    "minute": 3,
+    "p_team": 0.6465,
+    "t_ms": 180089
+   },
+   {
+    "minute": 4,
+    "p_team": 0.6963,
+    "t_ms": 240104
+   },
+   {
+    "minute": 5,
+    "p_team": 0.7361,
+    "t_ms": 300132
+   },
+   {
+    "minute": 6,
+    "p_team": 0.7106,
+    "t_ms": 360153
+   },
+   {
+    "minute": 7,
+    "p_team": 0.5775,
+    "t_ms": 420157
+   },
+   {
+    "minute": 8,
+    "p_team": 0.6248,
+    "t_ms": 480162
+   },
+   {
+    "minute": 9,
+    "p_team": 0.4704,
+    "t_ms": 540177
+   },
+   {
+    "minute": 10,
+    "p_team": 0.5166,
+    "t_ms": 600199
+   },
+   {
+    "minute": 11,
+    "p_team": 0.4651,
+    "t_ms": 660223
+   },
+   {
+    "minute": 12,
+    "p_team": 0.4846,
+    "t_ms": 720249
+   },
+   {
+    "minute": 13,
+    "p_team": 0.6135,
+    "t_ms": 780261
+   },
+   {
+    "minute": 14,
+    "p_team": 0.5102,
+    "t_ms": 840279
+   },
+   {
+    "minute": 15,
+    "p_team": 0.5131,
+    "t_ms": 900308
+   },
+   {
+    "minute": 16,
+    "p_team": 0.5626,
+    "t_ms": 960326
+   },
+   {
+    "minute": 17,
+    "p_team": 0.5287,
+    "t_ms": 1020345
+   },
+   {
+    "minute": 18,
+    "p_team": 0.6044,
+    "t_ms": 1080372
+   },
+   {
+    "minute": 19,
+    "p_team": 0.5515,
+    "t_ms": 1140380
+   },
+   {
+    "minute": 20,
+    "p_team": 0.6094,
+    "t_ms": 1200413
+   },
+   {
+    "minute": 21,
+    "p_team": 0.6667,
+    "t_ms": 1260431
+   },
+   {
+    "minute": 22,
+    "p_team": 0.6734,
+    "t_ms": 1320463
+   },
+   {
+    "minute": 23,
+    "p_team": 0.8527,
+    "t_ms": 1380494
+   },
+   {
+    "minute": 24,
+    "p_team": 0.8777,
+    "t_ms": 1440514
+   },
+   {
+    "minute": 25,
+    "p_team": 0.663,
+    "t_ms": 1500541
+   },
+   {
+    "minute": 26,
+    "p_team": 0.4737,
+    "t_ms": 1560557
+   },
+   {
+    "minute": 27,
+    "p_team": 0.5395,
+    "t_ms": 1620581
+   },
+   {
+    "minute": 28,
+    "p_team": 0.5796,
+    "t_ms": 1680586
+   },
+   {
+    "minute": 29,
+    "p_team": 0.6176,
+    "t_ms": 1740615
+   },
+   {
+    "minute": 30,
+    "p_team": 0.5512,
+    "t_ms": 1800627
+   },
+   {
+    "minute": 31,
+    "p_team": 0.5227,
+    "t_ms": 1860635
+   },
+   {
+    "minute": 32,
+    "p_team": 0.5393,
+    "t_ms": 1920666
+   },
+   {
+    "minute": 33,
+    "p_team": 0.4,
+    "t_ms": 1980697
+   },
+   {
+    "minute": 34,
+    "p_team": 0.393,
+    "t_ms": 2040702
+   },
+   {
+    "minute": 35,
+    "p_team": 0.3698,
+    "t_ms": 2100728
+   },
+   {
+    "minute": 36,
+    "p_team": 0.1968,
+    "t_ms": 2160753
+   },
+   {
+    "minute": 37,
+    "p_team": 0.2238,
+    "t_ms": 2220774
+   },
+   {
+    "minute": 38,
+    "p_team": 0.4343,
+    "t_ms": 2280789
+   },
+   {
+    "minute": 39,
+    "p_team": 0.2874,
+    "t_ms": 2340817
+   },
+   {
+    "minute": 40,
+    "p_team": 0.5091,
+    "t_ms": 2400825
+   },
+   {
+    "minute": 41,
+    "p_team": 0.6153,
+    "t_ms": 2460838
+   },
+   {
+    "minute": 42,
+    "p_team": 0.6529,
+    "t_ms": 2520858
+   },
+   {
+    "minute": 43,
+    "p_team": 0.63,
+    "t_ms": 2580868
+   },
+   {
+    "minute": 44,
+    "p_team": 0.5617,
+    "t_ms": 2640901
+   },
+   {
+    "minute": 45,
+    "p_team": 0.5089,
+    "t_ms": 2700922
+   },
+   {
+    "minute": 46,
+    "p_team": 0.78,
+    "t_ms": 2726796
+   }
+  ],
+  "spec": {
+   "close_units": 1500,
+   "context_pct": 90,
+   "fight_gap_s": 15,
+   "link_units": 3000,
+   "major_pct": 99,
+   "max_context": 3,
+   "max_moments": 8,
+   "max_span_min": 3,
+   "min_abs_swing": 0.05,
+   "min_spacing_min": 2,
+   "nearby_units": 2500,
+   "notable_pct": 90,
+   "objective_lead_s": 30,
+   "quiet_pct": 90,
+   "shop_visit_gap_s": 30,
+   "show_pct": 75
+  },
+  "team_id": 200
+ },
+ "text": [
+  "Janna (UTILITY, Player10#GOLD) — win",
+  "Moments to review: 8 (shown: ≥ 75th percentile swing for that point in the game, ≥ 5 pts)",
+  "  #8 · 1:00–2:00 · moderate · +7 pts",
+  "      Bot lane: 2v2 skirmish, your team traded 1–1 (you: credited with an assist on Zyra; died to Senna)",
+  "      dead 10s; back in play by 3:00; vs Senna meanwhile: XP -92 · you were in base buying at 1:55",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #5 · 6:00–7:00 · moderate · -13 pts · 3 things at once",
+  "      Bot lane: 2v2 skirmish, your team traded 1–1 (you: died to Zyra; credited with an assist on Senna)",
+  "      Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there)",
+  "      Bot lane: Fiddlesticks killed Kayn (you weren't there)",
+  "      dead 12s; back in play by 7:00; vs Senna meanwhile: XP -190 · you were in base buying at 6:13",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #4 · 22:00–24:00 · moderate · +20 pts · 3 things at once",
+  "      Mid lane: 5v4 teamfight, your team won 4–0; your team took Mountain Drake; your team took their mid outer tower (you: credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Fiddlesticks; credited with an assist on Zyra; credited with helping take Mountain Drake; credited with helping take their mid outer tower)",
+  "      Top lane: enemy took your top outer tower (you weren't there)",
+  "      Baron pit: your team took Baron (you: credited with helping take Baron)",
+  "      you were in base buying at 23:35",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "  #1 · 24:00–25:00 · notable · -21 pts · 2 things at once",
+  "      Your jungle (bot side): Brand killed Senna (you were nearby, not credited)",
+  "      Mid lane: 5v4 teamfight, your team lost 1–5 (you: died to Fiddlesticks; credited with an assist on Fiddlesticks)",
+  "      dead 40s; back in play by 26:00; vs Senna meanwhile: XP -1,569; lost meanwhile: your mid inner tower",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #7 · 32:00–33:00 · moderate · -14 pts · 2 things at once",
+  "      Bot lane: 4v1 teamfight, your team won 1–0 (you: credited with an assist on Heimerdinger)",
+  "      Your jungle (bot side): 4v4 teamfight, your team lost 0–4 (you were nearby, not credited)",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "  #6 · 35:00–36:00 · moderate · -17 pts · 2 things at once",
+  "      Top lane: 1v2 skirmish, your team lost 0–1 (you were nearby, not credited)",
+  "      Top lane: 4v5 teamfight, your team lost 2–4; enemy took your top inner tower (you: credited with an assist on Fiddlesticks; credited with an assist on Malzahar; died to Heimerdinger)",
+  "      dead 52s; back in play by 37:00; vs Senna meanwhile: XP -515; lost meanwhile: your top inner tower, your top base tower",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #2 · 37:00–38:00 · moderate · +21 pts · 3 things at once",
+  "      Bot lane: enemy took your bot inner tower (you weren't there)",
+  "      Baron pit: 5v4 teamfight, your team won 4–0; your team took Baron (you: credited with helping take Baron; credited with an assist on Fiddlesticks; credited with an assist on Senna; credited with an assist on Malzahar; credited with an assist on Zyra)",
+  "      Your base: enemy took your bot base tower; enemy took your bot inhibitor (you weren't there)",
+  "      you were in base buying at 37:47",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "  #3 · 39:00–40:00 · moderate · +22 pts",
+  "      Dragon pit: your team took Mountain Drake (you: credited with helping take Mountain Drake)",
+  "Game swings you weren't part of (context, not about you):",
+  "  context · 8:00–9:00 · notable · -15 pts",
+  "      Baron pit: 2v3 teamfight, your team lost 0–2; enemy took Voidgrub; enemy took Voidgrub; enemy took Voidgrub (you weren't there)"
+ ]
+}

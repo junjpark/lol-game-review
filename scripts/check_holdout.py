@@ -1,6 +1,6 @@
 """Release check: the unchanged calibration gate on games the model has never seen.
 
-The ~13.6k training games were looked at while the gate was being redesigned (CLAUDE.md,
+The ~13.6k training games were looked at while the gate was being redesigned (docs/model-history.md,
 Oct 31), so the final word comes from a fresh set: newest patch, players not in the
 training corpus, no shared matches. Same thresholds (metrics.GateSpec), same checks.
 
@@ -14,6 +14,8 @@ training corpus, no shared matches. Same thresholds (metrics.GateSpec), same che
 Records the result in models/winprob_meta.json ("holdout", "released") and writes
 data/processed/holdout_report.html. Run it ONCE per fresh set; re-running on the same
 games after changing the model would turn the holdout into another training signal.
+Enforced: a used set is refused (data/processed/holdouts_used.json, plus any model's recorded
+holdout) unless the owner passes --reuse-reason; a reuse is recorded and never releases a model.
 """
 
 from __future__ import annotations
@@ -28,7 +30,7 @@ import pandas as pd
 
 from lolreview.config import MODEL_DIR, PROCESSED_DIR
 from lolreview.extract.build import load as load_table, table_path
-from lolreview.model import metrics, report
+from lolreview.model import holdouts, metrics, report
 from lolreview.model.dataset import (
     EVENT_COLUMNS, EVENT_TYPES, FRAME_COLUMNS, TEAM_COLUMNS, build_features, tier_of,
 )
@@ -50,8 +52,16 @@ def main() -> None:
     ap.add_argument("--name", required=True,
                     help="corpus name of the fresh set, e.g. emerald_holdout_1622")
     ap.add_argument("--train-corpora", help="default: the corpora recorded in the model's metadata")
+    ap.add_argument("--reuse-reason", help="owner's decision only: re-check a set that was already used "
+                    "(recorded; can't release a model)")
     args = ap.parse_args()
     name = args.name.lower()
+    try:
+        reuse = holdouts.check_unused(name, PROCESSED_DIR, MODEL_DIR, args.reuse_reason)
+    except holdouts.HoldoutAlreadyUsed as exc:
+        sys.exit(str(exc))
+    if reuse:
+        print(f"REUSE of {name} (reason: {args.reuse_reason}). Diagnostic only: this run can't release a model.")
 
     for t in ("teams", "events", "frames"):
         if not table_path(PROCESSED_DIR, t, name).exists():
@@ -113,6 +123,12 @@ def main() -> None:
         print(res.checks[~res.checks["passed"]].to_string(index=False))
 
     # ---- record -------------------------------------------------------------------
+    holdouts.record_use(name, PROCESSED_DIR, {
+        "model_version": meta.get("model_version", "v1"), "model_built": meta.get("built"), "games": int(n_games),
+        "passed": bool(res.passed)}, reuse_reason=args.reuse_reason if reuse else None)
+    if reuse:
+        print(f"\nreuse recorded in {PROCESSED_DIR / holdouts.USED_FILE}; model metadata unchanged")
+        return
     meta["holdout"] = {
         "name": name, "checked": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "games": int(n_games), "rows": int(len(df)),

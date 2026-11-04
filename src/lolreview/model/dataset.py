@@ -52,7 +52,7 @@ FEATURES: list[tuple[str, int, str]] = [
     ("gold_diff_5m", 0, "change in gold diff over the last 5 minutes"),
     ("is_diamond", 0, "1 if the game is from the Diamond corpus"),
     # ---- v2 (Nov 1): how the gold is spread across players (owner's hypothesis, confirmed on
-    # the corpus; see CLAUDE.md). NaN when a role isn't uniquely filled; XGBoost handles it.
+    # the corpus; see docs/model-history.md). NaN when a role isn't uniquely filled; XGBoost handles it.
     ("gold_diff_top", +1, "Blue top minus Red top gold"),
     ("gold_diff_jungle", +1, "Blue jungle minus Red jungle gold"),
     ("gold_diff_mid", +1, "Blue mid minus Red mid gold"),

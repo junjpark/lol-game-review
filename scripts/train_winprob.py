@@ -15,7 +15,7 @@ concentration) and trains on the 16.21 holdout too. The previous model is archiv
 models/archive/ before anything is overwritten.
 
 Calibration gate, v2 (owner's explicit decision, Oct 31, after v1 and its fallbacks failed
-on the 1,971 test games; see CLAUDE.md for why). Thresholds are unchanged (metrics.GateSpec):
+on the 1,971 test games; see docs/model-history.md for why). Thresholds are unchanged (metrics.GateSpec):
   1. Out-of-fold XGBoost predictions for ALL games (5 folds by game).
   2. Time-aware calibration (models.TimeCalibrator), cross-fitted: each fold is calibrated
      by a calibrator fitted on the other four, so no game is scored by anything that saw it.
@@ -273,7 +273,7 @@ def main() -> None:
               "  python scripts/check_holdout.py --name emerald_holdout_1622")
     else:
         print(final.checks[~final.checks.passed].to_string(index=False))
-        print("\nThe gate blocks release (CLAUDE.md). Don't build Phase 6 severity labels on this model.")
+        print("\nThe gate blocks release (docs/decisions.md). Don't build Phase 6 severity labels on this model.")
     print(f"\nmodel  -> {model_path} (trained on all games)\nreport -> {REPORT}")
 
 

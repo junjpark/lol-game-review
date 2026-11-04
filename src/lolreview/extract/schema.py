@@ -51,7 +51,7 @@ EVENTS: dict[str, str] = {
     "victim_id": "int8",
     "team_id": "int16",          # team that acted
     "assists": "list<int8>",
-    "x": "int32", "y": "int32",  # as recorded by Riot — see CLAUDE.md for which types are reliable
+    "x": "int32", "y": "int32",  # as recorded by Riot — see docs/riot-gotchas.md for which types are reliable
     "structure_id": "str",       # lolreview.rift id for turret/inhibitor kills and plates
     "monster": "str",            # FIRE_DRAGON, BARON_NASHOR, HORDE, ...
     "ward_type": "str",

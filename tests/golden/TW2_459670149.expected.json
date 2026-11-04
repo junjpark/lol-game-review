@@ -1,0 +1,1029 @@
+{
+ "review": {
+  "context": [
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Morgana"
+      ],
+      "by": "you",
+      "killer": "Draven",
+      "t_ms": 624649,
+      "type": "CHAMPION_KILL",
+      "victim": "Ziggs",
+      "where": "bot lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 635700,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Mountain Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "none",
+    "involvement_detail": [],
+    "kind": "objective",
+    "label": "notable",
+    "minute_end": 11,
+    "minute_start": 10,
+    "p_end": 0.4364,
+    "p_start": 0.2711,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 624649,
+      "t_last_ms": 624649,
+      "text": "Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "bot lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 635700,
+      "t_last_ms": 635700,
+      "text": "Dragon pit: your team took Mountain Drake (you weren't there)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 94.1,
+    "rank": 1,
+    "shop_visits": [
+     [
+      603359,
+      603927
+     ]
+    ],
+    "summary": "Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there) · Dragon pit: your team took Mountain Drake (you weren't there)",
+    "swing": 0.1653,
+    "t_first_ms": 624649,
+    "t_last_ms": 635700
+   },
+   {
+    "confidence_notes": [
+     "4 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "by": "enemy",
+      "t_ms": 848703,
+      "type": "BUILDING_KILL",
+      "what": "your mid outer tower",
+      "where": "mid lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 864143,
+      "type": "BUILDING_KILL",
+      "what": "their bot outer tower",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Morgana"
+      ],
+      "by": "you",
+      "killer": "Draven",
+      "t_ms": 892777,
+      "type": "CHAMPION_KILL",
+      "victim": "Wukong",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Syndra"
+      ],
+      "by": "you",
+      "killer": "Aurelion Sol",
+      "t_ms": 900103,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "mid lane"
+     }
+    ],
+    "involvement": "none",
+    "involvement_detail": [],
+    "kind": "structure",
+    "label": "notable",
+    "minute_end": 15,
+    "minute_start": 14,
+    "p_end": 0.703,
+    "p_start": 0.5349,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 848703,
+      "t_last_ms": 848703,
+      "text": "Mid lane: enemy took your mid outer tower (you weren't there)",
+      "where": "mid lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 864143,
+      "t_last_ms": 864143,
+      "text": "Bot lane: your team took their bot outer tower (you weren't there)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 892777,
+      "t_last_ms": 892777,
+      "text": "Your jungle (bot side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 900103,
+      "t_last_ms": 900103,
+      "text": "Mid lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "mid lane"
+     }
+    ],
+    "percentile": 93.3,
+    "rank": 2,
+    "shop_visits": [
+     [
+      888235,
+      888389
+     ]
+    ],
+    "summary": "Mid lane: enemy took your mid outer tower (you weren't there) · Bot lane: your team took their bot outer tower (you weren't there) · Your jungle (bot side): 2v1 skirmish, your team won 1–0 (you weren't there) · Mid lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+    "swing": 0.1681,
+    "t_first_ms": 848703,
+    "t_last_ms": 900103
+   }
+  ],
+  "match_id": "TW2_459670149",
+  "moments": [
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Morgana"
+      ],
+      "by": "you",
+      "killer": "Draven",
+      "t_ms": 739044,
+      "type": "CHAMPION_KILL",
+      "victim": "Ziggs",
+      "where": "bot lane"
+     },
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Aatrox",
+      "t_ms": 753529,
+      "type": "CHAMPION_KILL",
+      "victim": "Nasus",
+      "where": "top lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 779378,
+      "type": "CHAMPION_KILL",
+      "victim": "Aurelion Sol",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "top lane: killed Nasus"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 13,
+    "minute_start": 12,
+    "p_end": 0.5523,
+    "p_start": 0.4096,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 739044,
+      "t_last_ms": 739044,
+      "text": "Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "killed Nasus"
+      ],
+      "t_first_ms": 753529,
+      "t_last_ms": 753529,
+      "text": "Top lane: you killed Nasus",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 779378,
+      "t_last_ms": 779378,
+      "text": "Dragon pit: Wukong killed Aurelion Sol (you weren't there)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 88.8,
+    "rank": 2,
+    "shop_visits": [],
+    "summary": "Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there) · Top lane: you killed Nasus · Dragon pit: Wukong killed Aurelion Sol (you weren't there)",
+    "swing": 0.1426,
+    "t_first_ms": 739044,
+    "t_last_ms": 779378
+   },
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Aatrox",
+      "t_ms": 932674,
+      "type": "CHAMPION_KILL",
+      "victim": "Nasus",
+      "where": "top lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "top lane: killed Nasus"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 16,
+    "minute_start": 15,
+    "p_end": 0.7906,
+    "p_start": 0.703,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "killed Nasus"
+      ],
+      "t_first_ms": 932674,
+      "t_last_ms": 932674,
+      "text": "Top lane: you killed Nasus",
+      "where": "top lane"
+     }
+    ],
+    "percentile": 75.4,
+    "rank": 4,
+    "shop_visits": [],
+    "summary": "Top lane: you killed Nasus",
+    "swing": 0.0877,
+    "t_first_ms": 932674,
+    "t_last_ms": 932674
+   },
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 25,
+     "cs_forgone": 7,
+     "lane_opponent": "Nasus",
+     "level_at_death": 15,
+     "lockout_minutes": [
+      23,
+      25
+     ],
+     "objectives_lost": [
+      {
+       "t_ms": 1448559,
+       "what": "Ocean Drake"
+      }
+     ],
+     "respawn_ms": 1484214,
+     "seconds_dead": 47.8,
+     "xp_forgone": 1162
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Draven"
+      ],
+      "by": "you",
+      "killer": "Syndra",
+      "t_ms": 1410547,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Aatrox",
+       "Morgana"
+      ],
+      "by": "you",
+      "killer": "Draven",
+      "t_ms": 1413694,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Miss Fortune"
+      ],
+      "by": "enemy",
+      "killer": "Ziggs",
+      "t_ms": 1415710,
+      "type": "CHAMPION_KILL",
+      "victim": "Morgana",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Miss Fortune"
+      ],
+      "by": "enemy",
+      "killer": "Ziggs",
+      "t_ms": 1415710,
+      "type": "CHAMPION_KILL",
+      "victim": "Draven",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1418190,
+      "type": "BUILDING_KILL",
+      "what": "your top inner tower",
+      "where": "top lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1421674,
+      "type": "CHAMPION_KILL",
+      "victim": "Aurelion Sol",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Ziggs"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1427087,
+      "type": "CHAMPION_KILL",
+      "victim": "Syndra",
+      "where": "mid lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Nasus",
+      "t_ms": 1436414,
+      "type": "CHAMPION_KILL",
+      "victim": "Aatrox",
+      "where": "top lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1448559,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Ocean Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "Dragon pit: credited with an assist on Miss Fortune",
+     "top lane: within 2,500 units at minute 24",
+     "top lane: died to Nasus"
+    ],
+    "kind": "objective",
+    "label": "notable",
+    "minute_end": 25,
+    "minute_start": 23,
+    "p_end": 0.5673,
+    "p_start": 0.8193,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 4,
+       "kills_us": 2,
+       "them": 4,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Miss Fortune"
+      ],
+      "t_first_ms": 1410547,
+      "t_last_ms": 1448559,
+      "text": "Dragon pit: 5v4 teamfight, your team lost 2–4; enemy took Ocean Drake (you: credited with an assist on Miss Fortune)",
+      "where": "Dragon pit"
+     },
+     {
+      "fight": null,
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 24"
+      ],
+      "t_first_ms": 1418190,
+      "t_last_ms": 1418190,
+      "text": "Top lane: enemy took your top inner tower (you were nearby, not credited)",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Nasus"
+      ],
+      "t_first_ms": 1436414,
+      "t_last_ms": 1436414,
+      "text": "Top lane: you died to Nasus",
+      "where": "top lane"
+     }
+    ],
+    "percentile": 92.2,
+    "rank": 1,
+    "shop_visits": [
+     [
+      1438418,
+      1438585
+     ]
+    ],
+    "summary": "Dragon pit: 5v4 teamfight, your team lost 2–4; enemy took Ocean Drake (you: credited with an assist on Miss Fortune) · Top lane: enemy took your top inner tower (you were nearby, not credited) · Top lane: you died to Nasus",
+    "swing": -0.252,
+    "t_first_ms": 1410547,
+    "t_last_ms": 1448559
+   },
+   {
+    "confidence_notes": [
+     "6 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Aurelion Sol"
+      ],
+      "by": "you",
+      "killer": "Syndra",
+      "t_ms": 1757421,
+      "type": "CHAMPION_KILL",
+      "victim": "Ziggs",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Malzahar"
+      ],
+      "by": "enemy",
+      "killer": "Miss Fortune",
+      "t_ms": 1763740,
+      "type": "CHAMPION_KILL",
+      "victim": "Morgana",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Draven",
+       "Morgana"
+      ],
+      "by": "you",
+      "killer": "Aurelion Sol",
+      "t_ms": 1765852,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Miss Fortune"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1779773,
+      "type": "CHAMPION_KILL",
+      "victim": "Draven",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Miss Fortune"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1784902,
+      "type": "CHAMPION_KILL",
+      "victim": "Syndra",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Miss Fortune"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1788109,
+      "type": "CHAMPION_KILL",
+      "victim": "Aurelion Sol",
+      "where": "mid lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1809583,
+      "type": "BUILDING_KILL",
+      "what": "your mid base tower",
+      "where": "your base"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1817506,
+      "type": "BUILDING_KILL",
+      "what": "your top base tower",
+      "where": "your base"
+     },
+     {
+      "assists": [
+       "Aatrox"
+      ],
+      "by": "you",
+      "killer": "Morgana",
+      "t_ms": 1824062,
+      "type": "CHAMPION_KILL",
+      "victim": "Nasus",
+      "where": "your base"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1826734,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Ocean Drake",
+      "where": "Dragon pit"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1828409,
+      "type": "BUILDING_KILL",
+      "what": "your mid inhibitor",
+      "where": "your base"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "your base: credited with an assist on Nasus"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 31,
+    "minute_start": 29,
+    "p_end": 0.2452,
+    "p_start": 0.4561,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1757421,
+      "t_last_ms": 1757421,
+      "text": "River (bot side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "river (bot side)"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 1,
+       "them": 2,
+       "us": 3
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1763740,
+      "t_last_ms": 1765852,
+      "text": "Mid lane: 3v2 teamfight, your team traded 1–1 (you weren't there)",
+      "where": "mid lane"
+     },
+     {
+      "fight": {
+       "kills_them": 3,
+       "kills_us": 0,
+       "them": 3,
+       "us": 3
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1779773,
+      "t_last_ms": 1809583,
+      "text": "Your base: 3v3 teamfight, your team lost 0–3; enemy took your mid base tower (you weren't there)",
+      "where": "your base"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Nasus"
+      ],
+      "t_first_ms": 1817506,
+      "t_last_ms": 1824062,
+      "text": "Your base: 2v1 skirmish, your team won 1–0; enemy took your top base tower (you: credited with an assist on Nasus)",
+      "where": "your base"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1826734,
+      "t_last_ms": 1826734,
+      "text": "Dragon pit: enemy took Ocean Drake (you weren't there)",
+      "where": "Dragon pit"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1828409,
+      "t_last_ms": 1828409,
+      "text": "Your base: enemy took your mid inhibitor (you weren't there)",
+      "where": "your base"
+     }
+    ],
+    "percentile": 81.7,
+    "rank": 3,
+    "shop_visits": [
+     [
+      1856239,
+      1856239
+     ]
+    ],
+    "summary": "River (bot side): 2v1 skirmish, your team won 1–0 (you weren't there) · Mid lane: 3v2 teamfight, your team traded 1–1 (you weren't there) · Your base: 3v3 teamfight, your team lost 0–3; enemy took your mid base tower (you weren't there) · Your base: 2v1 skirmish, your team won 1–0; enemy took your top base tower (you: credited with an assist on Nasus) · Dragon pit: enemy took Ocean Drake (you weren't there) · Your base: enemy took your mid inhibitor (you weren't there)",
+    "swing": -0.2109,
+    "t_first_ms": 1757421,
+    "t_last_ms": 1828409
+   }
+  ],
+  "notes": [],
+  "player": {
+   "champion": "Aatrox",
+   "participant_id": 1,
+   "riot_id": "Player1#GOLD",
+   "role": "TOP",
+   "team": 100,
+   "win": false
+  },
+  "series": [
+   {
+    "minute": 0,
+    "p_team": 0.4971,
+    "t_ms": 0
+   },
+   {
+    "minute": 1,
+    "p_team": 0.4585,
+    "t_ms": 60017
+   },
+   {
+    "minute": 2,
+    "p_team": 0.4356,
+    "t_ms": 120048
+   },
+   {
+    "minute": 3,
+    "p_team": 0.4431,
+    "t_ms": 180113
+   },
+   {
+    "minute": 4,
+    "p_team": 0.4495,
+    "t_ms": 240142
+   },
+   {
+    "minute": 5,
+    "p_team": 0.4595,
+    "t_ms": 300161
+   },
+   {
+    "minute": 6,
+    "p_team": 0.3609,
+    "t_ms": 360176
+   },
+   {
+    "minute": 7,
+    "p_team": 0.3251,
+    "t_ms": 420177
+   },
+   {
+    "minute": 8,
+    "p_team": 0.2421,
+    "t_ms": 480194
+   },
+   {
+    "minute": 9,
+    "p_team": 0.3019,
+    "t_ms": 540218
+   },
+   {
+    "minute": 10,
+    "p_team": 0.2711,
+    "t_ms": 600219
+   },
+   {
+    "minute": 11,
+    "p_team": 0.4364,
+    "t_ms": 660220
+   },
+   {
+    "minute": 12,
+    "p_team": 0.4096,
+    "t_ms": 720250
+   },
+   {
+    "minute": 13,
+    "p_team": 0.5523,
+    "t_ms": 780268
+   },
+   {
+    "minute": 14,
+    "p_team": 0.5349,
+    "t_ms": 840293
+   },
+   {
+    "minute": 15,
+    "p_team": 0.703,
+    "t_ms": 900319
+   },
+   {
+    "minute": 16,
+    "p_team": 0.7906,
+    "t_ms": 960330
+   },
+   {
+    "minute": 17,
+    "p_team": 0.7397,
+    "t_ms": 1020362
+   },
+   {
+    "minute": 18,
+    "p_team": 0.7862,
+    "t_ms": 1080374
+   },
+   {
+    "minute": 19,
+    "p_team": 0.7731,
+    "t_ms": 1140403
+   },
+   {
+    "minute": 20,
+    "p_team": 0.8254,
+    "t_ms": 1200408
+   },
+   {
+    "minute": 21,
+    "p_team": 0.8269,
+    "t_ms": 1260432
+   },
+   {
+    "minute": 22,
+    "p_team": 0.8056,
+    "t_ms": 1320436
+   },
+   {
+    "minute": 23,
+    "p_team": 0.8193,
+    "t_ms": 1380436
+   },
+   {
+    "minute": 24,
+    "p_team": 0.5828,
+    "t_ms": 1440456
+   },
+   {
+    "minute": 25,
+    "p_team": 0.5673,
+    "t_ms": 1500477
+   },
+   {
+    "minute": 26,
+    "p_team": 0.5608,
+    "t_ms": 1560479
+   },
+   {
+    "minute": 27,
+    "p_team": 0.4324,
+    "t_ms": 1620496
+   },
+   {
+    "minute": 28,
+    "p_team": 0.4754,
+    "t_ms": 1680528
+   },
+   {
+    "minute": 29,
+    "p_team": 0.4561,
+    "t_ms": 1740540
+   },
+   {
+    "minute": 30,
+    "p_team": 0.3338,
+    "t_ms": 1800547
+   },
+   {
+    "minute": 31,
+    "p_team": 0.2452,
+    "t_ms": 1860565
+   },
+   {
+    "minute": 32,
+    "p_team": 0.2451,
+    "t_ms": 1920581
+   },
+   {
+    "minute": 33,
+    "p_team": 0.2657,
+    "t_ms": 1980584
+   },
+   {
+    "minute": 34,
+    "p_team": 0.3039,
+    "t_ms": 2040603
+   },
+   {
+    "minute": 35,
+    "p_team": 0.2287,
+    "t_ms": 2100631
+   },
+   {
+    "minute": 36,
+    "p_team": 0.2678,
+    "t_ms": 2160662
+   },
+   {
+    "minute": 37,
+    "p_team": 0.3676,
+    "t_ms": 2220677
+   },
+   {
+    "minute": 38,
+    "p_team": 0.2783,
+    "t_ms": 2280705
+   },
+   {
+    "minute": 39,
+    "p_team": 0.1915,
+    "t_ms": 2340734
+   },
+   {
+    "minute": 40,
+    "p_team": 0.0781,
+    "t_ms": 2400755
+   },
+   {
+    "minute": 41,
+    "p_team": 0.0755,
+    "t_ms": 2409766
+   }
+  ],
+  "spec": {
+   "close_units": 1500,
+   "context_pct": 90,
+   "fight_gap_s": 15,
+   "link_units": 3000,
+   "major_pct": 99,
+   "max_context": 3,
+   "max_moments": 8,
+   "max_span_min": 3,
+   "min_abs_swing": 0.05,
+   "min_spacing_min": 2,
+   "nearby_units": 2500,
+   "notable_pct": 90,
+   "objective_lead_s": 30,
+   "quiet_pct": 90,
+   "shop_visit_gap_s": 30,
+   "show_pct": 75
+  },
+  "team_id": 100
+ },
+ "text": [
+  "Aatrox (TOP, Player1#GOLD) — loss",
+  "Moments to review: 4 (shown: ≥ 75th percentile swing for that point in the game, ≥ 5 pts)",
+  "  #2 · 12:00–13:00 · moderate · +14 pts · 3 things at once",
+  "      Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      Top lane: you killed Nasus",
+  "      Dragon pit: Wukong killed Aurelion Sol (you weren't there)",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "  #4 · 15:00–16:00 · moderate · +9 pts",
+  "      Top lane: you killed Nasus",
+  "  #1 · 23:00–25:00 · notable · -25 pts · 3 things at once",
+  "      Dragon pit: 5v4 teamfight, your team lost 2–4; enemy took Ocean Drake (you: credited with an assist on Miss Fortune)",
+  "      Top lane: enemy took your top inner tower (you were nearby, not credited)",
+  "      Top lane: you died to Nasus",
+  "      dead 48s; back in play by 25:00; vs Nasus meanwhile: CS -7, XP -1,162; lost meanwhile: Ocean Drake · you were in base buying at 23:58",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #3 · 29:00–31:00 · moderate · -21 pts · 6 things at once",
+  "      River (bot side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      Mid lane: 3v2 teamfight, your team traded 1–1 (you weren't there)",
+  "      Your base: 3v3 teamfight, your team lost 0–3; enemy took your mid base tower (you weren't there)",
+  "      Your base: 2v1 skirmish, your team won 1–0; enemy took your top base tower (you: credited with an assist on Nasus)",
+  "      Dragon pit: enemy took Ocean Drake (you weren't there)",
+  "      Your base: enemy took your mid inhibitor (you weren't there)",
+  "      you were in base buying at 30:56",
+  "      note: 6 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "Game swings you weren't part of (context, not about you):",
+  "  context · 10:00–11:00 · notable · +17 pts · 2 things at once",
+  "      Bot lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      Dragon pit: your team took Mountain Drake (you weren't there)",
+  "      you were in base buying at 10:03",
+  "  context · 14:00–15:00 · notable · +17 pts · 4 things at once",
+  "      Mid lane: enemy took your mid outer tower (you weren't there)",
+  "      Bot lane: your team took their bot outer tower (you weren't there)",
+  "      Your jungle (bot side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      Mid lane: 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      you were in base buying at 14:48"
+ ]
+}

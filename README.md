@@ -169,8 +169,8 @@ event clustering, map regions and respawn timers measured from the data.
 | 6. Moment detection | Built, in validation | Spec with pre-set pass criteria: [`docs/phase6-spec.md`](docs/phase6-spec.md) |
 | 7–10 | Planned | What the player did, what they could see, comparison with stronger players, coaching text |
 
-Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions and data pitfalls:
-[`CLAUDE.md`](CLAUDE.md).
+Full plan: [`docs/v1-plan.md`](docs/v1-plan.md). Design decisions:
+[`docs/decisions.md`](docs/decisions.md). Data pitfalls: [`docs/riot-gotchas.md`](docs/riot-gotchas.md).
 
 ## Getting started
 

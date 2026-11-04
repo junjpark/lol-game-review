@@ -1,0 +1,1519 @@
+{
+ "review": {
+  "context": [
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "by": "you",
+      "t_ms": 1733276,
+      "type": "BUILDING_KILL",
+      "what": "their mid inner tower",
+      "where": "mid lane"
+     }
+    ],
+    "involvement": "none",
+    "involvement_detail": [],
+    "kind": "structure",
+    "label": "notable",
+    "minute_end": 29,
+    "minute_start": 28,
+    "p_end": 0.66,
+    "p_start": 0.4476,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1733276,
+      "t_last_ms": 1733276,
+      "text": "Mid lane: your team took their mid inner tower (you weren't there)",
+      "where": "mid lane"
+     }
+    ],
+    "percentile": 92.4,
+    "rank": 2,
+    "shop_visits": [
+     [
+      1686346,
+      1686513
+     ]
+    ],
+    "summary": "Mid lane: your team took their mid inner tower (you weren't there)",
+    "swing": 0.2124,
+    "t_first_ms": 1733276,
+    "t_last_ms": 1733276
+   },
+   {
+    "confidence_notes": [
+     "6 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split"
+    ],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "by": "you",
+      "t_ms": 2403312,
+      "type": "BUILDING_KILL",
+      "what": "their bot base tower",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 2407436,
+      "type": "CHAMPION_KILL",
+      "victim": "Katarina",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Katarina"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 2407810,
+      "type": "CHAMPION_KILL",
+      "victim": "Thresh",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Mordekaiser"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 2412121,
+      "type": "CHAMPION_KILL",
+      "victim": "Ekko",
+      "where": "bot lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 2422973,
+      "type": "CHAMPION_KILL",
+      "victim": "Teemo",
+      "where": "bot lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 2428588,
+      "type": "BUILDING_KILL",
+      "what": "their bot inhibitor",
+      "where": "enemy base"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 2438227,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "top lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 2453402,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Hextech Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "none",
+    "involvement_detail": [],
+    "kind": "objective",
+    "label": "notable",
+    "minute_end": 41,
+    "minute_start": 40,
+    "p_end": 0.576,
+    "p_start": 0.9064,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 2,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2403312,
+      "t_last_ms": 2412121,
+      "text": "Enemy base: 1v2 skirmish, your team lost 0–1; your team took their bot base tower (you weren't there)",
+      "where": "enemy base"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 1,
+       "them": 2,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2407436,
+      "t_last_ms": 2407810,
+      "text": "Top lane: 2v2 skirmish, your team traded 1–1 (you weren't there)",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2422973,
+      "t_last_ms": 2422973,
+      "text": "Bot lane: Wukong killed Teemo (you weren't there)",
+      "where": "bot lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2428588,
+      "t_last_ms": 2428588,
+      "text": "Enemy base: your team took their bot inhibitor (you weren't there)",
+      "where": "enemy base"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2438227,
+      "t_last_ms": 2438227,
+      "text": "Top lane: Jinx killed Miss Fortune (you weren't there)",
+      "where": "top lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2453402,
+      "t_last_ms": 2453402,
+      "text": "Dragon pit: enemy took Hextech Drake (you weren't there)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 97.2,
+    "rank": 1,
+    "shop_visits": [
+     [
+      2452400,
+      2453102
+     ]
+    ],
+    "summary": "Enemy base: 1v2 skirmish, your team lost 0–1; your team took their bot base tower (you weren't there) · Top lane: 2v2 skirmish, your team traded 1–1 (you weren't there) · Bot lane: Wukong killed Teemo (you weren't there) · Enemy base: your team took their bot inhibitor (you weren't there) · Top lane: Jinx killed Miss Fortune (you weren't there) · Dragon pit: enemy took Hextech Drake (you weren't there)",
+    "swing": -0.3304,
+    "t_first_ms": 2403312,
+    "t_last_ms": 2453402
+   }
+  ],
+  "match_id": "NA1_5643108230",
+  "moments": [
+   {
+    "confidence_notes": [
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 2,
+     "lane_opponent": "Thresh",
+     "level_at_death": 1,
+     "lockout_minutes": [
+      0,
+      2
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 62743,
+     "seconds_dead": 9.9,
+     "xp_forgone": 155
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 52843,
+      "type": "CHAMPION_KILL",
+      "victim": "Sona",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: died to Jinx"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 1,
+    "minute_start": 0,
+    "p_end": 0.4467,
+    "p_start": 0.5029,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 2,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Jinx"
+      ],
+      "t_first_ms": 52843,
+      "t_last_ms": 52843,
+      "text": "Bot lane: 1v2 skirmish, your team lost 0–1 (you: died to Jinx)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 94.1,
+    "rank": 3,
+    "shop_visits": [
+     [
+      2776,
+      3344
+     ]
+    ],
+    "summary": "Bot lane: 1v2 skirmish, your team lost 0–1 (you: died to Jinx)",
+    "swing": -0.0562,
+    "t_first_ms": 52843,
+    "t_last_ms": 52843
+   },
+   {
+    "confidence_notes": [
+     "3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 11,
+     "lane_opponent": "Thresh",
+     "level_at_death": 6,
+     "lockout_minutes": [
+      9,
+      11
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 589534,
+     "seconds_dead": 15.9,
+     "xp_forgone": 244
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "by": "you",
+      "t_ms": 545361,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     },
+     {
+      "by": "you",
+      "t_ms": 552712,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     },
+     {
+      "by": "you",
+      "t_ms": 558323,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Voidgrub",
+      "where": "Baron pit"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 561362,
+      "type": "CHAMPION_KILL",
+      "victim": "Katarina",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 573634,
+      "type": "CHAMPION_KILL",
+      "victim": "Sona",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 581350,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: died to Jinx"
+    ],
+    "kind": "objective",
+    "label": "notable",
+    "minute_end": 10,
+    "minute_start": 9,
+    "p_end": 0.2903,
+    "p_start": 0.4921,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 545361,
+      "t_last_ms": 558323,
+      "text": "Baron pit: your team took Voidgrub; your team took Voidgrub; your team took Voidgrub (you weren't there)",
+      "where": "Baron pit"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 561362,
+      "t_last_ms": 561362,
+      "text": "Mid lane: Malzahar killed Katarina (you weren't there)",
+      "where": "mid lane"
+     },
+     {
+      "fight": {
+       "kills_them": 2,
+       "kills_us": 0,
+       "them": 2,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Jinx"
+      ],
+      "t_first_ms": 573634,
+      "t_last_ms": 581350,
+      "text": "Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Jinx)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 97.6,
+    "rank": 2,
+    "shop_visits": [],
+    "summary": "Baron pit: your team took Voidgrub; your team took Voidgrub; your team took Voidgrub (you weren't there) · Mid lane: Malzahar killed Katarina (you weren't there) · Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Jinx)",
+    "swing": -0.2018,
+    "t_first_ms": 545361,
+    "t_last_ms": 581350
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective"
+    ],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Wukong",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 1082089,
+      "type": "CHAMPION_KILL",
+      "victim": "Ekko",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1098255,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Infernal Drake",
+      "where": "Dragon pit"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1121537,
+      "type": "BUILDING_KILL",
+      "what": "your bot outer tower",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "nearby",
+    "involvement_detail": [
+     "Dragon pit: within 2,500 units at minute 18"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 19,
+    "minute_start": 18,
+    "p_end": 0.44,
+    "p_start": 0.5817,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 3,
+       "us": 1
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 18"
+      ],
+      "t_first_ms": 1082089,
+      "t_last_ms": 1098255,
+      "text": "Dragon pit: 1v3 teamfight, your team lost 0–1; enemy took Infernal Drake (you were nearby, not credited)",
+      "where": "Dragon pit"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1121537,
+      "t_last_ms": 1121537,
+      "text": "Bot lane: enemy took your bot outer tower (you weren't there)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 89.4,
+    "rank": 6,
+    "shop_visits": [
+     [
+      1140067,
+      1140067
+     ]
+    ],
+    "summary": "Dragon pit: 1v3 teamfight, your team lost 0–1; enemy took Infernal Drake (you were nearby, not credited) · Bot lane: enemy took your bot outer tower (you weren't there)",
+    "swing": -0.1416,
+    "t_first_ms": 1082089,
+    "t_last_ms": 1121537
+   },
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Ekko",
+       "Katarina",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 1240200,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Miss Fortune",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Katarina",
+      "t_ms": 1250131,
+      "type": "CHAMPION_KILL",
+      "victim": "Thresh",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Teemo",
+       "Ekko",
+       "Katarina",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 1254730,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "top lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "top lane: credited with an assist on Malzahar",
+     "top lane: credited with an assist on Thresh",
+     "top lane: credited with an assist on Mordekaiser"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 21,
+    "minute_start": 20,
+    "p_end": 0.5718,
+    "p_start": 0.4251,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 3,
+       "them": 3,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Malzahar",
+       "credited with an assist on Thresh",
+       "credited with an assist on Mordekaiser"
+      ],
+      "t_first_ms": 1240200,
+      "t_last_ms": 1254730,
+      "text": "Top lane: 5v3 teamfight, your team won 3–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh; credited with an assist on Mordekaiser)",
+      "where": "top lane"
+     }
+    ],
+    "percentile": 90.6,
+    "rank": 5,
+    "shop_visits": [],
+    "summary": "Top lane: 5v3 teamfight, your team won 3–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh; credited with an assist on Mordekaiser)",
+    "swing": 0.1468,
+    "t_first_ms": 1240200,
+    "t_last_ms": 1254730
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 29,
+     "lane_opponent": "Thresh",
+     "level_at_death": 13,
+     "lockout_minutes": [
+      27,
+      29
+     ],
+     "objectives_lost": [
+      {
+       "t_ms": 1672392,
+       "what": "your mid base tower"
+      },
+      {
+       "t_ms": 1678419,
+       "what": "your mid inhibitor"
+      }
+     ],
+     "respawn_ms": 1684549,
+     "seconds_dead": 44.4,
+     "xp_forgone": 1294
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Mordekaiser",
+      "t_ms": 1628489,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Miss Fortune",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Ekko",
+      "t_ms": 1634451,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Jinx",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1640149,
+      "type": "CHAMPION_KILL",
+      "victim": "Sona",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Wukong",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 1643562,
+      "type": "CHAMPION_KILL",
+      "victim": "Ekko",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Malzahar",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 1649569,
+      "type": "CHAMPION_KILL",
+      "victim": "Katarina",
+      "where": "mid lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1672392,
+      "type": "BUILDING_KILL",
+      "what": "your mid base tower",
+      "where": "your base"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Malzahar",
+       "Jinx"
+      ],
+      "by": "enemy",
+      "killer": "Thresh",
+      "t_ms": 1677584,
+      "type": "CHAMPION_KILL",
+      "victim": "Teemo",
+      "where": "your base"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1678419,
+      "type": "BUILDING_KILL",
+      "what": "your mid inhibitor",
+      "where": "your base"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "mid lane: credited with an assist on Mordekaiser",
+     "mid lane: died to Wukong",
+     "your base: dead when the enemy took your mid base tower"
+    ],
+    "kind": "structure",
+    "label": "major",
+    "minute_end": 28,
+    "minute_start": 27,
+    "p_end": 0.4476,
+    "p_start": 0.877,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 4,
+       "kills_us": 1,
+       "them": 5,
+       "us": 4
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Mordekaiser",
+       "died to Wukong"
+      ],
+      "t_first_ms": 1628489,
+      "t_last_ms": 1649569,
+      "text": "Mid lane: 4v5 teamfight, your team lost 1–4 (you: credited with an assist on Mordekaiser; died to Wukong)",
+      "where": "mid lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 4,
+       "us": 1
+      },
+      "involvement": "dead",
+      "involvement_detail": [
+       "dead when the enemy took your mid base tower"
+      ],
+      "t_first_ms": 1672392,
+      "t_last_ms": 1678419,
+      "text": "Your base: 1v4 teamfight, your team lost 0–1; enemy took your mid base tower; enemy took your mid inhibitor (you were dead at the time)",
+      "where": "your base"
+     }
+    ],
+    "percentile": 99.6,
+    "rank": 1,
+    "shop_visits": [
+     [
+      1654312,
+      1654312
+     ]
+    ],
+    "summary": "Mid lane: 4v5 teamfight, your team lost 1–4 (you: credited with an assist on Mordekaiser; died to Wukong) · Your base: 1v4 teamfight, your team lost 0–1; enemy took your mid base tower; enemy took your mid inhibitor (you were dead at the time)",
+    "swing": -0.4294,
+    "t_first_ms": 1628489,
+    "t_last_ms": 1678419
+   },
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Malzahar",
+       "Jinx",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Mordekaiser",
+      "t_ms": 2689710,
+      "type": "CHAMPION_KILL",
+      "victim": "Katarina",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Ekko",
+      "t_ms": 2690089,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "enemy base"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Mordekaiser",
+      "t_ms": 2694428,
+      "type": "CHAMPION_KILL",
+      "victim": "Miss Fortune",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Jinx",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Wukong",
+      "t_ms": 2701677,
+      "type": "CHAMPION_KILL",
+      "victim": "Teemo",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Malzahar",
+       "Thresh"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 2704416,
+      "type": "CHAMPION_KILL",
+      "victim": "Ekko",
+      "where": "enemy base"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "enemy base: credited with an assist on Malzahar"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 46,
+    "minute_start": 44,
+    "p_end": 0.4732,
+    "p_start": 0.7792,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 4,
+       "kills_us": 1,
+       "them": 5,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Malzahar"
+      ],
+      "t_first_ms": 2689710,
+      "t_last_ms": 2704416,
+      "text": "Enemy base: 5v5 teamfight, your team lost 1–4 (you: credited with an assist on Malzahar)",
+      "where": "enemy base"
+     }
+    ],
+    "percentile": 92.8,
+    "rank": 4,
+    "shop_visits": [
+     [
+      2734971,
+      2734971
+     ]
+    ],
+    "summary": "Enemy base: 5v5 teamfight, your team lost 1–4 (you: credited with an assist on Malzahar)",
+    "swing": -0.306,
+    "t_first_ms": 2689710,
+    "t_last_ms": 2704416
+   },
+   {
+    "confidence_notes": [],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Teemo",
+       "Ekko",
+       "Katarina",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 3085280,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Teemo",
+       "Ekko",
+       "Miss Fortune",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Katarina",
+      "t_ms": 3091339,
+      "type": "CHAMPION_KILL",
+      "victim": "Thresh",
+      "where": "enemy jungle (bot side)"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "enemy jungle (bot side): credited with an assist on Malzahar",
+     "enemy jungle (bot side): credited with an assist on Thresh"
+    ],
+    "kind": "fight",
+    "label": "moderate",
+    "minute_end": 52,
+    "minute_start": 51,
+    "p_end": 0.6477,
+    "p_start": 0.4696,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 2,
+       "them": 2,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Malzahar",
+       "credited with an assist on Thresh"
+      ],
+      "t_first_ms": 3085280,
+      "t_last_ms": 3091339,
+      "text": "Enemy jungle (bot side): 5v2 teamfight, your team won 2–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh)",
+      "where": "enemy jungle (bot side)"
+     }
+    ],
+    "percentile": 85.4,
+    "rank": 7,
+    "shop_visits": [],
+    "summary": "Enemy jungle (bot side): 5v2 teamfight, your team won 2–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh)",
+    "swing": 0.1781,
+    "t_first_ms": 3085280,
+    "t_last_ms": 3091339
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 56,
+     "lane_opponent": "Thresh",
+     "level_at_death": 18,
+     "lockout_minutes": [
+      54,
+      56
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 3340980,
+     "seconds_dead": 61.6,
+     "xp_forgone": -1540
+    },
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 3249086,
+      "type": "CHAMPION_KILL",
+      "victim": "Thresh",
+      "where": "enemy jungle (top side)"
+     },
+     {
+      "assists": [
+       "Katarina",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Teemo",
+      "t_ms": 3257503,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Malzahar"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 3273671,
+      "type": "CHAMPION_KILL",
+      "victim": "Ekko",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Malzahar"
+      ],
+      "by": "enemy",
+      "killer": "Jinx",
+      "t_ms": 3275244,
+      "type": "CHAMPION_KILL",
+      "victim": "Teemo",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Ekko",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Katarina",
+      "t_ms": 3278811,
+      "type": "CHAMPION_KILL",
+      "victim": "Jinx",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Wukong",
+       "Jinx"
+      ],
+      "by": "enemy",
+      "killer": "Malzahar",
+      "t_ms": 3279380,
+      "type": "CHAMPION_KILL",
+      "victim": "Sona",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Ekko",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Katarina",
+      "t_ms": 3280070,
+      "type": "CHAMPION_KILL",
+      "victim": "Malzahar",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Katarina",
+       "Sona"
+      ],
+      "by": "you",
+      "killer": "Miss Fortune",
+      "t_ms": 3290911,
+      "type": "CHAMPION_KILL",
+      "victim": "Wukong",
+      "where": "enemy base"
+     },
+     {
+      "by": "you",
+      "t_ms": 3300166,
+      "type": "BUILDING_KILL",
+      "what": "their nexus tower",
+      "where": "enemy base"
+     },
+     {
+      "by": "you",
+      "t_ms": 3301723,
+      "type": "BUILDING_KILL",
+      "what": "their nexus tower",
+      "where": "enemy base"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "enemy jungle (top side): credited with an assist on Thresh",
+     "enemy jungle (top side): credited with an assist on Mordekaiser",
+     "enemy base: credited with an assist on Jinx",
+     "enemy base: died to Malzahar",
+     "enemy base: credited with an assist on Malzahar",
+     "enemy base: credited with an assist on Wukong"
+    ],
+    "kind": "structure",
+    "label": "moderate",
+    "minute_end": 55,
+    "minute_start": 54,
+    "p_end": 0.7597,
+    "p_start": 0.5838,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 2,
+       "them": 2,
+       "us": 4
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Thresh",
+       "credited with an assist on Mordekaiser"
+      ],
+      "t_first_ms": 3249086,
+      "t_last_ms": 3257503,
+      "text": "Enemy jungle (top side): 4v2 teamfight, your team won 2–0 (you: credited with an assist on Thresh; credited with an assist on Mordekaiser)",
+      "where": "enemy jungle (top side)"
+     },
+     {
+      "fight": {
+       "kills_them": 3,
+       "kills_us": 3,
+       "them": 3,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Jinx",
+       "died to Malzahar",
+       "credited with an assist on Malzahar",
+       "credited with an assist on Wukong"
+      ],
+      "t_first_ms": 3273671,
+      "t_last_ms": 3301723,
+      "text": "Enemy base: 5v3 teamfight, your team traded 3–3; your team took their nexus tower; your team took their nexus tower (you: credited with an assist on Jinx; died to Malzahar; credited with an assist on Malzahar; credited with an assist on Wukong)",
+      "where": "enemy base"
+     }
+    ],
+    "percentile": 85.1,
+    "rank": 8,
+    "shop_visits": [],
+    "summary": "Enemy jungle (top side): 4v2 teamfight, your team won 2–0 (you: credited with an assist on Thresh; credited with an assist on Mordekaiser) · Enemy base: 5v3 teamfight, your team traded 3–3; your team took their nexus tower; your team took their nexus tower (you: credited with an assist on Jinx; died to Malzahar; credited with an assist on Malzahar; credited with an assist on Wukong)",
+    "swing": 0.1759,
+    "t_first_ms": 3249086,
+    "t_last_ms": 3301723
+   }
+  ],
+  "notes": [],
+  "player": {
+   "champion": "Sona",
+   "participant_id": 10,
+   "riot_id": "Player10#GOLD",
+   "role": "UTILITY",
+   "team": 200,
+   "win": true
+  },
+  "series": [
+   {
+    "minute": 0,
+    "p_team": 0.5029,
+    "t_ms": 0
+   },
+   {
+    "minute": 1,
+    "p_team": 0.4467,
+    "t_ms": 60024
+   },
+   {
+    "minute": 2,
+    "p_team": 0.4171,
+    "t_ms": 120038
+   },
+   {
+    "minute": 3,
+    "p_team": 0.4879,
+    "t_ms": 180120
+   },
+   {
+    "minute": 4,
+    "p_team": 0.5249,
+    "t_ms": 240144
+   },
+   {
+    "minute": 5,
+    "p_team": 0.5313,
+    "t_ms": 300153
+   },
+   {
+    "minute": 6,
+    "p_team": 0.4823,
+    "t_ms": 360179
+   },
+   {
+    "minute": 7,
+    "p_team": 0.4629,
+    "t_ms": 420185
+   },
+   {
+    "minute": 8,
+    "p_team": 0.379,
+    "t_ms": 480206
+   },
+   {
+    "minute": 9,
+    "p_team": 0.4921,
+    "t_ms": 540218
+   },
+   {
+    "minute": 10,
+    "p_team": 0.2903,
+    "t_ms": 600247
+   },
+   {
+    "minute": 11,
+    "p_team": 0.3414,
+    "t_ms": 660262
+   },
+   {
+    "minute": 12,
+    "p_team": 0.2709,
+    "t_ms": 720280
+   },
+   {
+    "minute": 13,
+    "p_team": 0.3539,
+    "t_ms": 780282
+   },
+   {
+    "minute": 14,
+    "p_team": 0.3367,
+    "t_ms": 840285
+   },
+   {
+    "minute": 15,
+    "p_team": 0.4325,
+    "t_ms": 900290
+   },
+   {
+    "minute": 16,
+    "p_team": 0.5215,
+    "t_ms": 960294
+   },
+   {
+    "minute": 17,
+    "p_team": 0.4805,
+    "t_ms": 1020300
+   },
+   {
+    "minute": 18,
+    "p_team": 0.5817,
+    "t_ms": 1080319
+   },
+   {
+    "minute": 19,
+    "p_team": 0.44,
+    "t_ms": 1140348
+   },
+   {
+    "minute": 20,
+    "p_team": 0.4251,
+    "t_ms": 1200364
+   },
+   {
+    "minute": 21,
+    "p_team": 0.5718,
+    "t_ms": 1260389
+   },
+   {
+    "minute": 22,
+    "p_team": 0.6565,
+    "t_ms": 1320395
+   },
+   {
+    "minute": 23,
+    "p_team": 0.6812,
+    "t_ms": 1380399
+   },
+   {
+    "minute": 24,
+    "p_team": 0.747,
+    "t_ms": 1440428
+   },
+   {
+    "minute": 25,
+    "p_team": 0.8483,
+    "t_ms": 1500448
+   },
+   {
+    "minute": 26,
+    "p_team": 0.8532,
+    "t_ms": 1560468
+   },
+   {
+    "minute": 27,
+    "p_team": 0.877,
+    "t_ms": 1620488
+   },
+   {
+    "minute": 28,
+    "p_team": 0.4476,
+    "t_ms": 1680490
+   },
+   {
+    "minute": 29,
+    "p_team": 0.66,
+    "t_ms": 1740509
+   },
+   {
+    "minute": 30,
+    "p_team": 0.31,
+    "t_ms": 1800529
+   },
+   {
+    "minute": 31,
+    "p_team": 0.4101,
+    "t_ms": 1860558
+   },
+   {
+    "minute": 32,
+    "p_team": 0.4195,
+    "t_ms": 1920563
+   },
+   {
+    "minute": 33,
+    "p_team": 0.618,
+    "t_ms": 1980578
+   },
+   {
+    "minute": 34,
+    "p_team": 0.7015,
+    "t_ms": 2040607
+   },
+   {
+    "minute": 35,
+    "p_team": 0.8111,
+    "t_ms": 2100621
+   },
+   {
+    "minute": 36,
+    "p_team": 0.8223,
+    "t_ms": 2160623
+   },
+   {
+    "minute": 37,
+    "p_team": 0.8787,
+    "t_ms": 2220628
+   },
+   {
+    "minute": 38,
+    "p_team": 0.8331,
+    "t_ms": 2280646
+   },
+   {
+    "minute": 39,
+    "p_team": 0.8895,
+    "t_ms": 2340662
+   },
+   {
+    "minute": 40,
+    "p_team": 0.9064,
+    "t_ms": 2400696
+   },
+   {
+    "minute": 41,
+    "p_team": 0.576,
+    "t_ms": 2460710
+   },
+   {
+    "minute": 42,
+    "p_team": 0.7741,
+    "t_ms": 2520722
+   },
+   {
+    "minute": 43,
+    "p_team": 0.821,
+    "t_ms": 2580747
+   },
+   {
+    "minute": 44,
+    "p_team": 0.7792,
+    "t_ms": 2640780
+   },
+   {
+    "minute": 45,
+    "p_team": 0.6159,
+    "t_ms": 2700808
+   },
+   {
+    "minute": 46,
+    "p_team": 0.4732,
+    "t_ms": 2760820
+   },
+   {
+    "minute": 47,
+    "p_team": 0.4307,
+    "t_ms": 2820844
+   },
+   {
+    "minute": 48,
+    "p_team": 0.4293,
+    "t_ms": 2880857
+   },
+   {
+    "minute": 49,
+    "p_team": 0.4309,
+    "t_ms": 2940874
+   },
+   {
+    "minute": 50,
+    "p_team": 0.45,
+    "t_ms": 3000901
+   },
+   {
+    "minute": 51,
+    "p_team": 0.4696,
+    "t_ms": 3060933
+   },
+   {
+    "minute": 52,
+    "p_team": 0.6477,
+    "t_ms": 3120964
+   },
+   {
+    "minute": 53,
+    "p_team": 0.593,
+    "t_ms": 3180976
+   },
+   {
+    "minute": 54,
+    "p_team": 0.5838,
+    "t_ms": 3240985
+   },
+   {
+    "minute": 55,
+    "p_team": 0.7597,
+    "t_ms": 3300989
+   },
+   {
+    "minute": 56,
+    "p_team": 0.7793,
+    "t_ms": 3311109
+   }
+  ],
+  "spec": {
+   "close_units": 1500,
+   "context_pct": 90,
+   "fight_gap_s": 15,
+   "link_units": 3000,
+   "major_pct": 99,
+   "max_context": 3,
+   "max_moments": 8,
+   "max_span_min": 3,
+   "min_abs_swing": 0.05,
+   "min_spacing_min": 2,
+   "nearby_units": 2500,
+   "notable_pct": 90,
+   "objective_lead_s": 30,
+   "quiet_pct": 90,
+   "shop_visit_gap_s": 30,
+   "show_pct": 75
+  },
+  "team_id": 200
+ },
+ "text": [
+  "Sona (UTILITY, Player10#GOLD) — win",
+  "Moments to review: 8 (shown: ≥ 75th percentile swing for that point in the game, ≥ 5 pts)",
+  "  #3 · 0:00–1:00 · notable · -6 pts",
+  "      Bot lane: 1v2 skirmish, your team lost 0–1 (you: died to Jinx)",
+  "      dead 10s; back in play by 2:00; vs Thresh meanwhile: XP -155 · you were in base buying at 0:02",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #2 · 9:00–10:00 · notable · -20 pts · 3 things at once",
+  "      Baron pit: your team took Voidgrub; your team took Voidgrub; your team took Voidgrub (you weren't there)",
+  "      Mid lane: Malzahar killed Katarina (you weren't there)",
+  "      Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Jinx)",
+  "      dead 16s; back in play by 11:00; vs Thresh meanwhile: XP -244",
+  "      note: 3 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #6 · 18:00–19:00 · moderate · -14 pts · 2 things at once",
+  "      Dragon pit: 1v3 teamfight, your team lost 0–1; enemy took Infernal Drake (you were nearby, not credited)",
+  "      Bot lane: enemy took your bot outer tower (you weren't there)",
+  "      you were in base buying at 19:00",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "  #5 · 20:00–21:00 · notable · +15 pts",
+  "      Top lane: 5v3 teamfight, your team won 3–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh; credited with an assist on Mordekaiser)",
+  "  #1 · 27:00–28:00 · major · -43 pts · 2 things at once",
+  "      Mid lane: 4v5 teamfight, your team lost 1–4 (you: credited with an assist on Mordekaiser; died to Wukong)",
+  "      Your base: 1v4 teamfight, your team lost 0–1; enemy took your mid base tower; enemy took your mid inhibitor (you were dead at the time)",
+  "      dead 44s; back in play by 29:00; vs Thresh meanwhile: XP -1,294; lost meanwhile: your mid base tower, your mid inhibitor · you were in base buying at 27:34",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #4 · 44:00–46:00 · notable · -31 pts",
+  "      Enemy base: 5v5 teamfight, your team lost 1–4 (you: credited with an assist on Malzahar)",
+  "      you were in base buying at 45:34",
+  "  #7 · 51:00–52:00 · moderate · +18 pts",
+  "      Enemy jungle (bot side): 5v2 teamfight, your team won 2–0 (you: credited with an assist on Malzahar; credited with an assist on Thresh)",
+  "  #8 · 54:00–55:00 · moderate · +18 pts · 2 things at once",
+  "      Enemy jungle (top side): 4v2 teamfight, your team won 2–0 (you: credited with an assist on Thresh; credited with an assist on Mordekaiser)",
+  "      Enemy base: 5v3 teamfight, your team traded 3–3; your team took their nexus tower; your team took their nexus tower (you: credited with an assist on Jinx; died to Malzahar; credited with an assist on Malzahar; credited with an assist on Wukong)",
+  "      dead 62s; back in play by 56:00; vs Thresh meanwhile: XP +1,540",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "Game swings you weren't part of (context, not about you):",
+  "  context · 28:00–29:00 · notable · +21 pts",
+  "      Mid lane: your team took their mid inner tower (you weren't there)",
+  "      you were in base buying at 28:06",
+  "  context · 40:00–41:00 · notable · -33 pts · 6 things at once",
+  "      Enemy base: 1v2 skirmish, your team lost 0–1; your team took their bot base tower (you weren't there)",
+  "      Top lane: 2v2 skirmish, your team traded 1–1 (you weren't there)",
+  "      Bot lane: Wukong killed Teemo (you weren't there)",
+  "      Enemy base: your team took their bot inhibitor (you weren't there)",
+  "      Top lane: Jinx killed Miss Fortune (you weren't there)",
+  "      Dragon pit: enemy took Hextech Drake (you weren't there)",
+  "      you were in base buying at 40:52"
+ ]
+}

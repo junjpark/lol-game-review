@@ -2,7 +2,7 @@
 
 Calibration = when the model says 70%, Blue wins about 70% of those times. Every severity
 label downstream is a difference of two of these numbers, so a miscalibrated model makes
-every verdict wrong. The gate was fixed BEFORE training (CLAUDE.md, Phase 5 decisions)
+every verdict wrong. The gate was fixed BEFORE training (docs/model-history.md)
 and is not loosened after seeing results:
 
   * ECE ≤ 2 pts on the whole test set

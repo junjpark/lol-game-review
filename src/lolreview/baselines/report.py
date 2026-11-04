@@ -1,5 +1,5 @@
 """v0 percentile report: how one player's game compares with players at the same rank,
-role and minute. Descriptive only — no model, no verdicts (CLAUDE.md: comparative claims,
+role and minute. Descriptive only — no model, no verdicts (docs/decisions.md: comparative claims,
 never "objectively wrong").
 
 Pure function from (frames rows, baselines) to text, so it's testable without files.

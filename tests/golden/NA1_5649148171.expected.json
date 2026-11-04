@@ -1,0 +1,1492 @@
+{
+ "review": {
+  "context": [],
+  "match_id": "NA1_5649148171",
+  "moments": [
+   {
+    "confidence_notes": [
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 2,
+     "cs_forgone": 1,
+     "lane_opponent": "Ezreal",
+     "level_at_death": 1,
+     "lockout_minutes": [
+      0,
+      2
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 60443,
+     "seconds_dead": 9.9,
+     "xp_forgone": 79
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 50543,
+      "type": "CHAMPION_KILL",
+      "victim": "Jhin",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Kayn",
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 52580,
+      "type": "CHAMPION_KILL",
+      "victim": "Yuumi",
+      "where": "bot lane"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: died to Ezreal"
+    ],
+    "kind": "fight",
+    "label": "major",
+    "minute_end": 1,
+    "minute_start": 0,
+    "p_end": 0.3167,
+    "p_start": 0.4971,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 2,
+       "kills_us": 0,
+       "them": 3,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Ezreal"
+      ],
+      "t_first_ms": 50543,
+      "t_last_ms": 52580,
+      "text": "Bot lane: 2v3 teamfight, your team lost 0–2 (you: died to Ezreal)",
+      "where": "bot lane"
+     }
+    ],
+    "percentile": 99.7,
+    "rank": 1,
+    "shop_visits": [
+     [
+      6818,
+      6818
+     ]
+    ],
+    "summary": "Bot lane: 2v3 teamfight, your team lost 0–2 (you: died to Ezreal)",
+    "swing": -0.1804,
+    "t_first_ms": 50543,
+    "t_last_ms": 52580
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 4,
+     "cs_forgone": 7,
+     "lane_opponent": "Ezreal",
+     "level_at_death": 3,
+     "lockout_minutes": [
+      3,
+      4
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 200948,
+     "seconds_dead": 12.2,
+     "xp_forgone": 452
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 188748,
+      "type": "CHAMPION_KILL",
+      "victim": "Jhin",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 193197,
+      "type": "CHAMPION_KILL",
+      "victim": "Yuumi",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Kayn"
+      ],
+      "by": "enemy",
+      "killer": "Akali",
+      "t_ms": 214207,
+      "type": "CHAMPION_KILL",
+      "victim": "Fizz",
+      "where": "enemy jungle (bot side)"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: died to Ezreal"
+    ],
+    "kind": "fight",
+    "label": "notable",
+    "minute_end": 4,
+    "minute_start": 3,
+    "p_end": 0.2303,
+    "p_start": 0.4505,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 2,
+       "kills_us": 0,
+       "them": 2,
+       "us": 2
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Ezreal"
+      ],
+      "t_first_ms": 188748,
+      "t_last_ms": 193197,
+      "text": "Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Ezreal)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 2,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 214207,
+      "t_last_ms": 214207,
+      "text": "Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there)",
+      "where": "enemy jungle (bot side)"
+     }
+    ],
+    "percentile": 96.8,
+    "rank": 2,
+    "shop_visits": [
+     [
+      193063,
+      193063
+     ]
+    ],
+    "summary": "Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Ezreal) · Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there)",
+    "swing": -0.2202,
+    "t_first_ms": 188748,
+    "t_last_ms": 214207
+   },
+   {
+    "confidence_notes": [
+     "4 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 18,
+     "cs_forgone": 1,
+     "lane_opponent": "Ezreal",
+     "level_at_death": 9,
+     "lockout_minutes": [
+      16,
+      18
+     ],
+     "objectives_lost": [
+      {
+       "t_ms": 1023584,
+       "what": "your mid inner tower"
+      },
+      {
+       "t_ms": 1055499,
+       "what": "Cloud Drake"
+      }
+     ],
+     "respawn_ms": 1014572,
+     "seconds_dead": 28.7,
+     "xp_forgone": 501
+    },
+    "direction": "bad",
+    "events": [
+     {
+      "by": "enemy",
+      "t_ms": 978256,
+      "type": "BUILDING_KILL",
+      "what": "your top inner tower",
+      "where": "top lane"
+     },
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 982465,
+      "type": "CHAMPION_KILL",
+      "victim": "Yuumi",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 985872,
+      "type": "CHAMPION_KILL",
+      "victim": "Jhin",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Ezreal",
+      "t_ms": 989315,
+      "type": "CHAMPION_KILL",
+      "victim": "Fizz",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Ezreal",
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Akali",
+      "t_ms": 1010937,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "mid lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1023584,
+      "type": "BUILDING_KILL",
+      "what": "your mid inner tower",
+      "where": "mid lane"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 1055499,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Cloud Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "your jungle (top side): died to Ezreal"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 18,
+    "minute_start": 16,
+    "p_end": 0.0469,
+    "p_start": 0.1697,
+    "parts": [
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 978256,
+      "t_last_ms": 978256,
+      "text": "Top lane: enemy took your top inner tower (you weren't there)",
+      "where": "top lane"
+     },
+     {
+      "fight": {
+       "kills_them": 3,
+       "kills_us": 0,
+       "them": 2,
+       "us": 3
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "died to Ezreal"
+      ],
+      "t_first_ms": 982465,
+      "t_last_ms": 989315,
+      "text": "Your jungle (top side): 3v2 teamfight, your team lost 0–3 (you: died to Ezreal)",
+      "where": "your jungle (top side)"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 3,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1010937,
+      "t_last_ms": 1023584,
+      "text": "Mid lane: 1v3 teamfight, your team lost 0–1; enemy took your mid inner tower (you weren't there)",
+      "where": "mid lane"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1055499,
+      "t_last_ms": 1055499,
+      "text": "Dragon pit: enemy took Cloud Drake (you weren't there)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 75.4,
+    "rank": 7,
+    "shop_visits": [
+     [
+      944613,
+      965452
+     ]
+    ],
+    "summary": "Top lane: enemy took your top inner tower (you weren't there) · Your jungle (top side): 3v2 teamfight, your team lost 0–3 (you: died to Ezreal) · Mid lane: 1v3 teamfight, your team lost 0–1; enemy took your mid inner tower (you weren't there) · Dragon pit: enemy took Cloud Drake (you weren't there)",
+    "swing": -0.1228,
+    "t_first_ms": 978256,
+    "t_last_ms": 1055499
+   },
+   {
+    "confidence_notes": [
+     "5 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 29,
+     "cs_forgone": 3,
+     "lane_opponent": "Ezreal",
+     "level_at_death": 13,
+     "lockout_minutes": [
+      27,
+      29
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 1685022,
+     "seconds_dead": 44.4,
+     "xp_forgone": -861
+    },
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 1502941,
+      "type": "CHAMPION_KILL",
+      "victim": "Karma",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Naafiri"
+      ],
+      "by": "you",
+      "killer": "Yuumi",
+      "t_ms": 1512420,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Naafiri",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Mordekaiser",
+      "t_ms": 1528337,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "mid lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 1535036,
+      "type": "BUILDING_KILL",
+      "what": "their mid outer tower",
+      "where": "mid lane"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Akali",
+      "t_ms": 1553247,
+      "type": "CHAMPION_KILL",
+      "victim": "Naafiri",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Naafiri",
+       "Jhin"
+      ],
+      "by": "you",
+      "killer": "Fizz",
+      "t_ms": 1559660,
+      "type": "CHAMPION_KILL",
+      "victim": "Akali",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Fizz",
+      "t_ms": 1570856,
+      "type": "CHAMPION_KILL",
+      "victim": "Dr. Mundo",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Ezreal",
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Kayn",
+      "t_ms": 1618074,
+      "type": "CHAMPION_KILL",
+      "victim": "Yuumi",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Fizz",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 1623818,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Fizz",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Jhin",
+      "t_ms": 1624725,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Naafiri",
+       "Jhin"
+      ],
+      "by": "you",
+      "killer": "Mordekaiser",
+      "t_ms": 1638321,
+      "type": "CHAMPION_KILL",
+      "victim": "Akali",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Akali"
+      ],
+      "by": "enemy",
+      "killer": "Dr. Mundo",
+      "t_ms": 1640622,
+      "type": "CHAMPION_KILL",
+      "victim": "Jhin",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Jhin"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 1641805,
+      "type": "CHAMPION_KILL",
+      "victim": "Karma",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Fizz",
+       "Naafiri"
+      ],
+      "by": "you",
+      "killer": "Mordekaiser",
+      "t_ms": 1661500,
+      "type": "CHAMPION_KILL",
+      "victim": "Dr. Mundo",
+      "where": "river (top side)"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "mid lane: credited with an assist on Akali",
+     "mid lane: credited with an assist on Dr. Mundo",
+     "your jungle (top side): credited with an assist on Ezreal",
+     "your jungle (top side): killed Kayn",
+     "your jungle (top side): credited with an assist on Akali",
+     "your jungle (top side): died to Dr. Mundo",
+     "your jungle (top side): credited with an assist on Karma"
+    ],
+    "kind": "structure",
+    "label": "notable",
+    "minute_end": 28,
+    "minute_start": 25,
+    "p_end": 0.3704,
+    "p_start": 0.0642,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 2
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1502941,
+      "t_last_ms": 1502941,
+      "text": "Your jungle (top side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+      "where": "your jungle (top side)"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 2,
+       "them": 2,
+       "us": 3
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1512420,
+      "t_last_ms": 1535036,
+      "text": "Mid lane: 3v2 teamfight, your team won 2–0; your team took their mid outer tower (you weren't there)",
+      "where": "mid lane"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 2,
+       "them": 2,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Akali",
+       "credited with an assist on Dr. Mundo"
+      ],
+      "t_first_ms": 1553247,
+      "t_last_ms": 1570856,
+      "text": "Mid lane: 5v2 teamfight, your team won 2–1 (you: credited with an assist on Akali; credited with an assist on Dr. Mundo)",
+      "where": "mid lane"
+     },
+     {
+      "fight": {
+       "kills_them": 2,
+       "kills_us": 4,
+       "them": 5,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Ezreal",
+       "killed Kayn",
+       "credited with an assist on Akali",
+       "died to Dr. Mundo",
+       "credited with an assist on Karma"
+      ],
+      "t_first_ms": 1618074,
+      "t_last_ms": 1641805,
+      "text": "Your jungle (top side): 5v5 teamfight, your team won 4–2 (you: credited with an assist on Ezreal; killed Kayn; credited with an assist on Akali; died to Dr. Mundo; credited with an assist on Karma)",
+      "where": "your jungle (top side)"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 3
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 1661500,
+      "t_last_ms": 1661500,
+      "text": "River (top side): 3v1 teamfight, your team won 1–0 (you weren't there)",
+      "where": "river (top side)"
+     }
+    ],
+    "percentile": 91.6,
+    "rank": 3,
+    "shop_visits": [
+     [
+      1642608,
+      1651910
+     ]
+    ],
+    "summary": "Your jungle (top side): 2v1 skirmish, your team won 1–0 (you weren't there) · Mid lane: 3v2 teamfight, your team won 2–0; your team took their mid outer tower (you weren't there) · Mid lane: 5v2 teamfight, your team won 2–1 (you: credited with an assist on Akali; credited with an assist on Dr. Mundo) · Your jungle (top side): 5v5 teamfight, your team won 4–2 (you: credited with an assist on Ezreal; killed Kayn; credited with an assist on Akali; died to Dr. Mundo; credited with an assist on Karma) · River (top side): 3v1 teamfight, your team won 1–0 (you weren't there)",
+    "swing": 0.3062,
+    "t_first_ms": 1502941,
+    "t_last_ms": 1661500
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Fizz",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 1750596,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "bot lane"
+     },
+     {
+      "assists": [
+       "Kayn",
+       "Akali"
+      ],
+      "by": "enemy",
+      "killer": "Dr. Mundo",
+      "t_ms": 1755413,
+      "type": "CHAMPION_KILL",
+      "victim": "Fizz",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [],
+      "by": "you",
+      "killer": "Mordekaiser",
+      "t_ms": 1758038,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "enemy jungle (bot side)"
+     },
+     {
+      "assists": [
+       "Fizz",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 1764235,
+      "type": "CHAMPION_KILL",
+      "victim": "Akali",
+      "where": "bot lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 1781933,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Infernal Drake",
+      "where": "Dragon pit"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "bot lane: within 2,500 units at minute 30",
+     "Dragon pit: credited with helping take Infernal Drake"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 30,
+    "minute_start": 29,
+    "p_end": 0.4642,
+    "p_start": 0.2865,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 2,
+       "them": 3,
+       "us": 3
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 30"
+      ],
+      "t_first_ms": 1750596,
+      "t_last_ms": 1764235,
+      "text": "Bot lane: 3v3 teamfight, your team won 2–1 (you were nearby, not credited)",
+      "where": "bot lane"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with helping take Infernal Drake"
+      ],
+      "t_first_ms": 1758038,
+      "t_last_ms": 1781933,
+      "text": "Dragon pit: Mordekaiser killed Ezreal; your team took Infernal Drake (you: credited with helping take Infernal Drake)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 88.1,
+    "rank": 4,
+    "shop_visits": [],
+    "summary": "Bot lane: 3v3 teamfight, your team won 2–1 (you were nearby, not credited) · Dragon pit: Mordekaiser killed Ezreal; your team took Infernal Drake (you: credited with helping take Infernal Drake)",
+    "swing": 0.1777,
+    "t_first_ms": 1750596,
+    "t_last_ms": 1781933
+   },
+   {
+    "confidence_notes": [
+     "2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "time back in play is to the minute (snapshots are 1 minute apart)"
+    ],
+    "direct_cost": {
+     "back_in_play_minute": 37,
+     "cs_forgone": 8,
+     "lane_opponent": "Ezreal",
+     "level_at_death": 16,
+     "lockout_minutes": [
+      35,
+      37
+     ],
+     "objectives_lost": [],
+     "respawn_ms": 2166106,
+     "seconds_dead": 56.0,
+     "xp_forgone": 339
+    },
+    "direction": "good",
+    "events": [
+     {
+      "assists": [
+       "Fizz",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2026748,
+      "type": "CHAMPION_KILL",
+      "victim": "Akali",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Naafiri",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Fizz",
+      "t_ms": 2029607,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2032916,
+      "type": "CHAMPION_KILL",
+      "victim": "Karma",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Naafiri",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Fizz",
+      "t_ms": 2042349,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "mid lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 2053388,
+      "type": "BUILDING_KILL",
+      "what": "their mid inner tower",
+      "where": "mid lane"
+     },
+     {
+      "assists": [
+       "Fizz",
+       "Naafiri",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Mordekaiser",
+      "t_ms": 2065539,
+      "type": "CHAMPION_KILL",
+      "victim": "Dr. Mundo",
+      "where": "enemy base"
+     },
+     {
+      "by": "you",
+      "t_ms": 2065539,
+      "type": "BUILDING_KILL",
+      "what": "their mid base tower",
+      "where": "enemy base"
+     },
+     {
+      "by": "you",
+      "t_ms": 2069250,
+      "type": "BUILDING_KILL",
+      "what": "their mid inhibitor",
+      "where": "enemy base"
+     },
+     {
+      "by": "you",
+      "t_ms": 2100630,
+      "type": "ELITE_MONSTER_KILL",
+      "what": "Infernal Drake",
+      "where": "Dragon pit"
+     },
+     {
+      "assists": [
+       "Akali"
+      ],
+      "by": "enemy",
+      "killer": "Kayn",
+      "t_ms": 2102124,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Akali",
+      "t_ms": 2103946,
+      "type": "CHAMPION_KILL",
+      "victim": "Fizz",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Mordekaiser",
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2108032,
+      "type": "CHAMPION_KILL",
+      "victim": "Akali",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Karma"
+      ],
+      "by": "enemy",
+      "killer": "Kayn",
+      "t_ms": 2110106,
+      "type": "CHAMPION_KILL",
+      "victim": "Jhin",
+      "where": "river (bot side)"
+     },
+     {
+      "assists": [
+       "Jhin",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2112529,
+      "type": "CHAMPION_KILL",
+      "victim": "Karma",
+      "where": "enemy jungle (bot side)"
+     }
+    ],
+    "involvement": "direct",
+    "involvement_detail": [
+     "enemy base: credited with an assist on Akali",
+     "enemy base: credited with an assist on Ezreal",
+     "enemy base: credited with helping take their mid inner tower",
+     "enemy base: credited with an assist on Dr. Mundo",
+     "enemy base: credited with helping take their mid base tower",
+     "enemy base: credited with helping take their mid inhibitor",
+     "Dragon pit: credited with helping take Infernal Drake",
+     "Dragon pit: credited with an assist on Akali",
+     "Dragon pit: died to Kayn",
+     "Dragon pit: credited with an assist on Karma"
+    ],
+    "kind": "objective",
+    "label": "moderate",
+    "minute_end": 36,
+    "minute_start": 33,
+    "p_end": 0.6212,
+    "p_start": 0.3048,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 5,
+       "them": 5,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with an assist on Akali",
+       "credited with an assist on Ezreal",
+       "credited with helping take their mid inner tower",
+       "credited with an assist on Dr. Mundo",
+       "credited with helping take their mid base tower",
+       "credited with helping take their mid inhibitor"
+      ],
+      "t_first_ms": 2026748,
+      "t_last_ms": 2069250,
+      "text": "Enemy base: 5v5 teamfight, your team won 5–0; your team took their mid inner tower; your team took their mid base tower; your team took their mid inhibitor (you: credited with an assist on Akali; credited with an assist on Ezreal; credited with helping take their mid inner tower; credited with an assist on Dr. Mundo; credited with helping take their mid base tower; credited with helping take their mid inhibitor)",
+      "where": "enemy base"
+     },
+     {
+      "fight": {
+       "kills_them": 3,
+       "kills_us": 2,
+       "them": 3,
+       "us": 5
+      },
+      "involvement": "direct",
+      "involvement_detail": [
+       "credited with helping take Infernal Drake",
+       "credited with an assist on Akali",
+       "died to Kayn",
+       "credited with an assist on Karma"
+      ],
+      "t_first_ms": 2100630,
+      "t_last_ms": 2112529,
+      "text": "Dragon pit: 5v3 teamfight, your team lost 2–3; your team took Infernal Drake (you: credited with helping take Infernal Drake; credited with an assist on Akali; died to Kayn; credited with an assist on Karma)",
+      "where": "Dragon pit"
+     }
+    ],
+    "percentile": 85.6,
+    "rank": 5,
+    "shop_visits": [
+     [
+      2111893,
+      2135034
+     ]
+    ],
+    "summary": "Enemy base: 5v5 teamfight, your team won 5–0; your team took their mid inner tower; your team took their mid base tower; your team took their mid inhibitor (you: credited with an assist on Akali; credited with an assist on Ezreal; credited with helping take their mid inner tower; credited with an assist on Dr. Mundo; credited with helping take their mid base tower; credited with helping take their mid inhibitor) · Dragon pit: 5v3 teamfight, your team lost 2–3; your team took Infernal Drake (you: credited with helping take Infernal Drake; credited with an assist on Akali; died to Kayn; credited with an assist on Karma)",
+    "swing": 0.3164,
+    "t_first_ms": 2026748,
+    "t_last_ms": 2112529
+   },
+   {
+    "confidence_notes": [
+     "5 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+     "nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective"
+    ],
+    "direct_cost": null,
+    "direction": "good",
+    "events": [
+     {
+      "by": "enemy",
+      "t_ms": 2288542,
+      "type": "BUILDING_KILL",
+      "what": "your top inhibitor",
+      "where": "your base"
+     },
+     {
+      "by": "you",
+      "t_ms": 2290342,
+      "type": "BUILDING_KILL",
+      "what": "their nexus tower",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Fizz",
+       "Naafiri"
+      ],
+      "by": "you",
+      "killer": "Yuumi",
+      "t_ms": 2297193,
+      "type": "CHAMPION_KILL",
+      "victim": "Kayn",
+      "where": "your base"
+     },
+     {
+      "by": "enemy",
+      "t_ms": 2302974,
+      "type": "BUILDING_KILL",
+      "what": "your nexus tower",
+      "where": "your base"
+     },
+     {
+      "by": "you",
+      "t_ms": 2303642,
+      "type": "BUILDING_KILL",
+      "what": "their nexus tower",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2308002,
+      "type": "CHAMPION_KILL",
+      "victim": "Ezreal",
+      "where": "your jungle (top side)"
+     },
+     {
+      "assists": [
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Naafiri",
+      "t_ms": 2312028,
+      "type": "CHAMPION_KILL",
+      "victim": "Karma",
+      "where": "top lane"
+     },
+     {
+      "by": "you",
+      "t_ms": 2317108,
+      "type": "BUILDING_KILL",
+      "what": "their bot base tower",
+      "where": "enemy base"
+     },
+     {
+      "assists": [
+       "Naafiri",
+       "Yuumi"
+      ],
+      "by": "you",
+      "killer": "Fizz",
+      "t_ms": 2334024,
+      "type": "CHAMPION_KILL",
+      "victim": "Dr. Mundo",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "assists": [],
+      "by": "enemy",
+      "killer": "Akali",
+      "t_ms": 2334879,
+      "type": "CHAMPION_KILL",
+      "victim": "Mordekaiser",
+      "where": "enemy base"
+     }
+    ],
+    "involvement": "dead",
+    "involvement_detail": [
+     "your base: dead when the enemy took your top inhibitor",
+     "your jungle (bot side): within 2,500 units at minute 39"
+    ],
+    "kind": "structure",
+    "label": "moderate",
+    "minute_end": 39,
+    "minute_start": 38,
+    "p_end": 0.8507,
+    "p_start": 0.6815,
+    "parts": [
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 3,
+       "them": 3,
+       "us": 3
+      },
+      "involvement": "dead",
+      "involvement_detail": [
+       "dead when the enemy took your top inhibitor"
+      ],
+      "t_first_ms": 2288542,
+      "t_last_ms": 2312028,
+      "text": "Your base: 3v3 teamfight, your team won 3–0; enemy took your top inhibitor; enemy took your nexus tower (you were dead at the time)",
+      "where": "your base"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2290342,
+      "t_last_ms": 2303642,
+      "text": "Enemy base: your team took their nexus tower; your team took their nexus tower (you weren't there)",
+      "where": "enemy base"
+     },
+     {
+      "fight": null,
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2317108,
+      "t_last_ms": 2317108,
+      "text": "Enemy base: your team took their bot base tower (you weren't there)",
+      "where": "enemy base"
+     },
+     {
+      "fight": {
+       "kills_them": 0,
+       "kills_us": 1,
+       "them": 1,
+       "us": 3
+      },
+      "involvement": "nearby",
+      "involvement_detail": [
+       "within 2,500 units at minute 39"
+      ],
+      "t_first_ms": 2334024,
+      "t_last_ms": 2334024,
+      "text": "Your jungle (bot side): 3v1 teamfight, your team won 1–0 (you were nearby, not credited)",
+      "where": "your jungle (bot side)"
+     },
+     {
+      "fight": {
+       "kills_them": 1,
+       "kills_us": 0,
+       "them": 1,
+       "us": 1
+      },
+      "involvement": "none",
+      "involvement_detail": [],
+      "t_first_ms": 2334879,
+      "t_last_ms": 2334879,
+      "text": "Enemy base: Akali killed Mordekaiser (you weren't there)",
+      "where": "enemy base"
+     }
+    ],
+    "percentile": 80.7,
+    "rank": 6,
+    "shop_visits": [],
+    "summary": "Your base: 3v3 teamfight, your team won 3–0; enemy took your top inhibitor; enemy took your nexus tower (you were dead at the time) · Enemy base: your team took their nexus tower; your team took their nexus tower (you weren't there) · Enemy base: your team took their bot base tower (you weren't there) · Your jungle (bot side): 3v1 teamfight, your team won 1–0 (you were nearby, not credited) · Enemy base: Akali killed Mordekaiser (you weren't there)",
+    "swing": 0.1692,
+    "t_first_ms": 2288542,
+    "t_last_ms": 2334879
+   }
+  ],
+  "notes": [],
+  "player": {
+   "champion": "Jhin",
+   "participant_id": 4,
+   "riot_id": "Player4#GOLD",
+   "role": "BOTTOM",
+   "team": 100,
+   "win": true
+  },
+  "series": [
+   {
+    "minute": 0,
+    "p_team": 0.4971,
+    "t_ms": 0
+   },
+   {
+    "minute": 1,
+    "p_team": 0.3167,
+    "t_ms": 60029
+   },
+   {
+    "minute": 2,
+    "p_team": 0.3367,
+    "t_ms": 120038
+   },
+   {
+    "minute": 3,
+    "p_team": 0.4505,
+    "t_ms": 180040
+   },
+   {
+    "minute": 4,
+    "p_team": 0.2303,
+    "t_ms": 240063
+   },
+   {
+    "minute": 5,
+    "p_team": 0.2572,
+    "t_ms": 300065
+   },
+   {
+    "minute": 6,
+    "p_team": 0.2214,
+    "t_ms": 360086
+   },
+   {
+    "minute": 7,
+    "p_team": 0.2317,
+    "t_ms": 420092
+   },
+   {
+    "minute": 8,
+    "p_team": 0.2138,
+    "t_ms": 480107
+   },
+   {
+    "minute": 9,
+    "p_team": 0.1953,
+    "t_ms": 540118
+   },
+   {
+    "minute": 10,
+    "p_team": 0.2026,
+    "t_ms": 600124
+   },
+   {
+    "minute": 11,
+    "p_team": 0.2191,
+    "t_ms": 660144
+   },
+   {
+    "minute": 12,
+    "p_team": 0.1838,
+    "t_ms": 720176
+   },
+   {
+    "minute": 13,
+    "p_team": 0.1487,
+    "t_ms": 780277
+   },
+   {
+    "minute": 14,
+    "p_team": 0.1576,
+    "t_ms": 840281
+   },
+   {
+    "minute": 15,
+    "p_team": 0.1931,
+    "t_ms": 900311
+   },
+   {
+    "minute": 16,
+    "p_team": 0.1697,
+    "t_ms": 960323
+   },
+   {
+    "minute": 17,
+    "p_team": 0.0521,
+    "t_ms": 1020349
+   },
+   {
+    "minute": 18,
+    "p_team": 0.0469,
+    "t_ms": 1080351
+   },
+   {
+    "minute": 19,
+    "p_team": 0.0805,
+    "t_ms": 1140384
+   },
+   {
+    "minute": 20,
+    "p_team": 0.0882,
+    "t_ms": 1200408
+   },
+   {
+    "minute": 21,
+    "p_team": 0.0921,
+    "t_ms": 1260409
+   },
+   {
+    "minute": 22,
+    "p_team": 0.0816,
+    "t_ms": 1320429
+   },
+   {
+    "minute": 23,
+    "p_team": 0.1382,
+    "t_ms": 1380431
+   },
+   {
+    "minute": 24,
+    "p_team": 0.1065,
+    "t_ms": 1440463
+   },
+   {
+    "minute": 25,
+    "p_team": 0.0642,
+    "t_ms": 1500482
+   },
+   {
+    "minute": 26,
+    "p_team": 0.1966,
+    "t_ms": 1560495
+   },
+   {
+    "minute": 27,
+    "p_team": 0.1607,
+    "t_ms": 1620502
+   },
+   {
+    "minute": 28,
+    "p_team": 0.3704,
+    "t_ms": 1680537
+   },
+   {
+    "minute": 29,
+    "p_team": 0.2865,
+    "t_ms": 1740555
+   },
+   {
+    "minute": 30,
+    "p_team": 0.4642,
+    "t_ms": 1800563
+   },
+   {
+    "minute": 31,
+    "p_team": 0.2878,
+    "t_ms": 1860574
+   },
+   {
+    "minute": 32,
+    "p_team": 0.3105,
+    "t_ms": 1920605
+   },
+   {
+    "minute": 33,
+    "p_team": 0.3048,
+    "t_ms": 1980611
+   },
+   {
+    "minute": 34,
+    "p_team": 0.4529,
+    "t_ms": 2040641
+   },
+   {
+    "minute": 35,
+    "p_team": 0.7893,
+    "t_ms": 2100663
+   },
+   {
+    "minute": 36,
+    "p_team": 0.6212,
+    "t_ms": 2160667
+   },
+   {
+    "minute": 37,
+    "p_team": 0.6793,
+    "t_ms": 2220675
+   },
+   {
+    "minute": 38,
+    "p_team": 0.6815,
+    "t_ms": 2280678
+   },
+   {
+    "minute": 39,
+    "p_team": 0.8507,
+    "t_ms": 2340688
+   },
+   {
+    "minute": 40,
+    "p_team": 0.7835,
+    "t_ms": 2369821
+   }
+  ],
+  "spec": {
+   "close_units": 1500,
+   "context_pct": 90,
+   "fight_gap_s": 15,
+   "link_units": 3000,
+   "major_pct": 99,
+   "max_context": 3,
+   "max_moments": 8,
+   "max_span_min": 3,
+   "min_abs_swing": 0.05,
+   "min_spacing_min": 2,
+   "nearby_units": 2500,
+   "notable_pct": 90,
+   "objective_lead_s": 30,
+   "quiet_pct": 90,
+   "shop_visit_gap_s": 30,
+   "show_pct": 75
+  },
+  "team_id": 100
+ },
+ "text": [
+  "Jhin (BOTTOM, Player4#GOLD) — win",
+  "Moments to review: 7 (shown: ≥ 75th percentile swing for that point in the game, ≥ 5 pts)",
+  "  #1 · 0:00–1:00 · major · -18 pts",
+  "      Bot lane: 2v3 teamfight, your team lost 0–2 (you: died to Ezreal)",
+  "      dead 10s; back in play by 2:00; vs Ezreal meanwhile: CS -1, XP -79 · you were in base buying at 0:06",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #2 · 3:00–4:00 · notable · -22 pts · 2 things at once",
+  "      Bot lane: 2v2 skirmish, your team lost 0–2 (you: died to Ezreal)",
+  "      Enemy jungle (bot side): 1v2 skirmish, your team lost 0–1 (you weren't there)",
+  "      dead 12s; back in play by 4:00; vs Ezreal meanwhile: CS -7, XP -452 · you were in base buying at 3:13",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #7 · 16:00–18:00 · moderate · -12 pts · 4 things at once",
+  "      Top lane: enemy took your top inner tower (you weren't there)",
+  "      Your jungle (top side): 3v2 teamfight, your team lost 0–3 (you: died to Ezreal)",
+  "      Mid lane: 1v3 teamfight, your team lost 0–1; enemy took your mid inner tower (you weren't there)",
+  "      Dragon pit: enemy took Cloud Drake (you weren't there)",
+  "      dead 29s; back in play by 18:00; vs Ezreal meanwhile: CS -1, XP -501; lost meanwhile: your mid inner tower, Cloud Drake · you were in base buying at 15:44",
+  "      note: 4 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #3 · 25:00–28:00 · notable · +31 pts · 5 things at once",
+  "      Your jungle (top side): 2v1 skirmish, your team won 1–0 (you weren't there)",
+  "      Mid lane: 3v2 teamfight, your team won 2–0; your team took their mid outer tower (you weren't there)",
+  "      Mid lane: 5v2 teamfight, your team won 2–1 (you: credited with an assist on Akali; credited with an assist on Dr. Mundo)",
+  "      Your jungle (top side): 5v5 teamfight, your team won 4–2 (you: credited with an assist on Ezreal; killed Kayn; credited with an assist on Akali; died to Dr. Mundo; credited with an assist on Karma)",
+  "      River (top side): 3v1 teamfight, your team won 1–0 (you weren't there)",
+  "      dead 44s; back in play by 29:00; vs Ezreal meanwhile: CS -3, XP +861 · you were in base buying at 27:22",
+  "      note: 5 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #4 · 29:00–30:00 · moderate · +18 pts · 2 things at once",
+  "      Bot lane: 3v3 teamfight, your team won 2–1 (you were nearby, not credited)",
+  "      Dragon pit: Mordekaiser killed Ezreal; your team took Infernal Drake (you: credited with helping take Infernal Drake)",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective",
+  "  #5 · 33:00–36:00 · moderate · +32 pts · 2 things at once",
+  "      Enemy base: 5v5 teamfight, your team won 5–0; your team took their mid inner tower; your team took their mid base tower; your team took their mid inhibitor (you: credited with an assist on Akali; credited with an assist on Ezreal; credited with helping take their mid inner tower; credited with an assist on Dr. Mundo; credited with helping take their mid base tower; credited with helping take their mid inhibitor)",
+  "      Dragon pit: 5v3 teamfight, your team lost 2–3; your team took Infernal Drake (you: credited with helping take Infernal Drake; credited with an assist on Akali; died to Kayn; credited with an assist on Karma)",
+  "      dead 56s; back in play by 37:00; vs Ezreal meanwhile: CS -8, XP -339 · you were in base buying at 35:11",
+  "      note: 2 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: time back in play is to the minute (snapshots are 1 minute apart)",
+  "  #6 · 38:00–39:00 · moderate · +17 pts · 5 things at once",
+  "      Your base: 3v3 teamfight, your team won 3–0; enemy took your top inhibitor; enemy took your nexus tower (you were dead at the time)",
+  "      Enemy base: your team took their nexus tower; your team took their nexus tower (you weren't there)",
+  "      Enemy base: your team took their bot base tower (you weren't there)",
+  "      Your jungle (bot side): 3v1 teamfight, your team won 1–0 (you were nearby, not credited)",
+  "      Enemy base: Akali killed Mordekaiser (you weren't there)",
+  "      note: 5 separate things happened between the same minute snapshots; the swing is their combined effect and can't be split",
+  "      note: nearby, not credited: you were close (minute snapshots) but not listed in the kill/objective"
+ ]
+}

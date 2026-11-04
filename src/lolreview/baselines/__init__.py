@@ -8,7 +8,7 @@ Files (data/baselines/):
     baselines_<tier>.parquet   one row per (role, minute, stat)
     baselines_<tier>.json      what it was built from: games, patches, extract version, date
 
-Baselines go stale with patches (CLAUDE.md: "patch drift invalidates baselines"); the
+Baselines go stale with patches (docs/decisions.md: "patch drift invalidates baselines"); the
 JSON records the patches so a report can warn when a game is from a different one.
 """
 
