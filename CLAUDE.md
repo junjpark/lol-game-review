@@ -43,11 +43,12 @@ Phase 9. Details and reasons: `docs/decisions.md`.
 | Owner's validation of reviews | `docs/phase6-validation.md` |
 | What happened in past sessions | `docs/sessions.md` (newest first) |
 | What broke before, and which check now catches it | `docs/failures.md` |
+| Running an analysis ("does X predict Y?"): contract, checks, review | `docs/analyses/README.md` |
 
 Code (`src/lolreview/`, stages in order): `riot/` API client, routing, cache, queues ·
 `extract/` timelines → frames/events/teams tables · `baselines/` percentiles · `model/` dataset,
 training, calibration, gate, `predict.WinProb` · `review/` moments, death timers, wording ·
-`viz/` HTML replay · `rift.py` map geometry. Scripts in `scripts/`, offline tests in `tests/`.
+`viz/` HTML replay · `rift.py` map geometry · `contracts.py` analysis contracts. Scripts in `scripts/`, offline tests in `tests/`.
 
 ## Commands
 
@@ -58,6 +59,7 @@ python scripts/replay.py  --riot-id "Name#TAG"      # replay only
 UPDATE_GOLDEN=1 pytest tests/test_golden.py         # re-freeze review output after an intended change
 python scripts/train_winprob.py                     # owner's Mac only (sandbox has no xgboost)
 python scripts/check_holdout.py --name <fresh_set>  # ONCE per fresh set; owner runs it
+python scripts/check_analysis.py docs/analyses/<f>  # code gate for an analysis, before the stats-reviewer
 ```
 
 ## Current state (update at the end of each session)
@@ -78,6 +80,9 @@ python scripts/check_holdout.py --name <fresh_set>  # ONCE per fresh set; owner 
 3. **When something breaks:** fix it, then add a line to `docs/failures.md` naming the check
    that would have caught it (test, hook, CI, map entry) and add that check.
 4. If a rule matters, enforce it in code (test, hook, CI) rather than adding text here.
+5. **Analyses** (feature tests, "does X predict Y") follow `docs/analyses/`: contract committed
+   before code, `check_analysis.py`, then an independent stats-reviewer that sees the contract,
+   script and results but not the conclusions. The owner decides.
 
 ## Conventions
 
@@ -92,7 +97,9 @@ python scripts/check_holdout.py --name <fresh_set>  # ONCE per fresh set; owner 
   outside `config`.
 - **Assistants: don't run git in the sandbox** (not even `git status`). It creates
   `.git/index.lock` and can't delete it from the mounted folder, which blocks the owner's next
-  `git add`. Inspect files directly instead; the owner runs git. (A hook in `.claude/` blocks it.)
+  `git add`. Inspect files directly instead; the owner runs git.
+- **Hard-to-reverse lane is closed to agents** (`.claude/hooks/agent_guard.py`): git,
+  `check_holdout.py`, `collect_*.py`, and `rm` under `data/`/`models/`. Give the owner the command.
 - Owner works plan-first, wants concise plain explanations and pushback with evidence.
 - Long runs on a laptop: `caffeinate -i python ...`.
 - Build the walking skeleton end-to-end before deepening any one component

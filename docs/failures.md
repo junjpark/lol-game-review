@@ -6,11 +6,13 @@ one run; a new check helps every later one. Newest first. "Open" means no automa
 
 | When | What broke | Cause | Check that catches it now | Status |
 |---|---|---|---|---|
+| Nov 4 | "No future information in features" and "resample by game" were only review questions | Rules lived in reviewers' heads | `tests/test_leakage.py` (cut-the-game test; fails on a planted leak); `contracts.py` refuses row/minute resampling and fresh holdouts | Check in place |
+| Nov 4 | Agents could start a holdout check or a collection | Hard-to-reverse actions were only described in text | `.claude/hooks/agent_guard.py` + `tests/test_hooks.py` | Check in place |
 | Nov 2 | Review said the player was "in" the dragon fight while he was 1v1 in top lane; kills in different lanes read as one fight | Same-minute merge also merged involvement and fight counts | Parts with own place/involvement (spec amendments 3–4); `tests/test_moments.py`; **golden reviews** `tests/test_golden.py` (all 5 fail if the old linking rule returns) | Check in place |
 | Nov 2 | Two separate fights in one minute each got the whole minute's swing | Clusters scored independently against one shared swing | `merge_by_snapshot` + `tests/test_moments.py`; golden reviews | Check in place |
 | Nov 2 | 2-point wiggles at minute 0 ranked "top 10%" | Percentiles alone; early swings are tiny | `min_abs_swing` (5 pts) in `review/moments.SPEC`; golden reviews | Check in place |
 | Nov 2 | Multi-minute moments compared with 1-minute swings | Swing table predated the k-minute windows | Review prints a note when windows are missing; retrain writes them | Check in place |
-| Nov 1 | `git status` from the sandbox left `.git/index.lock`, blocking the owner's `git add` | Sandbox can't delete files it creates in `.git/` on the mounted folder | `.claude/hooks/block_git.py` (PreToolUse hook) + `tests/test_hooks.py` | Check in place (hook needs a harness that loads `.claude/settings.json`) |
+| Nov 1 | `git status` from the sandbox left `.git/index.lock`, blocking the owner's `git add` | Sandbox can't delete files it creates in `.git/` on the mounted folder | `.claude/hooks/agent_guard.py` (PreToolUse hook) + `tests/test_hooks.py` | Check in place (hook needs a harness that loads `.claude/settings.json`) |
 | Nov 1 | Told the owner `replay.py --back` existed; it didn't | Answered from memory of a sibling script | None automatic. Habit: check `--help` / the parser before telling the owner a flag exists | Open |
 | Nov 1 | Riot ID lookups failed for TW2 | ACCOUNT-V1 has no `sea` host | `routing.account_host` + `tests/test_routing.py`; `docs/riot-gotchas.md` | Check in place |
 | Nov 1 | `ModuleNotFoundError: lolreview` when running scripts | conda base env shadowing the venv | pytest: `pythonpath` in `pyproject.toml`. Scripts: `conda deactivate; source venv/bin/activate` (README) | Partly (scripts rely on the habit) |

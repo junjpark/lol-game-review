@@ -24,6 +24,44 @@ open risks:     what could still be wrong
 
 ---
 
+## Nov 4, 2026 (later): agent lanes, leakage tests, stats-reviewer
+
+**Contract.** Objective: close the hard-to-reverse lane to agents; make the stats reviewer's
+mechanical checks code; add the reviewer agent and the analysis flow. Must not change: model,
+review or pipeline behaviour. Done when: each new check has a test that shows it can fail; full
+suite passes. Needs approval: nothing.
+
+**Changed**
+- `.claude/hooks/block_git.py` → `agent_guard.py`: also blocks agents from `check_holdout.py`,
+  `collect_*.py`, and `rm` under `data/`/`models/`. `tests/test_hooks.py` (12 blocked, 11 allowed).
+- `tests/test_leakage.py`: no feature is a whole-game field; features up to minute m are identical
+  when the game is cut after m (3 real games, 4 cut points each).
+- `src/lolreview/contracts.py`, `scripts/check_analysis.py`, `tests/test_contracts.py`: analysis
+  contracts (required fields, resample by game, no fresh holdout, hash stamp so the pass rule can't
+  move after the run).
+- `docs/analyses/` (README with the flow, TEMPLATE). CLAUDE.md map + working agreement item 5.
+- Written to the session outputs folder for the owner to copy (the app blocks assistants from
+  writing into `.claude/`): `.claude/agents/stats-reviewer.md`, `.claude/commands/review-analysis.md`.
+
+**Verified**
+- All 16 test modules pass in the sandbox (stand-in pytest).
+- Each check fails when it should: a planted future-information feature (game length added to
+  `gold_diff`) fails the leakage test; editing `pass_if` after a run fails `check_analysis.py`
+  (exit 1); `rm models/…`, `check_holdout.py` and `collect_matches.py` are blocked.
+
+**Not verified**
+- The hook and agent in a real Claude Code session; `ruff`/`pytest` on the Mac.
+
+**Decisions**
+- Reviewer is read-only (Read/Grep/Glob) and never sees the analyst's conclusions.
+- `train_winprob.py` stays open to agents: it archives the current model before overwriting.
+
+**Open risks**
+- `.claude/settings.json` and the hook were written with the shell earlier today, before the
+  app's protection on `.claude/` showed up. Owner should read both before committing.
+- The guard matches command text; a determined workaround (e.g. a script that shells out to git)
+  isn't caught. It's a guard against mistakes, not an adversary.
+
 ## Nov 4, 2026: harness (map, checks, contracts, failure log)
 
 **Contract.** Objective: adopt items 1–5 of the harness plan. Must not change: any model, review
@@ -45,7 +83,7 @@ that shows it can fail. Needs approval: nothing (owner commits).
 - Wording rule in code: `src/lolreview/review/wording.py`, checked on every golden review.
 - Holdout run-once lock: `src/lolreview/model/holdouts.py`, wired into `scripts/check_holdout.py`
   (`--reuse-reason` to override; a reuse never releases a model), `tests/test_holdouts.py`.
-- Agent git block: `.claude/settings.json` + `.claude/hooks/block_git.py`, `tests/test_hooks.py`;
+- Agent git block: `.claude/settings.json` + `.claude/hooks/block_git.py` (renamed `agent_guard.py` later the same day), `tests/test_hooks.py`;
   `.claude/settings.local.json` gitignored.
 - `docs/failures.md` (seeded with 17 past failures and their checks), this file.
 
